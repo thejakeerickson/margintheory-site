@@ -1,17 +1,195 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const surfaces = [
+  {
+    title: 'Newsletter',
+    href: '/newsletter',
+    body: 'Weekly writing on reading your own machine and finding the money sitting one layer down.',
+    status: 'Live',
+  },
+  {
+    title: 'Podcast',
+    href: '/podcast',
+    body: 'Real operators. Real P&Ls. We trace the money five drivers down, on the record.',
+    status: 'Coming soon',
+  },
+  {
+    title: 'CFO Services',
+    href: '/cfo',
+    body: 'The fractional CFO practice. Monthly. For owner-operators who want to see further.',
+    status: 'Taking clients',
+  },
+  {
+    title: 'Community',
+    href: '#',
+    body: 'A curated space for operators working the method together. In design.',
+    status: 'Later',
+  },
+];
+
+const proof = [
+  {
+    headline: '$110,000 / month',
+    subhead: 'RDM Hospitality — Don Julio',
+    body: 'A three-point COGS gap, hiding in inventory counts. Five drivers below where anyone was looking.',
+  },
+  {
+    headline: 'Sleep at night again',
+    subhead: 'Ultimis Engineering — Cash vs. accrual',
+    body: 'The books said profitable. The cash said something different. We translated the gap into a visible, manageable forecast.',
+  },
+  {
+    headline: 'Past the two-year tap-out',
+    subhead: 'Car wash acquisition — Chemistry gap',
+    body: 'Outsider buyers tap out because they never learn the machine. Different industry, same edge.',
+  },
+];
 ---
+<BaseLayout
+  title="Edge Theory — A financial operating system for $1M to $20M owner-operators"
+  description="Edge Theory is a media brand and financial operating system for owner-operator businesses doing $1M to $20M. Newsletter, podcast, community, and the fractional CFO practice that proves it works."
+>
+  <!-- Hero -->
+  <section>
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-40">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-edge-blue font-semibold mb-6">
+          <span class="w-8 h-px bg-edge-blue"></span>
+          <span>Edge Theory</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8">
+          Your business has an edge.
+          <span class="block text-white/60">Most founders never visit it.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-white/80 max-w-2xl mb-10 leading-relaxed">
+          A media brand and financial operating system for owner-operator businesses doing $1M to $20M. Newsletter, podcast, community, and the fractional CFO practice that proves it works.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="/newsletter"
+            class="inline-flex items-center justify-center px-6 py-3 bg-edge-blue text-white font-semibold rounded-md hover:opacity-90 transition"
+          >
+            Read the newsletter
+          </a>
+          <a
+            href="/cfo"
+            class="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-semibold rounded-md hover:bg-white/5 transition"
+          >
+            Work with the CFO practice
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <!-- The Premise -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="grid md:grid-cols-12 gap-12">
+        <div class="md:col-span-4">
+          <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">The Premise</div>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+            The answers are already inside the business.
+          </h2>
+        </div>
+        <div class="md:col-span-8 space-y-6 text-lg text-white/80 leading-relaxed">
+          <p>
+            Every business that stalls between $1M and $20M got too big to see each detail and run at the same time. The answers are already inside the business, hiding in the data it produces every day.
+          </p>
+          <p>
+            Every transaction, every invoice, every payroll run, every line item is hiding six figures of money <span class="text-white font-semibold">one layer below where anyone is looking</span>.
+          </p>
+          <p class="text-2xl text-white font-semibold pt-2">
+            We call that boundary our edge.
+          </p>
+          <p>
+            Most fractional CFOs stop at the surface drivers. Edge Theory traces the money five drivers down to the thing actually moving the number.
+          </p>
+          <p class="text-xl text-white font-semibold pt-2 border-l-2 border-edge-blue pl-6">
+            Most founders coast in the middle. Edge Theory is for the ones who'd rather see further.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four Surfaces -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="mb-12">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">The Surfaces</div>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight max-w-2xl">
+          One philosophy. Four ways to work with it.
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {surfaces.map((s) => (
+          <a
+            href={s.href}
+            class="group block p-8 border border-white/10 rounded-xl hover:border-edge-blue transition-colors"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-2xl font-bold">{s.title}</h3>
+              <span class="text-xs font-semibold text-edge-blue uppercase tracking-wider">{s.status}</span>
+            </div>
+            <p class="text-white/70 leading-relaxed mb-6">{s.body}</p>
+            <span class="inline-flex items-center text-edge-blue text-sm font-semibold">
+              Explore
+              <svg
+                class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="mb-12">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">The Work</div>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight max-w-2xl">
+          The money is always at the edge of the operator's current visibility.
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {proof.map((p) => (
+          <div class="p-8 border border-white/10 rounded-xl">
+            <div class="text-3xl md:text-4xl font-bold text-edge-blue mb-3">{p.headline}</div>
+            <div class="text-xs text-white/60 uppercase tracking-wider mb-4">{p.subhead}</div>
+            <p class="text-white/80 leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
+      <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+        Read the edge.
+        <span class="block text-edge-blue">Find the money.</span>
+      </h2>
+      <p class="text-xl text-white/70 max-w-2xl mx-auto mb-10">
+        Start with the newsletter. It's free, it's weekly, and it will teach you how to read your own machine.
+      </p>
+      <a
+        href="/newsletter"
+        class="inline-flex items-center justify-center px-8 py-4 bg-edge-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
+      >
+        Get the newsletter
+      </a>
+    </div>
+  </section>
+</BaseLayout>

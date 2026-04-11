@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  /* Edge Theory brand colors (from brand_kit.md) */
+  --color-charcoal: #1E1E1E;
+  --color-edge-blue: #1E90FF;
+  --color-deep-blue: #1D4ED8;
+  --color-soft-gray: #F5F5F5;
+  --color-mid-gray: #6B7280;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Beehiiv embed: let it breathe inside our containers */
+.beehiiv-embed {
+  width: 100% !important;
+  max-width: 866px;
+}

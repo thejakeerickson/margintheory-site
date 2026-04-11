@@ -1,0 +1,43 @@
+---
+const nav = [
+  { href: '/newsletter', label: 'Newsletter' },
+  { href: '/podcast', label: 'Podcast' },
+  { href: '/cfo', label: 'CFO Services' },
+  { href: '/about', label: 'About' },
+];
+
+const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
+---
+<header class="sticky top-0 z-50 bg-charcoal/95 backdrop-blur border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="font-bold text-xl tracking-tight text-white">
+      Edge Theory
+    </a>
+    <nav class="hidden md:flex items-center gap-8">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm text-white/80 hover:text-white transition-colors"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <a
+      href={calendlyUrl}
+      target="_blank"
+      rel="noopener"
+      class="hidden md:inline-flex items-center px-4 py-2 bg-edge-blue text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
+    >
+      Right Fit Call
+    </a>
+  </div>
+  <nav class="md:hidden px-6 pb-4 pt-1 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/80">
+    {nav.map((item) => (
+      <a href={item.href} class="hover:text-white">{item.label}</a>
+    ))}
+    <a href={calendlyUrl} target="_blank" rel="noopener" class="text-edge-blue font-semibold">
+      Right Fit Call →
+    </a>
+  </nav>
+</header>

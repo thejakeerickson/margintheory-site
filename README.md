@@ -1,43 +1,50 @@
-# Astro Starter Kit: Minimal
+# edgetheory-site
+
+The marketing site for Edge Theory — a media brand and financial operating system for owner-operator businesses doing $1M to $20M.
+
+## Stack
+
+- **Framework:** Astro 6
+- **Styling:** Tailwind CSS v4 (brand tokens in `src/styles/global.css`)
+- **Language:** TypeScript (strict)
+- **Deployment:** Vercel (auto-deploy on push to `main`)
+- **Domain:** edgetheory.co
+
+## Pages
+
+- `/` — Home
+- `/cfo` — CFO Services landing page
+- `/newsletter` — Newsletter signup (Beehiiv embed)
+- `/podcast` — Podcast page + guest application form
+- `/about` — Edge Theory manifesto
+
+## Brand tokens
+
+Defined in `src/styles/global.css` under the `@theme` block. Pulled from the PCD brand kit:
+
+- `--color-charcoal` `#1E1E1E` — dominant background
+- `--color-edge-blue` `#1E90FF` — accent / CTAs
+- `--color-deep-blue` `#1D4ED8` — emphasis backgrounds
+- `--color-soft-gray` `#F5F5F5`
+- `--color-mid-gray` `#6B7280`
+- `--font-sans` `Inter`
+
+Use classes like `bg-charcoal`, `text-edge-blue`, `font-sans`.
+
+## Dev
 
 ```sh
-npm create astro@latest -- --template minimal
+npm run dev      # start dev server on localhost:4321
+npm run build    # production build to ./dist
+npm run preview  # preview production build locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Editing content
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Page copy:** edit the relevant `src/pages/*.astro` file.
+- **Nav links:** `src/components/Nav.astro`
+- **Footer:** `src/components/Footer.astro`
+- **Brand colors / typography:** `src/styles/global.css`
+- **Calendly URL:** referenced in Nav and CFO page (search for `calendly.com/jake-qmqx`)
+- **Beehiiv embed:** `src/pages/newsletter.astro`
+- **Podcast guest application:** Google Form URL in `src/pages/podcast.astro`

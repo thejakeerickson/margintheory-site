@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const applicationUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdB3dL6x7WdCPUo79Tkvb5693eNAgSM5Rk-aw2OlCzWvT2Q2Q/viewform';
+---
+<BaseLayout
+  title="The Edge Theory Podcast"
+  description="Real operators. Real P&Ls. We trace the money five drivers down, on the record."
+>
+  <section>
+    <div class="max-w-4xl mx-auto px-6 pt-24 pb-12 md:pt-32">
+      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-edge-blue font-semibold mb-6">
+        <span class="w-8 h-px bg-edge-blue"></span>
+        <span>Podcast</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8">
+        Where the money is hiding.
+        <span class="block text-white/60">In your own business.</span>
+      </h1>
+      <p class="text-xl text-white/80 leading-relaxed mb-10 max-w-3xl">
+        The Edge Theory podcast. Real operators. Real P&Ls. We trace the money five drivers down, on the record.
+      </p>
+
+      <div class="inline-flex items-center gap-3 px-4 py-2 border border-edge-blue/40 bg-edge-blue/5 rounded-full text-sm text-edge-blue font-semibold">
+        <span class="w-2 h-2 rounded-full bg-edge-blue animate-pulse"></span>
+        First episodes dropping soon
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-4xl mx-auto px-6 py-20">
+      <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Apply to be on the show</div>
+      <h2 class="text-4xl font-bold tracking-tight mb-6">
+        We dissect founder-led businesses on the record.
+      </h2>
+      <div class="space-y-4 text-lg text-white/80 leading-relaxed mb-10">
+        <p>
+          Each episode is a live CFO session with a real operator. You bring your P&L. We trace the money five drivers down and find what's hiding in your own machine.
+        </p>
+        <p>
+          If you're running a $1M to $20M owner-operator business and you want Edge Theory applied to your numbers on the record, apply below. We select guests carefully.
+        </p>
+      </div>
+      <a
+        href={applicationUrl}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center px-8 py-4 bg-edge-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
+      >
+        Apply to be a guest
+        <svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="border-t border-white/10">
+    <div class="max-w-4xl mx-auto px-6 py-20">
+      <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Host</div>
+      <h2 class="text-4xl font-bold tracking-tight mb-6">Jake Erickson</h2>
+      <div class="space-y-4 text-lg text-white/80 leading-relaxed">
+        <p>
+          Fractional CFO for owner-operator businesses. Built the Edge Theory method by finding money hiding in inventory counts, cash-vs-accrual gaps, and operator blind spots in businesses nobody else could see through.
+        </p>
+        <p>
+          The work that built the brand: $110k per month recovered in beverage COGS at RDM Hospitality. The cash forecast that let Dan McCaulley sleep at night again. The car wash chemistry gap that saved Devin Church from the outsider-buyer failure pattern.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-white/10">
+    <div class="max-w-4xl mx-auto px-6 py-20 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Don't want to wait for the podcast?</h2>
+      <p class="text-lg text-white/70 mb-8 max-w-2xl mx-auto">
+        The newsletter is live now. Same method, weekly, in writing.
+      </p>
+      <a
+        href="/newsletter"
+        class="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-semibold rounded-md hover:bg-white/5 transition"
+      >
+        Read the newsletter
+      </a>
+    </div>
+  </section>
+</BaseLayout>

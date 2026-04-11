@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
+
+const phase1 = [
+  {
+    title: 'Financial assessment',
+    body: 'Books, P&L, balance sheet, cash position, AR, AP, payroll timing. We find where the business is right now and which drivers are moving the numbers.',
+  },
+  {
+    title: 'Annual profit & cash targets',
+    body: 'Set the numbers the business is trying to hit for the year. Grounded in actual operating economics, not wishful thinking.',
+  },
+  {
+    title: '12-month rolling cash forecast',
+    body: 'Week-by-week cash position for the next 12 months, updated monthly. Tight weeks and cushion weeks, color coded. Tied to real payroll, AR, and spend.',
+  },
+  {
+    title: 'KPI dashboard',
+    body: 'The 3 to 5 numbers that actually move the business. Not a vanity dashboard. Watched weekly. Tied to the financials.',
+  },
+  {
+    title: '3 opportunities, dollar-sized',
+    body: 'At least three specific ways to improve financial performance, each with an estimated dollar impact you can act on this quarter.',
+  },
+];
+
+const phase2 = [
+  {
+    title: 'Monthly CFO working session',
+    body: '90 minutes. Actuals vs. targets. The month\'s main constraint. A 30-day action plan with owners and deadlines.',
+  },
+  {
+    title: 'Weekly Friday check-in',
+    body: 'Short accountability pulse on the 30-day plan. No formal report required. Just make sure the needle is moving.',
+  },
+  {
+    title: 'Between-call decision support',
+    body: 'When an urgent decision hits, we model it in the forecast within 24 hours and come back with a recommendation. CFO in the room.',
+  },
+  {
+    title: 'Rolling forecast & KPI updates',
+    body: 'The forecast moves forward one month every month. The KPI dashboard refreshes with the latest actuals.',
+  },
+];
+
+const onboarding = [
+  {
+    step: '1',
+    title: 'Right Fit Call',
+    body: '30 minutes. Free. Bring the latest financials. You leave knowing the 2 to 3 biggest problems and whether Edge Theory is the right fit.',
+  },
+  {
+    step: '2',
+    title: 'Agreement sent',
+    body: 'Month-to-month retainer. No long-term lock-in. Signed in 24 hours.',
+  },
+  {
+    step: '3',
+    title: 'First 30 days',
+    body: 'Phase 1 deliverables. By day 30, you can see your machine clearly for the first time.',
+  },
+  {
+    step: '4',
+    title: 'Ongoing cadence',
+    body: 'Monthly rhythm. Weekly pulse. Decision support between calls. We work the method together.',
+  },
+];
+---
+<BaseLayout
+  title="Edge Theory CFO Services — Fractional CFO for $1M to $20M owner-operators"
+  description="The fractional CFO practice behind Edge Theory. Monthly rhythm for owner-operator businesses doing $1M to $20M. We trace the money five drivers down."
+>
+  <!-- Hero -->
+  <section>
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-edge-blue font-semibold mb-6">
+          <span class="w-8 h-px bg-edge-blue"></span>
+          <span>CFO Services</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-8">
+          The fractional CFO practice for operators who want to see further.
+        </h1>
+        <p class="text-lg md:text-xl text-white/80 max-w-3xl mb-10 leading-relaxed">
+          Phase 1: we make the machine visible. Phase 2: we read the machine together every month, and find the money hiding five drivers down.
+        </p>
+        <a
+          href={calendlyUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center px-6 py-3 bg-edge-blue text-white font-semibold rounded-md hover:opacity-90 transition"
+        >
+          Book a 30-minute Right Fit Call
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Who it's for</div>
+          <h2 class="text-3xl font-bold mb-6">Owner-operators running the machine</h2>
+          <ul class="space-y-3 text-white/80">
+            <li class="flex gap-3"><span class="text-edge-blue font-bold">·</span> Marketing agency owners doing $1M to $20M</li>
+            <li class="flex gap-3"><span class="text-edge-blue font-bold">·</span> 2 or more years in business</li>
+            <li class="flex gap-3"><span class="text-edge-blue font-bold">·</span> 5 to 50 employees</li>
+            <li class="flex gap-3"><span class="text-edge-blue font-bold">·</span> Active operator, not absentee</li>
+            <li class="flex gap-3"><span class="text-edge-blue font-bold">·</span> Willing to look at the numbers monthly and make changes</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-white/40 font-semibold mb-4">Who it's not for</div>
+          <h2 class="text-3xl font-bold mb-6 text-white/60">The middle isn't the customer</h2>
+          <ul class="space-y-3 text-white/60">
+            <li class="flex gap-3"><span class="font-bold">·</span> Bookkeeping or tax work only</li>
+            <li class="flex gap-3"><span class="font-bold">·</span> Non-profits</li>
+            <li class="flex gap-3"><span class="font-bold">·</span> Pre-revenue or unstable revenue</li>
+            <li class="flex gap-3"><span class="font-bold">·</span> Absentee owners</li>
+            <li class="flex gap-3"><span class="font-bold">·</span> Founders unwilling to change what the numbers reveal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phase 1 -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="mb-12">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Phase 1 — First 30 days</div>
+        <h2 class="text-4xl font-bold tracking-tight">Make the machine visible.</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {phase1.map((item, i) => (
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="text-edge-blue text-sm font-bold mb-2">0{i + 1}</div>
+            <h3 class="text-xl font-bold mb-3">{item.title}</h3>
+            <p class="text-white/70 leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Phase 2 -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="mb-12">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Phase 2 — Ongoing</div>
+        <h2 class="text-4xl font-bold tracking-tight">Read the machine together.</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {phase2.map((item, i) => (
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="text-edge-blue text-sm font-bold mb-2">0{i + 1}</div>
+            <h3 class="text-xl font-bold mb-3">{item.title}</h3>
+            <p class="text-white/70 leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Difference -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="max-w-3xl">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">The difference</div>
+        <h2 class="text-4xl font-bold tracking-tight mb-8">Five drivers down.</h2>
+        <div class="space-y-6 text-lg text-white/80 leading-relaxed">
+          <p>
+            Most fractional CFOs stop at the surface drivers. "COGS is too high." "Labor is creeping up." "AR is aging."
+          </p>
+          <p>
+            Edge Theory keeps going. COGS high — which line? Wine cost. Which SKU? Don Julio. What drove it? Over-pours and miscounts. Where? Two specific bartenders, two specific shifts.
+          </p>
+          <p>
+            That's five drivers down. That's where the money is. That's the edge.
+          </p>
+          <div class="pt-4 border-l-2 border-edge-blue pl-6">
+            <p class="text-white font-semibold text-xl leading-snug">
+              RDM Hospitality — Don Julio: $110,000 per month in saved cash flow. The data was sitting in the business the whole time. Someone had to pop the hood.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">Pricing</div>
+          <h2 class="text-4xl font-bold tracking-tight mb-6">Month-to-month. No lock-in.</h2>
+          <p class="text-white/80 leading-relaxed mb-6">
+            Monthly retainer from $1,500 to $7,500 depending on business size, complexity, and scope. Most engagements land in the $3,500 to $5,000 range.
+          </p>
+          <p class="text-white/60 leading-relaxed">
+            No long-term contract. Cancel with 30 days notice. The goal is to walk you through the stages, not keep you dependent.
+          </p>
+        </div>
+        <div class="p-8 border border-edge-blue rounded-xl">
+          <div class="text-sm text-white/60 mb-2">Monthly retainer</div>
+          <div class="text-5xl font-bold text-edge-blue mb-1">$1,500</div>
+          <div class="text-2xl text-white/60 mb-6">to $7,500 / month</div>
+          <div class="border-t border-white/10 pt-6 space-y-2 text-sm text-white/80">
+            <div>· Monthly 90-minute CFO working session</div>
+            <div>· Weekly Friday check-ins</div>
+            <div>· Between-call decision support</div>
+            <div>· Rolling forecast + KPI dashboard</div>
+            <div>· Direct access to Jake, not a junior</div>
+          </div>
+          <a
+            href={calendlyUrl}
+            target="_blank"
+            rel="noopener"
+            class="block mt-6 w-full text-center px-6 py-3 bg-edge-blue text-white font-semibold rounded-md hover:opacity-90 transition"
+          >
+            Book a Right Fit Call
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Onboarding -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="mb-12">
+        <div class="text-xs uppercase tracking-widest text-edge-blue font-semibold mb-4">How it starts</div>
+        <h2 class="text-4xl font-bold tracking-tight">Four steps to a visible machine.</h2>
+      </div>
+      <div class="grid md:grid-cols-4 gap-6">
+        {onboarding.map((step) => (
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="text-5xl font-bold text-edge-blue mb-4">{step.step}</div>
+            <h3 class="text-lg font-bold mb-3">{step.title}</h3>
+            <p class="text-sm text-white/70 leading-relaxed">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-24 text-center">
+      <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl mx-auto">
+        The money is sitting on the counter.
+      </h2>
+      <p class="text-xl text-white/70 max-w-2xl mx-auto mb-10">
+        The Right Fit Call is 30 minutes and free. You'll leave knowing the 2-3 biggest problems to fix first.
+      </p>
+      <a
+        href={calendlyUrl}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center px-8 py-4 bg-edge-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
+      >
+        Book the Right Fit Call
+      </a>
+    </div>
+  </section>
+</BaseLayout>
