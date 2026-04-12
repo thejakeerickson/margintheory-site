@@ -1,6 +1,6 @@
-# edgetheory-site
+# margintheory-site
 
-The marketing site for Edge Theory — a media brand and financial operating system for owner-operator businesses doing $1M to $20M.
+The marketing site for Margin Theory. A media brand and financial operating system for owner-operator businesses doing $1M to $20M.
 
 ## Stack
 
@@ -8,7 +8,7 @@ The marketing site for Edge Theory — a media brand and financial operating sys
 - **Styling:** Tailwind CSS v4 (brand tokens in `src/styles/global.css`)
 - **Language:** TypeScript (strict)
 - **Deployment:** Vercel (auto-deploy on push to `main`)
-- **Domain:** edgetheory.co
+- **Domain:** margintheory.co
 
 ## Pages
 
@@ -16,20 +16,20 @@ The marketing site for Edge Theory — a media brand and financial operating sys
 - `/cfo` — CFO Services landing page
 - `/newsletter` — Newsletter signup (Beehiiv embed)
 - `/podcast` — Podcast page + guest application form
-- `/about` — Edge Theory manifesto
+- `/about` — Margin Theory manifesto
 
 ## Brand tokens
 
 Defined in `src/styles/global.css` under the `@theme` block. Pulled from the PCD brand kit:
 
 - `--color-charcoal` `#1E1E1E` — dominant background
-- `--color-edge-blue` `#1E90FF` — accent / CTAs
+- `--color-margin-blue` `#1E90FF` — accent / CTAs
 - `--color-deep-blue` `#1D4ED8` — emphasis backgrounds
 - `--color-soft-gray` `#F5F5F5`
 - `--color-mid-gray` `#6B7280`
 - `--font-sans` `Inter`
 
-Use classes like `bg-charcoal`, `text-edge-blue`, `font-sans`.
+Use classes like `bg-charcoal`, `text-margin-blue`, `font-sans`.
 
 ## Dev
 
