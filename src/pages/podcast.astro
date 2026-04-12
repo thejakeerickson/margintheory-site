@@ -4,83 +4,266 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const applicationUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdB3dL6x7WdCPUo79Tkvb5693eNAgSM5Rk-aw2OlCzWvT2Q2Q/viewform';
 ---
 <BaseLayout
-  title="The Margin Theory Podcast"
-  description="Real operators. Real P&Ls. We trace the money five drivers down, on the record."
+  title="Margin Theory Show | Real Stories From Business Owners"
+  description="A short interview series featuring established business owners. Real conversations about what building something actually takes. The kind of conversation that usually only happens behind closed doors."
 >
-  <section>
-    <div class="max-w-4xl mx-auto px-6 pt-24 pb-12 md:pt-32">
-      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">Podcast</div>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-margin-blue/10 via-transparent to-transparent"></div>
+    <div class="relative max-w-4xl mx-auto px-6 pt-28 pb-20 md:pt-40 md:pb-32 text-center">
+      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">The Margin Theory Show</div>
       <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8">
-        Where the money is hiding.
-        <span class="block text-white/60">In your own business.</span>
+        Real stories from people
+        <span class="block text-margin-blue">who built something real.</span>
       </h1>
-      <p class="text-xl text-white/80 leading-relaxed mb-10 max-w-3xl">
-        The Margin Theory podcast. Real operators. Real P&Ls. We trace the money five drivers down, on the record.
+      <p class="text-xl md:text-2xl text-white/70 max-w-2xl mx-auto mb-12 leading-relaxed">
+        A short interview series featuring established business owners. Not a highlight reel. Real conversations about what building something actually takes.
       </p>
-
-      <div class="inline-flex items-center gap-3 px-4 py-2 border border-margin-blue/40 bg-margin-blue/5 rounded-full text-sm text-margin-blue font-semibold">
-        <span class="w-2 h-2 rounded-full bg-margin-blue animate-pulse"></span>
-        First episodes dropping soon
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={applicationUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center px-8 py-4 bg-margin-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
+        >
+          Apply to Be Featured
+        </a>
+        <div class="inline-flex items-center justify-center gap-3 px-6 py-4 border border-margin-blue/40 bg-margin-blue/5 rounded-md text-margin-blue font-semibold">
+          <span class="w-2 h-2 rounded-full bg-margin-blue animate-pulse"></span>
+          Now booking guests
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- What This Is -->
   <section class="border-t border-white/10 bg-white/[0.02]">
-    <div class="max-w-4xl mx-auto px-6 py-20">
-      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">Apply to be on the show</div>
-      <h2 class="text-4xl font-bold tracking-tight mb-6">
-        We dissect founder-led businesses on the record.
-      </h2>
-      <div class="space-y-4 text-lg text-white/80 leading-relaxed mb-10">
-        <p>
-          Each episode is a live CFO session with a real operator. You bring your P&L. We trace the money five drivers down and find what's hiding in your own machine.
-        </p>
-        <p>
-          If you're running a $1M to $20M owner-operator business and you want Margin Theory applied to your numbers on the record, apply below. We select guests carefully.
-        </p>
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">What this is</div>
+          <h2 class="text-4xl font-bold tracking-tight mb-6">The conversation that usually<br>only happens behind closed doors.</h2>
+          <div class="space-y-4 text-lg text-white/80 leading-relaxed">
+            <p>
+              Most business content is polished. Scripted. Surface-level. Nobody talks about what it actually feels like to build something with your own hands.
+            </p>
+            <p>
+              This show is different. Every episode covers four things that actually matter to the person behind the business. Not just the revenue line.
+            </p>
+            <p class="text-white font-semibold">
+              30 minutes. No script. No prep. Just a real conversation.
+            </p>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-10 h-10 rounded-full bg-margin-blue/10 flex items-center justify-center text-margin-blue font-bold text-sm">F</div>
+              <h3 class="text-lg font-bold">Faith</h3>
+            </div>
+            <p class="text-white/60 text-sm leading-relaxed pl-14">What grounds you. What keeps you going when things get hard and the answers are not obvious.</p>
+          </div>
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-10 h-10 rounded-full bg-margin-blue/10 flex items-center justify-center text-margin-blue font-bold text-sm">F</div>
+              <h3 class="text-lg font-bold">Fitness</h3>
+            </div>
+            <p class="text-white/60 text-sm leading-relaxed pl-14">How you take care of yourself so you can show up at your best. Because how you feel directly affects how you lead.</p>
+          </div>
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-10 h-10 rounded-full bg-margin-blue/10 flex items-center justify-center text-margin-blue font-bold text-sm">F</div>
+              <h3 class="text-lg font-bold">Family</h3>
+            </div>
+            <p class="text-white/60 text-sm leading-relaxed pl-14">The people who matter most outside the business. And what it actually looks like to protect that while building something at the same time.</p>
+          </div>
+          <div class="p-6 border border-white/10 rounded-xl">
+            <div class="flex items-center gap-4 mb-3">
+              <div class="w-10 h-10 rounded-full bg-margin-blue/10 flex items-center justify-center text-margin-blue font-bold text-sm">B</div>
+              <h3 class="text-lg font-bold">Business</h3>
+            </div>
+            <p class="text-white/60 text-sm leading-relaxed pl-14">What you are building, why it matters, and where you are taking it. The vision behind the work.</p>
+          </div>
+        </div>
       </div>
-      <a
-        href={applicationUrl}
-        target="_blank"
-        rel="noopener"
-        class="inline-flex items-center justify-center px-8 py-4 bg-margin-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
-      >
-        Apply to be a guest
-        <svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </a>
     </div>
   </section>
 
+  <!-- Who We Feature -->
   <section class="border-t border-white/10">
-    <div class="max-w-4xl mx-auto px-6 py-20">
-      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">Host</div>
-      <h2 class="text-4xl font-bold tracking-tight mb-6">Jake Erickson</h2>
-      <div class="space-y-4 text-lg text-white/80 leading-relaxed">
-        <p>
-          Fractional CFO for owner-operator businesses. Built the Margin Theory method by finding money hiding in inventory counts, cash-vs-accrual gaps, and operator blind spots in businesses nobody else could see through.
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="text-center mb-16">
+        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">Who we feature</div>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+          Business owners who have<br>built something real.
+        </h2>
+        <p class="text-xl text-white/60 max-w-2xl mx-auto">
+          You have employees. You have clients. You are making decisions every day that nobody documents. You are past the early days and into the part where the real work begins.
         </p>
-        <p>
-          The work that built the brand: $110k per month recovered in beverage COGS at RDM Hospitality. The cash forecast that let Dan McCaulley sleep at night again. The car wash chemistry gap that saved Devin Church from the outsider-buyer failure pattern.
-        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div class="p-8 border border-margin-blue/30 rounded-xl bg-margin-blue/[0.03]">
+          <h3 class="text-xl font-bold mb-6 text-margin-blue">You're a fit if:</h3>
+          <ul class="space-y-4">
+            <li class="flex gap-3 text-white/80">
+              <span class="text-margin-blue mt-1 text-lg">+</span>
+              <span>You run an established business with employees and clients</span>
+            </li>
+            <li class="flex gap-3 text-white/80">
+              <span class="text-margin-blue mt-1 text-lg">+</span>
+              <span>You are past the startup phase and into the real work of running it</span>
+            </li>
+            <li class="flex gap-3 text-white/80">
+              <span class="text-margin-blue mt-1 text-lg">+</span>
+              <span>You are willing to have an honest conversation about what it takes</span>
+            </li>
+            <li class="flex gap-3 text-white/80">
+              <span class="text-margin-blue mt-1 text-lg">+</span>
+              <span>You want to share your story with other operators who get it</span>
+            </li>
+          </ul>
+        </div>
+        <div class="p-8 border border-white/10 rounded-xl">
+          <h3 class="text-xl font-bold mb-6 text-white/50">Not a fit if:</h3>
+          <ul class="space-y-4">
+            <li class="flex gap-3 text-white/40">
+              <span class="mt-1 text-lg">-</span>
+              <span>You are pre-revenue or still in the idea stage</span>
+            </li>
+            <li class="flex gap-3 text-white/40">
+              <span class="mt-1 text-lg">-</span>
+              <span>You want to promote a product or service</span>
+            </li>
+            <li class="flex gap-3 text-white/40">
+              <span class="mt-1 text-lg">-</span>
+              <span>You are looking for a scripted, polished interview</span>
+            </li>
+            <li class="flex gap-3 text-white/40">
+              <span class="mt-1 text-lg">-</span>
+              <span>You are not comfortable with real, unfiltered conversation</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- How It Works -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="text-center mb-16">
+        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">How it works</div>
+        <h2 class="text-4xl font-bold tracking-tight">Three simple steps.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="text-center p-8 border border-white/10 rounded-xl">
+          <div class="text-4xl font-bold text-margin-blue mb-4">01</div>
+          <h3 class="text-xl font-bold mb-3">Apply</h3>
+          <p class="text-white/60 leading-relaxed">
+            Fill out a short application. Takes about two minutes. No commitment on your end.
+          </p>
+        </div>
+        <div class="text-center p-8 border border-white/10 rounded-xl">
+          <div class="text-4xl font-bold text-margin-blue mb-4">02</div>
+          <h3 class="text-xl font-bold mb-3">Intro Call</h3>
+          <p class="text-white/60 leading-relaxed">
+            If it looks like a good fit, you get a link to book a short 15-minute call. We put a name to a face and walk you through what the conversation will look like.
+          </p>
+        </div>
+        <div class="text-center p-8 border border-white/10 rounded-xl">
+          <div class="text-4xl font-bold text-margin-blue mb-4">03</div>
+          <h3 class="text-xl font-bold mb-3">You're On</h3>
+          <p class="text-white/60 leading-relaxed">
+            We book the interview. 30 minutes on Zoom. Nothing to prepare. No script. You control how deep it goes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You Get -->
   <section class="border-t border-white/10">
-    <div class="max-w-4xl mx-auto px-6 py-20 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">Don't want to wait for the podcast?</h2>
-      <p class="text-lg text-white/70 mb-8 max-w-2xl mx-auto">
-        The newsletter is live now. Same method, weekly, in writing.
-      </p>
-      <a
-        href="/newsletter"
-        class="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-semibold rounded-md hover:bg-white/5 transition"
-      >
-        Read the newsletter
-      </a>
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">What you get</div>
+          <h2 class="text-4xl font-bold tracking-tight mb-6">More than just an episode.</h2>
+          <div class="space-y-6 text-lg text-white/80 leading-relaxed">
+            <div class="flex gap-4">
+              <span class="text-margin-blue text-2xl leading-none mt-1">·</span>
+              <p><span class="text-white font-semibold">The full recording is yours to keep.</span> Use it however you want. Your story, your content.</p>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-margin-blue text-2xl leading-none mt-1">·</span>
+              <p><span class="text-white font-semibold">Short clips cut from the conversation.</span> We tag you across social media when they go out. A lot of guests use the clips as content long after the episode drops.</p>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-margin-blue text-2xl leading-none mt-1">·</span>
+              <p><span class="text-white font-semibold">Exposure to an audience of operators.</span> People who understand your world and respect what you have built.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-center">
+          <div class="w-full max-w-sm p-8 border border-white/10 rounded-2xl bg-white/[0.03]">
+            <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">What to expect on the day</div>
+            <div class="space-y-4 text-white/70 leading-relaxed">
+              <p>A 30-minute conversation on Zoom.</p>
+              <p>Nothing to prepare beforehand and no script to follow.</p>
+              <p>You control how deep it goes. If there is anything you would rather not talk about, just say so.</p>
+              <p class="text-white font-semibold pt-2">The goal is for it to feel like a real conversation, not an interview.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Host -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-4xl mx-auto px-6 py-20 md:py-28">
+      <div class="text-center">
+        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">Your host</div>
+        <h2 class="text-4xl font-bold tracking-tight mb-6">Jake Erickson</h2>
+        <div class="space-y-4 text-lg text-white/80 leading-relaxed max-w-2xl mx-auto">
+          <p>
+            Fractional CFO for owner-operator businesses doing $1M to $20M. Jake started the Margin Theory Show because the most important conversations in business are the ones that never get recorded.
+          </p>
+          <p>
+            Not the pitch decks. Not the revenue milestones. The real stuff. What it costs to build something. What it takes to keep going. And what the person behind the business actually thinks about when nobody is watching.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="border-t border-white/10">
+    <div class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-t from-margin-blue/10 via-transparent to-transparent"></div>
+      <div class="relative max-w-3xl mx-auto px-6 py-20 md:py-32 text-center">
+        <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          Ready to be
+          <span class="block text-margin-blue">featured?</span>
+        </h2>
+        <p class="text-xl text-white/60 max-w-xl mx-auto mb-10">
+          If this sounds like something you want to be part of, apply below. It takes about two minutes and there is no commitment on your end until we both decide it is a good fit.
+        </p>
+        <a
+          href={applicationUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center px-10 py-5 bg-margin-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
+        >
+          Apply to Be Featured
+          <svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <p class="text-sm text-white/30 mt-8">
+          Not a business owner? <a href="/newsletter" class="text-margin-blue hover:text-white transition-colors">Read the newsletter</a> instead.
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
