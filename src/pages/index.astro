@@ -1,191 +1,79 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const surfaces = [
-  {
-    title: 'Newsletter',
-    href: 'https://newsletter.margintheory.co',
-    body: 'Weekly writing on reading your own machine and finding the money sitting one layer down.',
-    status: 'Live',
-  },
-  {
-    title: 'Series',
-    href: '/series',
-    body: 'Real stories from business owners on what it actually takes to build and run a business.',
-    status: 'Live',
-  },
-  {
-    title: 'CFO Services',
-    href: '/cfo',
-    body: 'The fractional CFO practice, delivered monthly, for owner-operators who want to see further.',
-    status: 'Taking clients',
-  },
-  {
-    title: 'Community',
-    href: '#',
-    body: 'A curated space for operators working the method together. In design.',
-    status: 'Later',
-  },
-];
-
-const proof = [
-  {
-    headline: '$110,000 / month',
-    subhead: 'RDM Hospitality. Don Julio.',
-    body: 'A three-point COGS gap, hiding in inventory counts. Five drivers below where anyone was looking.',
-  },
-  {
-    headline: 'Sleep at night again',
-    subhead: 'Ultimis Engineering. Cash vs. accrual.',
-    body: 'The books said profitable. The cash said something different. We translated the gap into a visible, manageable forecast.',
-  },
-  {
-    headline: 'Past the two-year tap-out',
-    subhead: 'Car wash acquisition. Chemistry gap.',
-    body: 'Outsider buyers tap out because they never learn the machine. Different industry, same hidden margin.',
-  },
-];
 ---
 <BaseLayout
-  title="Margin Theory | A financial operating system for $1M to $20M owner-operators"
-  description="Margin Theory is a media brand and financial operating system for owner-operator businesses doing $1M to $20M. Newsletter, podcast, community, and the fractional CFO practice that proves it works."
+  title="Margin Theory | Jake Erickson"
+  description="Making sense of business and life, and sharing everything in between. Newsletter, podcast, and the fractional CFO practice that proves it works."
 >
   <!-- Hero -->
   <section>
     <div class="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-40">
-      <div class="max-w-4xl">
-        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">Margin Theory</div>
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8">
-          Your business has margin hiding in it.
-          <span class="block text-white/60 mt-4">Most founders never find it.</span>
-        </h1>
-        <p class="text-lg md:text-xl text-white/80 max-w-2xl mb-10 leading-relaxed">
-          A media brand and financial operating system for owner-operator businesses doing $1M to $20M. Newsletter, podcast, community, and the fractional CFO practice that proves it works.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
+      <div class="flex flex-col md:flex-row md:items-center gap-12 md:gap-20">
+        <div class="max-w-xl">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-8">
+            The data is everywhere.
+            <span class="block text-white/60 mt-3">You just haven't connected it yet.</span>
+          </h1>
+          <div class="mb-8">
+            <div class="text-2xl font-bold mb-2">Jake Erickson</div>
+            <p class="text-lg text-white/60">Making sense of business and life, and sharing everything in between.</p>
+          </div>
           <a
             href="https://newsletter.margintheory.co"
             class="inline-flex items-center justify-center px-6 py-3 bg-margin-blue text-white font-semibold rounded-md hover:opacity-90 transition"
           >
             Read the newsletter
           </a>
-          <a
-            href="/cfo"
-            class="inline-flex items-center justify-center px-6 py-3 border border-white/20 text-white font-semibold rounded-md hover:bg-white/5 transition"
-          >
-            Work with the CFO practice
-          </a>
+        </div>
+        <div class="flex-shrink-0">
+          <img
+            src="/Jake.png"
+            alt="Jake Erickson"
+            class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl object-cover border border-white/10"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- The Premise -->
+  <!-- About Jake -->
   <section class="border-t border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <div class="grid md:grid-cols-12 gap-12">
-        <div class="md:col-span-4">
-          <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">The Premise</div>
-          <h2 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
-            The answers are already inside the business.
-          </h2>
+      <div class="max-w-3xl">
+        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">About</div>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-8">Who is Jake Erickson?</h2>
+        <div class="space-y-6 text-lg text-white/80 leading-relaxed">
+          <p>
+            I run a fractional CFO practice for owner-operator businesses doing $1M to $20M. I go 5 to 10 drivers deep into the numbers most people never look at. That's where the six-figure opportunities live.
+          </p>
+          <p>
+            But Margin Theory is bigger than the CFO work. It's the philosophy underneath. Every business and every life is producing data. In your revenue, your habits, your relationships, your decisions. Most people never connect it. I write about what happens when you do.
+          </p>
         </div>
-        <div class="md:col-span-8 space-y-6 text-lg text-white/80 leading-relaxed">
-          <p>
-            Every business that stalls between $1M and $20M got too big to see each detail and run at the same time. The answers are already inside the business, hiding in the data it produces every day.
-          </p>
-          <p>
-            Every transaction, every invoice, every payroll run, every line item is hiding six figures of money <span class="text-white font-semibold">one layer below where anyone is looking</span>.
-          </p>
-          <p class="text-2xl text-white font-semibold pt-2">
-            We call that hidden layer your margin.
-          </p>
-          <p>
-            Most fractional CFOs stop at the surface drivers. Margin Theory traces the money five drivers down to the thing actually moving the number.
-          </p>
-          <p class="text-xl text-white font-semibold pt-2 border-l-2 border-margin-blue pl-6">
-            Most founders leave it on the table. Margin Theory is for the ones who'd rather find it.
-          </p>
+        <div class="flex gap-6 mt-8">
+          <a href="https://linkedin.com/in/jakeerickson" target="_blank" rel="noopener" class="text-sm text-white/50 hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://instagram.com/margintheory" target="_blank" rel="noopener" class="text-sm text-white/50 hover:text-white transition-colors">Instagram</a>
+          <a href="https://youtube.com/@thejakeerickson" target="_blank" rel="noopener" class="text-sm text-white/50 hover:text-white transition-colors">YouTube</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Four Surfaces -->
-  <section class="border-t border-white/10 bg-white/[0.02]">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <div class="mb-12">
-        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">The Surfaces</div>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight max-w-2xl">
-          One philosophy. Four ways to work with it.
-        </h2>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6">
-        {surfaces.map((s) => (
-          <a
-            href={s.href}
-            class="group block p-8 border border-white/10 rounded-xl hover:border-margin-blue transition-colors"
-          >
-            <div class="flex items-start justify-between mb-4">
-              <h3 class="text-2xl font-bold">{s.title}</h3>
-              <span class="text-xs font-semibold text-margin-blue uppercase tracking-wider">{s.status}</span>
-            </div>
-            <p class="text-white/70 leading-relaxed mb-6">{s.body}</p>
-            <span class="inline-flex items-center text-margin-blue text-sm font-semibold">
-              Explore
-              <svg
-                class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Proof -->
-  <section class="border-t border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <div class="mb-12">
-        <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">The Work</div>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight max-w-2xl">
-          The money is always hiding one layer below the operator's current visibility.
-        </h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        {proof.map((p) => (
-          <div class="p-8 border border-white/10 rounded-xl">
-            <div class="text-3xl md:text-4xl font-bold text-margin-blue mb-3">{p.headline}</div>
-            <div class="text-xs text-white/60 uppercase tracking-wider mb-4">{p.subhead}</div>
-            <p class="text-white/80 leading-relaxed">{p.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
+  <!-- Bottom CTA -->
   <section class="border-t border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
       <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-        Find the margin.
-        <span class="block text-margin-blue">Keep the money.</span>
+        The data is everywhere.
+        <span class="block text-margin-blue">Start connecting it.</span>
       </h2>
       <p class="text-xl text-white/70 max-w-2xl mx-auto mb-10">
-        Start with the newsletter. It's free, it's weekly, and it will teach you how to read your own machine.
+        Two emails a month. Business, life, and everything in between.
       </p>
       <a
         href="https://newsletter.margintheory.co"
         class="inline-flex items-center justify-center px-8 py-4 bg-margin-blue text-white text-lg font-semibold rounded-md hover:opacity-90 transition"
       >
-        Get the newsletter
+        Subscribe
       </a>
     </div>
   </section>

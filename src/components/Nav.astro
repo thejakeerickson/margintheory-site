@@ -1,12 +1,10 @@
 ---
 const nav = [
+  { href: 'https://newsletter.margintheory.co', label: 'Newsletter' },
+  { href: '/series', label: 'Podcast' },
   { href: '/about', label: 'About' },
-  { href: 'https://newsletter.margintheory.co', label: 'Writing' },
-  { href: '/series', label: 'Series' },
-  { href: '/cfo', label: 'CFO Services' },
+  { href: '/cfo', label: 'Work With Me' },
 ];
-
-const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
 ---
 <header class="sticky top-0 z-50 bg-charcoal/95 backdrop-blur border-b border-white/5">
   <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -23,21 +21,10 @@ const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
         </a>
       ))}
     </nav>
-    <a
-      href={calendlyUrl}
-      target="_blank"
-      rel="noopener"
-      class="hidden md:inline-flex items-center px-4 py-2 bg-margin-blue text-white text-sm font-semibold rounded-md hover:opacity-90 transition-opacity"
-    >
-      Right Fit Call
-    </a>
   </div>
   <nav class="md:hidden px-6 pb-4 pt-1 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/80">
     {nav.map((item) => (
       <a href={item.href} class="hover:text-white">{item.label}</a>
     ))}
-    <a href={calendlyUrl} target="_blank" rel="noopener" class="text-margin-blue font-semibold">
-      Right Fit Call →
-    </a>
   </nav>
 </header>
