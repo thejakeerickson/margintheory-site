@@ -29,8 +29,13 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="border-t border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-6 text-xs text-white/40 flex flex-col md:flex-row justify-between gap-2">
+    <div class="max-w-6xl mx-auto px-6 py-6 text-xs text-white/40 flex flex-col md:flex-row justify-between gap-2 md:items-center">
       <div>&copy; {year} Margin Theory. Operated by JJE Strategy LLC.</div>
+      <div class="flex items-center gap-3">
+        <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms" class="hover:text-white transition-colors">Terms</a>
+      </div>
       <div>Not investment, tax, or legal advice.</div>
     </div>
   </div>
