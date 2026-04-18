@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Privacy Policy | Margin Theory"
+  description="How Margin Theory collects, uses, and protects information."
+>
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pt-24 pb-12 md:pt-32">
+      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">Legal</div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
+        Privacy Policy
+      </h1>
+      <p class="text-sm text-white/50">Last updated: April 17, 2026</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pb-20">
+      <div class="space-y-8 text-base md:text-lg text-white/80 leading-relaxed">
+        <p>
+          This Privacy Policy describes how Margin Theory ("we," "our," or "us") collects, uses, and protects information when you engage Margin Theory for fractional CFO services or visit margintheory.co.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Who We Are</h2>
+        <p>
+          Margin Theory is a fractional CFO practice operated by Jake Erickson. We provide monthly financial review, forecasting, cash flow planning, and related advisory services to founder-led businesses. Our principal place of business is Austin, Texas.
+        </p>
+        <p>Contact: <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a></p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Information We Collect</h2>
+        <p>When you become a client, we collect:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Contact information (name, business name, email, phone, mailing address)</li>
+          <li>Financial information necessary for CFO services (QuickBooks Online access, general ledger and trial balance data, bank statement summaries, POS reports, management commentary)</li>
+          <li>Communications we exchange during the engagement (emails, meeting transcripts, notes, text messages)</li>
+          <li>Payment information necessary to bill and collect fees</li>
+        </ul>
+        <p>
+          We only collect information necessary to deliver CFO services. We do not use tracking cookies on margintheory.co beyond standard web analytics.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">How We Use Information</h2>
+        <p>We use client information solely to deliver the services contracted for in your engagement agreement. This includes:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Preparing monthly financial reviews, forecasts, and action plans</li>
+          <li>Diagnosing financial issues and identifying opportunities for improvement</li>
+          <li>Coordinating with your bookkeeper, accountant, or other advisors with your permission</li>
+          <li>Communicating with you about your engagement</li>
+          <li>Invoicing and collecting fees</li>
+        </ul>
+        <p>
+          We do not sell client information. We do not share client information with third parties except as described below.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">QuickBooks Online Integration</h2>
+        <p>
+          Margin Theory uses QuickBooks Online APIs to pull trial balance and general ledger data for clients who have authorized Margin Theory as a user on their QBO company. This integration is implemented in an internal tool ("Margin Theory CFO Prep") used solely by Margin Theory staff to prepare client monthly reports. QBO data is never shared outside Margin Theory. We use OAuth 2.0 to access your QBO data and store only the refresh token needed to re-authenticate. You can revoke access at any time through your QuickBooks settings (Apps and subscriptions, My Apps, disconnect Margin Theory CFO Prep).
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">How We Share Information</h2>
+        <p>We share client information only:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>With you and anyone you explicitly designate (bookkeeper, attorney, spouse, business partner)</li>
+          <li>With service providers that help us operate the practice (Google Workspace for email and calendar, Notion for project management, Capsule for CRM, Intuit for QuickBooks data), each of which is under its own confidentiality terms</li>
+          <li>When required by law, subpoena, or court order</li>
+        </ul>
+        <p>
+          We do not share client information with marketing platforms, data brokers, or AI model trainers.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">How We Protect Information</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Client data is stored on encrypted local drives and reputable cloud services</li>
+          <li>Credentials for third-party systems are stored in access-controlled secrets files, never in version control</li>
+          <li>We never email or text passwords</li>
+          <li>Access to client books is limited to Jake Erickson and any explicitly authorized delegates</li>
+        </ul>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Retention</h2>
+        <p>
+          We retain client records for seven years after an engagement ends, consistent with tax and professional record-keeping standards. If you wish to request earlier deletion of non-records information, contact <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a>.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Your Rights</h2>
+        <p>
+          You may request access to, correction of, or deletion of your personal information at any time by contacting <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a>. We will respond within 30 days. If you are in a jurisdiction with specific privacy rights (for example California or the European Union), those rights apply.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Changes</h2>
+        <p>
+          We may update this Privacy Policy from time to time. The "last updated" date at the top reflects the current version. Material changes will be communicated to active clients by email.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Contact</h2>
+        <p>
+          Margin Theory<br>
+          Attn: Jake Erickson<br>
+          <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a><br>
+          Austin, Texas
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
