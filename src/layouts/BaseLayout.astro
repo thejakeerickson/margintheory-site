@@ -6,12 +6,97 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  ogType?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+  extraSchemas?: Record<string, unknown>[];
 }
 
 const {
-  title = 'Margin Theory',
-  description = 'A media brand and financial operating system for owner-operator businesses doing $1M to $20M.',
+  title = 'Margin Theory | Fractional CFO for $1M to $20M Owner-Operators',
+  description = 'Margin Theory is a fractional CFO practice, newsletter, and podcast for owner-operator businesses doing $1M to $20M. Jake Erickson traces the money five drivers down to find the margin hiding in your own business.',
+  image = '/Jake.png',
+  ogType = 'website',
+  noindex = false,
+  extraSchemas = [],
 } = Astro.props;
+
+const SITE_URL = 'https://margintheory.co';
+const canonical = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImageUrl = new URL(image, SITE_URL).toString();
+
+const organizationSchema = {
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Margin Theory',
+  legalName: 'JJE Strategy LLC',
+  url: SITE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/Jake.png`,
+  },
+  image: `${SITE_URL}/Jake.png`,
+  description:
+    'Fractional CFO practice for owner-operator businesses doing $1M to $20M in annual revenue.',
+  email: 'jake@margintheory.co',
+  founder: { '@id': `${SITE_URL}/#jake` },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Austin',
+    addressRegion: 'TX',
+    addressCountry: 'US',
+  },
+  sameAs: [
+    'https://linkedin.com/in/jakeerickson',
+    'https://instagram.com/margintheory',
+    'https://youtube.com/@thejakeerickson',
+  ],
+};
+
+const personSchema = {
+  '@type': 'Person',
+  '@id': `${SITE_URL}/#jake`,
+  name: 'Jake Erickson',
+  url: `${SITE_URL}/about`,
+  image: `${SITE_URL}/Jake.png`,
+  jobTitle: 'Fractional CFO',
+  worksFor: { '@id': `${SITE_URL}/#organization` },
+  sameAs: [
+    'https://linkedin.com/in/jakeerickson',
+    'https://instagram.com/margintheory',
+    'https://youtube.com/@thejakeerickson',
+  ],
+  description:
+    'Fractional CFO for owner-operator businesses doing $1M to $20M. Writes and hosts the Margin Theory newsletter and podcast.',
+};
+
+const websiteSchema = {
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: 'Margin Theory',
+  description,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+  inLanguage: 'en-US',
+};
+
+const webPageSchema = {
+  '@type': 'WebPage',
+  '@id': `${canonical}#webpage`,
+  url: canonical,
+  name: title,
+  description,
+  isPartOf: { '@id': `${SITE_URL}/#website` },
+  about: { '@id': `${SITE_URL}/#organization` },
+  inLanguage: 'en-US',
+};
+
+const baseGraph = [organizationSchema, personSchema, websiteSchema, webPageSchema];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [...baseGraph, ...extraSchemas],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -19,8 +104,19 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#0a0a0a" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta
+        name="robots"
+        content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      />
+    )}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,15 +125,33 @@ const {
       rel="stylesheet"
     />
 
+    <meta property="og:site_name" content="Margin Theory" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://margintheory.co" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="en_US" />
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:creator" content="@thejakeerickson" />
+    <meta name="twitter:site" content="@thejakeerickson" />
+
+    <meta name="author" content="Jake Erickson" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Margin Theory Newsletter"
+      href="https://newsletter.margintheory.co/feed"
+    />
 
     <meta name="generator" content={Astro.generator} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="bg-charcoal text-white font-sans antialiased">
     <Nav />
