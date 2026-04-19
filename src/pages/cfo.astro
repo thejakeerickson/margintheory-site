@@ -1,11 +1,115 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
+const calendlyUrl = 'https://calendly.com/jake-qmqx/strategy-call';
+const SITE_URL = 'https://margintheory.co';
+
+const serviceSchema = {
+  '@type': 'Service',
+  '@id': `${SITE_URL}/cfo#service`,
+  name: 'Fractional CFO Services',
+  serviceType: 'Fractional CFO',
+  provider: { '@id': `${SITE_URL}/#organization` },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  audience: {
+    '@type': 'BusinessAudience',
+    audienceType: 'Owner-operator businesses doing $1M to $20M in annual revenue',
+  },
+  description:
+    'Monthly fractional CFO practice for owner-operator businesses doing $1M to $20M. Includes annual profit and cash targets, rolling budget, KPI dashboard, 12-month rolling cash forecast, monthly working sessions, and a 30-day action plan after every session.',
+  offers: {
+    '@type': 'Offer',
+    price: '3000',
+    priceCurrency: 'USD',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: '3000',
+      priceCurrency: 'USD',
+      unitText: 'MONTH',
+    },
+    availability: 'https://schema.org/InStock',
+    url: calendlyUrl,
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Margin Theory CFO Monthly Deliverables',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Monthly KPI scoreboard' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '30-day action plan' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '12-month rolling cash forecast' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Monthly CFO working session' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Between-session access' } },
+    ],
+  },
+};
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  '@id': `${SITE_URL}/cfo#faq`,
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is a fractional CFO?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A CFO\'s job is to guide a business toward more profit, more cash flow, and better decisions. A fractional CFO does the same thing for businesses that do not need or cannot afford a full-time CFO at $200K+ per year. You get the strategic financial brain without the full-time salary.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Who is Margin Theory for?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Owner-operator businesses doing $1M to $20M in annual revenue. Operators who have the reports but do not know what to do with them, whose growth has not translated to profit, and who are making five- and six-figure decisions alone.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does Margin Theory cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Flat $3,000 per month. No contract, cancel anytime, no setup fee, no hourly billing. Roughly 20% the cost of a full-time CFO.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How is a fractional CFO different from a bookkeeper or a CPA?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Your bookkeeper records what happened. Your CPA files the return. A CFO looks forward with you, builds the forecast, and tells you what to do about the numbers. Margin Theory does the third job, not the first two.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What do the first 30 days look like?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A financial assessment, annual profit and cash targets, a rolling budget, a KPI dashboard tied to the 3 to 5 numbers that move your business, a 12-month rolling cash forecast, and at least 3 dollar-sized opportunities you can act on this quarter.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the guarantee?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'If Margin Theory does not find at least 3 specific ways to improve your profit or cash in the first 90 days, we work the next month free. Client must attend monthly sessions, be transparent about the business, and follow through on commitments.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Where is Margin Theory based?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Austin, Texas. Margin Theory is operated by JJE Strategy LLC. Services are delivered remotely to clients across the United States.',
+      },
+    },
+  ],
+};
 ---
 <BaseLayout
-  title="Margin Theory CFO Services | Fractional CFO for $1M to $20M owner-operators"
-  description="The fractional CFO practice behind Margin Theory. Monthly rhythm for owner-operator businesses doing $1M to $20M. We trace the money five drivers down."
+  title="Fractional CFO Services for $1M to $20M Owner-Operators | Margin Theory"
+  description="Margin Theory is a $3,000/month fractional CFO practice for owner-operator businesses doing $1M to $20M. Monthly KPI scoreboard, 30-day action plans, 12-month rolling cash forecast, and between-session access. Flat fee. No hourly billing."
+  extraSchemas={[serviceSchema, faqSchema]}
 >
   <!-- Hero -->
   <section>
@@ -25,7 +129,7 @@ const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
           rel="noopener"
           class="inline-flex items-center justify-center px-6 py-3 bg-margin-blue text-white font-semibold rounded-md hover:opacity-90 transition"
         >
-          Schedule a Right Fit Call
+          Schedule a Strategy Call
         </a>
       </div>
     </div>
@@ -150,7 +254,7 @@ const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
           rel="noopener"
           class="inline-flex items-center justify-center px-6 py-3 bg-margin-blue text-white font-semibold rounded-md hover:opacity-90 transition"
         >
-          Schedule a Right Fit Call
+          Schedule a Strategy Call
         </a>
       </div>
     </div>
@@ -385,7 +489,80 @@ const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
     </div>
   </section>
 
-  <!-- Right Fit Call -->
+  <!-- FAQ -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-4xl mx-auto px-6 py-20">
+      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-4">FAQ</div>
+      <h2 class="text-4xl font-bold tracking-tight mb-12">Common questions.</h2>
+      <div class="space-y-6">
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">What is a fractional CFO?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>A CFO's job is to guide a business toward more profit, more cash flow, and better decisions. A fractional CFO does the same thing for businesses that do not need or cannot afford a full-time CFO at $200K+ per year. You get the strategic financial brain without the full-time salary.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">Who is Margin Theory for?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>Owner-operator businesses doing $1M to $20M in annual revenue. Operators who have the reports but do not know what to do with them, whose growth has not translated to profit, and who are making five- and six-figure decisions alone.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">How much does Margin Theory cost?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>Flat $3,000 per month. No contract, cancel anytime, no setup fee, no hourly billing. Roughly 20% the cost of a full-time CFO.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">How is a fractional CFO different from a bookkeeper or a CPA?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>Your bookkeeper records what happened. Your CPA files the return. A CFO looks forward with you, builds the forecast, and tells you what to do about the numbers. Margin Theory does the third job, not the first two.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">What do the first 30 days look like?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>A financial assessment, annual profit and cash targets, a rolling budget, a KPI dashboard tied to the 3 to 5 numbers that move your business, a 12-month rolling cash forecast, and at least 3 dollar-sized opportunities you can act on this quarter.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">What is the guarantee?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>If Margin Theory does not find at least 3 specific ways to improve your profit or cash in the first 90 days, we work the next month free. Client must attend monthly sessions, be transparent about the business, and follow through on commitments.</p>
+          </div>
+        </details>
+        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <h3 class="text-lg md:text-xl font-bold pr-6">Where is Margin Theory based?</h3>
+            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div class="mt-4 text-white/80 leading-relaxed">
+            <p>Austin, Texas. Margin Theory is operated by JJE Strategy LLC. Services are delivered remotely to clients across the United States.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strategy Call -->
   <section class="border-t border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-20">
       <div class="max-w-3xl mx-auto text-center">
@@ -394,7 +571,7 @@ const calendlyUrl = 'https://calendly.com/jake-qmqx/right-fit-call';
         <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 py-8 text-left">
           <div class="p-6 border border-white/10 rounded-xl">
             <div class="text-3xl font-bold text-margin-blue mb-3">1</div>
-            <h4 class="font-bold mb-2">Right Fit Call</h4>
+            <h4 class="font-bold mb-2">Strategy Call</h4>
             <p class="text-sm text-white/70">30 minutes. We look at your financials together and identify the 2 to 3 biggest problems.</p>
           </div>
           <div class="p-6 border border-white/10 rounded-xl">
