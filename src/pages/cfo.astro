@@ -17,19 +17,6 @@ const serviceSchema = {
   },
   description:
     'Monthly fractional CFO practice for owner-operator businesses doing $1M to $20M. Includes annual profit and cash targets, rolling budget, KPI dashboard, 12-month rolling cash forecast, monthly working sessions, and a 30-day action plan after every session.',
-  offers: {
-    '@type': 'Offer',
-    price: '3000',
-    priceCurrency: 'USD',
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: '3000',
-      priceCurrency: 'USD',
-      unitText: 'MONTH',
-    },
-    availability: 'https://schema.org/InStock',
-    url: calendlyUrl,
-  },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Margin Theory CFO Monthly Deliverables',
@@ -61,14 +48,6 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Owner-operator businesses doing $1M to $20M in annual revenue. Operators who have the reports but do not know what to do with them, whose growth has not translated to profit, and who are making five- and six-figure decisions alone.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How much does Margin Theory cost?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Flat $3,000 per month. No contract, cancel anytime, no setup fee, no hourly billing. Roughly 20% the cost of a full-time CFO.',
       },
     },
     {
@@ -108,7 +87,7 @@ const faqSchema = {
 ---
 <BaseLayout
   title="Fractional CFO Services for $1M to $20M Owner-Operators | Margin Theory"
-  description="Margin Theory is a $3,000/month fractional CFO practice for owner-operator businesses doing $1M to $20M. Monthly KPI scoreboard, 30-day action plans, 12-month rolling cash forecast, and between-session access. Flat fee. No hourly billing."
+  description="Margin Theory is a fractional CFO practice for owner-operator businesses doing $1M to $20M. Monthly KPI scoreboard, 30-day action plans, 12-month rolling cash forecast, and between-session access. Flat fee. No hourly billing."
   extraSchemas={[serviceSchema, faqSchema]}
 >
   <!-- Hero -->
@@ -415,7 +394,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Pricing -->
+  <!-- Investment -->
   <section class="border-t border-white/10 bg-white/[0.02]">
     <div class="max-w-6xl mx-auto px-6 py-20">
       <div class="max-w-3xl mx-auto text-center">
@@ -425,14 +404,25 @@ const faqSchema = {
           Get long-range visibility into cash, 5 to 15 points of margin improvement across pricing, costs, and revenue, and a partner that pressure-tests every major move before you make it. All without adding headcount.
         </p>
         <div class="p-10 border border-margin-blue/30 rounded-2xl bg-margin-blue/[0.03] mb-8">
-          <div class="text-5xl md:text-6xl font-bold text-margin-blue mb-2">$3,000</div>
-          <div class="text-xl text-white/60 mb-6">per month</div>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center text-white/70 text-sm mb-8">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center text-white/70 text-sm mb-6">
+            <span class="flex items-center gap-2"><span class="text-margin-blue">+</span> Flat monthly fee</span>
             <span class="flex items-center gap-2"><span class="text-margin-blue">+</span> No contract</span>
             <span class="flex items-center gap-2"><span class="text-margin-blue">+</span> Cancel anytime</span>
             <span class="flex items-center gap-2"><span class="text-margin-blue">+</span> No setup fee</span>
           </div>
-          <p class="text-white/50 text-sm">20% the cost of a full-time CFO.</p>
+          <p class="text-white/60 text-base leading-relaxed">
+            A fraction of the cost of a full-time CFO. We will walk through pricing on the Strategy Call.
+          </p>
+          <div class="mt-6">
+            <a
+              href={calendlyUrl}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center justify-center px-6 py-3 bg-margin-blue text-white font-semibold rounded-md hover:opacity-90 transition"
+            >
+              Schedule a Strategy Call
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -511,15 +501,6 @@ const faqSchema = {
           </summary>
           <div class="mt-4 text-white/80 leading-relaxed">
             <p>Owner-operator businesses doing $1M to $20M in annual revenue. Operators who have the reports but do not know what to do with them, whose growth has not translated to profit, and who are making five- and six-figure decisions alone.</p>
-          </div>
-        </details>
-        <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
-          <summary class="flex justify-between items-center cursor-pointer list-none">
-            <h3 class="text-lg md:text-xl font-bold pr-6">How much does Margin Theory cost?</h3>
-            <span class="text-margin-blue text-2xl leading-none transition-transform group-open:rotate-45">+</span>
-          </summary>
-          <div class="mt-4 text-white/80 leading-relaxed">
-            <p>Flat $3,000 per month. No contract, cancel anytime, no setup fee, no hourly billing. Roughly 20% the cost of a full-time CFO.</p>
           </div>
         </details>
         <details class="group border border-white/10 rounded-xl p-6 open:bg-white/[0.03]">
