@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const calendlyUrl = 'https://calendly.com/jake-qmqx/strategy-call';
+const loomEmbedUrl = 'https://www.loom.com/embed/PLACEHOLDER_VIDEO_ID';
+const contactEmail = 'jake@margintheory.co';
+const SITE_URL = 'https://margintheory.co';
+
+const serviceSchema = {
+  '@type': 'Service',
+  '@id': `${SITE_URL}/grow#service`,
+  name: 'Margin Theory Fractional CFO Engagement',
+  serviceType: 'Fractional CFO',
+  provider: { '@id': `${SITE_URL}/#organization` },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  audience: {
+    '@type': 'BusinessAudience',
+    audienceType: 'Small business owners doing $1M+ in annual revenue',
+  },
+  description:
+    'Embedded fractional CFO engagement for small business owners. $3,500/month, a fraction of what a full-time CFO costs.',
+  offers: {
+    '@type': 'Offer',
+    price: '3500',
+    priceCurrency: 'USD',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: '3500',
+      priceCurrency: 'USD',
+      unitText: 'MONTH',
+    },
+  },
+};
+---
+<BaseLayout
+  title="How Margin Theory works | 5-min look"
+  description="A 5-minute look at how Margin Theory works as your embedded financial operator. $3,500/month, a fraction of what a full-time CFO costs."
+  extraSchemas={[serviceSchema]}
+>
+  <!-- Video -->
+  <section>
+    <div class="max-w-4xl mx-auto px-6 pt-20 pb-8 md:pt-28">
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight text-center mb-8 text-white/90">
+        How this actually works. <span class="text-margin-blue">In 5 minutes.</span>
+      </h1>
+
+      {loomEmbedUrl.includes('PLACEHOLDER') ? (
+        <div class="aspect-video w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-white/[0.03] flex items-center justify-center">
+          <div class="text-center px-6">
+            <div class="text-margin-blue text-5xl mb-4">▶</div>
+            <p class="text-white/70 text-lg font-medium">5-minute video goes here</p>
+            <p class="text-white/40 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
+          </div>
+        </div>
+      ) : (
+        <div class="aspect-video w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+          <iframe
+            src={loomEmbedUrl}
+            frameborder="0"
+            webkitallowfullscreen
+            mozallowfullscreen
+            allowfullscreen
+            class="w-full h-full"
+            title="How Margin Theory works"
+          ></iframe>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA Button -->
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pt-4 pb-12 text-center">
+      <a
+        href={calendlyUrl}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center px-10 py-5 bg-margin-blue text-white text-xl font-bold rounded-md hover:opacity-90 transition shadow-lg"
+      >
+        Book Your Strategy Call
+      </a>
+    </div>
+  </section>
+
+  <!-- How to Book -->
+  <section class="border-t border-white/10 bg-white/[0.02]">
+    <div class="max-w-3xl mx-auto px-6 py-16">
+      <h2 class="text-xl md:text-2xl font-semibold mb-8 text-white/90">Here's exactly what happens after you click:</h2>
+
+      <ol class="space-y-5 text-white/85">
+        <li class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-margin-blue text-white font-bold flex items-center justify-center">1</span>
+          <p class="text-lg leading-relaxed pt-0.5">The button takes you to my calendar. Pick any 30-minute slot that works for you.</p>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-margin-blue text-white font-bold flex items-center justify-center">2</span>
+          <p class="text-lg leading-relaxed pt-0.5">You get a confirmation email with a Zoom link. No prep needed. No forms to fill out.</p>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-margin-blue text-white font-bold flex items-center justify-center">3</span>
+          <p class="text-lg leading-relaxed pt-0.5">We hop on Zoom. 30-minute conversation about your business. What you are trying to grow, what is getting in the way, what the numbers say.</p>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-margin-blue text-white font-bold flex items-center justify-center">4</span>
+          <p class="text-lg leading-relaxed pt-0.5">If it is a fit, I lay out exactly how I would dig in. If not, you walk away with a sharper view than you came in with.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Got a Question -->
+  <section class="border-t border-white/10">
+    <div class="max-w-3xl mx-auto px-6 py-16 text-center">
+      <p class="text-lg text-white/80 mb-3">Got a question about your specific situation before booking?</p>
+      <p class="text-lg text-white/90">
+        Email me directly: <a href={`mailto:${contactEmail}`} class="text-margin-blue font-semibold hover:underline">{contactEmail}</a>
+      </p>
+      <p class="text-sm text-white/60 mt-2">I read every one. Usually reply within a day.</p>
+    </div>
+  </section>
+</BaseLayout>
