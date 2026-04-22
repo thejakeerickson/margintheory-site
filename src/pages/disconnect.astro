@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Disconnected | Margin Theory"
+  description="Your QuickBooks Online account has been disconnected from Margin Theory."
+>
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pt-24 pb-12 md:pt-32">
+      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">QuickBooks Integration</div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
+        You've Disconnected QuickBooks
+      </h1>
+      <p class="text-lg text-white/70">
+        Margin Theory no longer has access to your QuickBooks Online data.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pb-20">
+      <div class="space-y-8 text-base md:text-lg text-white/80 leading-relaxed">
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">What Happened</h2>
+        <p>
+          You disconnected Margin Theory from your QuickBooks Online company. Margin Theory's authorization token has been revoked and we can no longer pull new trial balance or general ledger data from your books.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">What This Means</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Existing reports and workbooks we've already prepared for you are unaffected.</li>
+          <li>We cannot prepare new monthly reviews until you reconnect.</li>
+          <li>Historical data we've already stored (past trial balances, reports, and notes) is retained per our <a href="/privacy" class="text-margin-blue hover:underline">Privacy Policy</a>.</li>
+        </ul>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">If This Was a Mistake</h2>
+        <p>
+          You can reconnect at any time. Email <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a> for a fresh connection link, or visit our <a href="/connect" class="text-margin-blue hover:underline">connect page</a>.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Requesting Deletion</h2>
+        <p>
+          If you want the historical data we've stored to be deleted, email <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a>. We'll confirm the scope of deletion and process the request within 30 days, consistent with our <a href="/privacy" class="text-margin-blue hover:underline">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

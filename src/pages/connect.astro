@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Connect QuickBooks | Margin Theory"
+  description="Authorize Margin Theory to access your QuickBooks Online company for fractional CFO services."
+>
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pt-24 pb-12 md:pt-32">
+      <div class="text-xs uppercase tracking-widest text-margin-blue font-semibold mb-6">Client Onboarding</div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
+        Connect Your QuickBooks Online
+      </h1>
+      <p class="text-lg text-white/70">
+        Grant Margin Theory read access to your QuickBooks Online company so we can prepare your monthly financial review.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="max-w-3xl mx-auto px-6 pb-20">
+      <div class="space-y-8 text-base md:text-lg text-white/80 leading-relaxed">
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">What This Does</h2>
+        <p>
+          Margin Theory uses QuickBooks Online's secure OAuth 2.0 flow to pull the trial balance and general ledger data needed to prepare your monthly CFO report. No passwords are stored and no write access is granted. You can revoke access at any time from your QuickBooks settings.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">How to Connect</h2>
+        <p>
+          Margin Theory issues each client a personalized connection link. If you're an active Margin Theory client and haven't received your link yet, or if you need a new one, email <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a>.
+        </p>
+        <p>
+          When you click your connection link, Intuit will ask you to sign in to QuickBooks and confirm authorization. After you approve, you'll be returned here and Margin Theory will be able to read your books for the duration of your engagement.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">What We Access</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Chart of accounts and account balances</li>
+          <li>Trial balance by period</li>
+          <li>General ledger transaction detail</li>
+          <li>Profit and loss, balance sheet, and cash flow reports</li>
+        </ul>
+        <p>
+          We do not access payroll detail, employee records, or customer payment credentials unless explicitly needed and separately agreed.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">How to Disconnect</h2>
+        <p>
+          At any time, you can revoke Margin Theory's access from QuickBooks Online: <strong>Settings → Apps and subscriptions → My Apps → Margin Theory CFO Prep → Disconnect</strong>. See also <a href="/disconnect" class="text-margin-blue hover:underline">our disconnect page</a>.
+        </p>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-white pt-6">Questions</h2>
+        <p>
+          Email <a href="mailto:jake@margintheory.co" class="text-margin-blue hover:underline">jake@margintheory.co</a>. Our full data practices are described in our <a href="/privacy" class="text-margin-blue hover:underline">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
