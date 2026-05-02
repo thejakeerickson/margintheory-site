@@ -12,6 +12,11 @@
   --color-margin-navy-soft: #16243B;
   --color-margin-stone: #1F1B17;
   --color-margin-stone-soft: #2A2520;
+  /* Option B — cream + ink + oxblood editorial palette (conversion pages) */
+  --color-margin-cream: #EDE5D7;
+  --color-margin-cream-light: #F5EFE6;
+  --color-margin-ink: #1A1612;
+  --color-margin-oxblood: #9C2A1A;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
