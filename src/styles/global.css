@@ -17,6 +17,13 @@
   --color-margin-cream-light: #F5EFE6;
   --color-margin-ink: #1A1612;
   --color-margin-oxblood: #9C2A1A;
+  /* Option A — Hampton system (deep teal-black + warm off-white + clay) */
+  --color-hampton-bg: #F1F2EF;
+  --color-hampton-dark: #031B1D;
+  --color-hampton-text: #032528;
+  --color-hampton-clay: #D1BFAE;
+  --color-hampton-tan: #C7A98D;
+  --color-hampton-khaki: #B39E8A;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
