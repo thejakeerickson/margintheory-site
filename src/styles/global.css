@@ -24,6 +24,10 @@
   --color-hampton-clay: #D1BFAE;
   --color-hampton-tan: #C7A98D;
   --color-hampton-khaki: #B39E8A;
+  /* Margin Coral — conversion-page accent (Anthropic's #D97757). Replaces gold per 2026 research. */
+  --color-margin-coral: #D97757;
+  --color-margin-coral-deep: #C6613F;
+  --color-warm-cream: #F5F1EA;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
