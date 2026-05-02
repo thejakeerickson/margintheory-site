@@ -10,6 +10,9 @@ interface Props {
   ogType?: 'website' | 'article' | 'profile';
   noindex?: boolean;
   extraSchemas?: Record<string, unknown>[];
+  noNav?: boolean;
+  lightTheme?: boolean;
+  minimalFooter?: boolean;
 }
 
 const {
@@ -19,7 +22,12 @@ const {
   ogType = 'website',
   noindex = false,
   extraSchemas = [],
+  noNav = false,
+  lightTheme = false,
+  minimalFooter = false,
 } = Astro.props;
+
+const year = new Date().getFullYear();
 
 const SITE_URL = 'https://margintheory.co';
 const canonical = new URL(Astro.url.pathname, SITE_URL).toString();
@@ -121,7 +129,7 @@ const jsonLd = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -153,11 +161,25 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class="bg-charcoal text-white font-sans antialiased">
-    <Nav />
+  <body class={`${lightTheme ? 'bg-soft-gray text-charcoal' : 'bg-charcoal text-white'} font-sans antialiased`}>
+    {!noNav && <Nav />}
     <main>
       <slot />
     </main>
-    <Footer />
+    {minimalFooter ? (
+      <footer class={`border-t ${lightTheme ? 'border-charcoal/10' : 'border-white/10'} mt-16`}>
+        <div class={`max-w-3xl mx-auto px-6 py-6 text-xs flex flex-col md:flex-row justify-between gap-2 md:items-center ${lightTheme ? 'text-charcoal/60' : 'text-white/40'}`}>
+          <div>&copy; {year} Margin Theory. Operated by JJE Strategy LLC.</div>
+          <div class="flex items-center gap-3">
+            <a href="/privacy" class={`${lightTheme ? 'hover:text-charcoal' : 'hover:text-white'} transition-colors`}>Privacy</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms" class={`${lightTheme ? 'hover:text-charcoal' : 'hover:text-white'} transition-colors`}>Terms</a>
+          </div>
+          <div>Not investment, tax, or legal advice.</div>
+        </div>
+      </footer>
+    ) : (
+      <Footer />
+    )}
   </body>
 </html>
