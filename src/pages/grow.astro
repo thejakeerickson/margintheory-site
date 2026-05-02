@@ -31,28 +31,28 @@ const serviceSchema = {
 >
   <!-- Logo bar — minimal brand presence, no nav -->
   <div class="max-w-3xl mx-auto px-6 pt-8">
-    <a href="/" class="font-bold text-lg tracking-tight text-hampton-text">
+    <a href="/" class="font-bold text-lg tracking-tight text-white">
       Margin Theory
     </a>
   </div>
 
-  <!-- Headline + Video (Hampton off-white section) -->
+  <!-- Headline + Video (charcoal section, dominant — brand kit "When in doubt, go darker") -->
   <section>
     <div class="max-w-3xl mx-auto px-6 pt-10 pb-6 md:pt-14">
-      <h1 class="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-center mb-8 text-hampton-text leading-[1.15]">
-        If you're doing $500K to $20M and making <span class="italic text-hampton-tan">big calls alone</span>, watch this.
+      <h1 class="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-center mb-8 text-white leading-[1.15]">
+        If you're doing $500K to $20M and making <span class="italic text-margin-gold">big calls alone</span>, watch this.
       </h1>
 
       {loomEmbedUrl.includes('PLACEHOLDER') ? (
-        <div class="aspect-video w-full overflow-hidden border border-hampton-text/15 shadow-md bg-hampton-text/5 flex items-center justify-center">
+        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl bg-white/[0.03] flex items-center justify-center">
           <div class="text-center px-6">
-            <div class="text-hampton-tan text-5xl mb-4">▶</div>
-            <p class="text-hampton-text/70 text-lg font-medium">5-minute video goes here</p>
-            <p class="text-hampton-text/50 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
+            <div class="text-margin-gold text-5xl mb-4">▶</div>
+            <p class="text-white/70 text-lg font-medium">5-minute video goes here</p>
+            <p class="text-white/40 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
           </div>
         </div>
       ) : (
-        <div class="aspect-video w-full overflow-hidden border border-hampton-text/15 shadow-md">
+        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl">
           <iframe
             src={loomEmbedUrl}
             frameborder="0"
@@ -67,68 +67,68 @@ const serviceSchema = {
     </div>
   </section>
 
-  <!-- CTA Button (Hampton off-white section, deep teal-black CTA) -->
+  <!-- CTA Button (charcoal section, gold CTA) -->
   <section>
     <div class="max-w-3xl mx-auto px-6 pt-2 pb-12 text-center">
       <a
         href={calendlyUrl}
         target="_blank"
         rel="noopener"
-        class="inline-flex items-center justify-center px-10 py-5 bg-hampton-dark text-hampton-bg text-xl font-bold rounded-sm hover:opacity-90 transition shadow-md border-2 border-hampton-tan"
+        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-lg"
       >
         Get on my calendar. It's free.
       </a>
     </div>
   </section>
 
-  <!-- What happens after you click — INVERTED dark teal-black section -->
-  <section class="bg-hampton-dark text-hampton-bg">
+  <!-- What happens after you click — INVERTED light section (soft gray + charcoal text) -->
+  <section class="bg-soft-gray text-charcoal">
     <div class="max-w-3xl mx-auto px-6 py-14 md:py-16">
-      <h2 class="font-serif text-2xl md:text-3xl font-semibold mb-8 text-hampton-khaki">What happens after you click:</h2>
+      <h2 class="font-serif text-2xl md:text-3xl font-semibold mb-8 text-charcoal">What happens after you click:</h2>
 
-      <ol class="space-y-5 text-hampton-bg">
+      <ol class="space-y-5 text-charcoal">
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-hampton-clay text-hampton-dark font-bold flex items-center justify-center">1</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-margin-gold font-bold flex items-center justify-center">1</span>
           <p class="text-lg leading-relaxed pt-0.5">Pick a time on my calendar. We hop on Zoom for 30 minutes.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-hampton-clay text-hampton-dark font-bold flex items-center justify-center">2</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-margin-gold font-bold flex items-center justify-center">2</span>
           <p class="text-lg leading-relaxed pt-0.5">We talk about your business. What you're navigating right now. I ask questions and listen.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-hampton-clay text-hampton-dark font-bold flex items-center justify-center">3</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-margin-gold font-bold flex items-center justify-center">3</span>
           <p class="text-lg leading-relaxed pt-0.5">By the time we're done, you'll have a clearer read on your situation.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-hampton-clay text-hampton-dark font-bold flex items-center justify-center">4</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-margin-gold font-bold flex items-center justify-center">4</span>
           <p class="text-lg leading-relaxed pt-0.5">If there's something worth looking into, I'll show you exactly how I'd approach it.</p>
         </li>
       </ol>
     </div>
   </section>
 
-  <!-- Repeat CTA — back to off-white -->
+  <!-- Repeat CTA — back to charcoal -->
   <section>
     <div class="max-w-3xl mx-auto px-6 pt-12 pb-12 text-center">
       <a
         href={calendlyUrl}
         target="_blank"
         rel="noopener"
-        class="inline-flex items-center justify-center px-10 py-5 bg-hampton-dark text-hampton-bg text-xl font-bold rounded-sm hover:opacity-90 transition shadow-md border-2 border-hampton-tan"
+        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-lg"
       >
         Get on my calendar. It's free.
       </a>
     </div>
   </section>
 
-  <!-- Got a Question — off-white with border separation -->
-  <section class="border-t border-hampton-text/10">
+  <!-- Got a Question — charcoal with subtle border -->
+  <section class="border-t border-white/10">
     <div class="max-w-3xl mx-auto px-6 py-12 text-center">
-      <p class="text-lg text-hampton-text/85 mb-3">Got a question about your specific situation before booking?</p>
-      <p class="text-lg text-hampton-text">
-        Email me directly: <a href={`mailto:${contactEmail}`} class="text-hampton-tan font-semibold hover:underline">{contactEmail}</a>
+      <p class="text-lg text-white/85 mb-3">Got a question about your specific situation before booking?</p>
+      <p class="text-lg text-white">
+        Email me directly: <a href={`mailto:${contactEmail}`} class="text-margin-gold font-semibold hover:underline">{contactEmail}</a>
       </p>
-      <p class="text-sm text-hampton-text/60 mt-2">I read every one. Usually reply within a day.</p>
+      <p class="text-sm text-white/60 mt-2">I read every one. Usually reply within a day.</p>
     </div>
   </section>
 </BaseLayout>
