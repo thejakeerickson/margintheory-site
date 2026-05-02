@@ -161,19 +161,19 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class={`${conversionPage ? 'bg-margin-stone text-white' : 'bg-charcoal text-white'} font-sans antialiased`}>
+  <body class={`${conversionPage ? 'bg-margin-cream text-margin-ink' : 'bg-charcoal text-white'} font-sans antialiased`}>
     {!noNav && <Nav />}
     <main>
       <slot />
     </main>
     {minimalFooter ? (
-      <footer class="border-t border-white/10 mt-16">
-        <div class="max-w-3xl mx-auto px-6 py-6 text-xs flex flex-col md:flex-row justify-between gap-2 md:items-center text-white/50">
+      <footer class={`border-t ${conversionPage ? 'border-margin-ink/15' : 'border-white/10'} mt-16`}>
+        <div class={`max-w-3xl mx-auto px-6 py-6 text-xs flex flex-col md:flex-row justify-between gap-2 md:items-center ${conversionPage ? 'text-margin-ink/60' : 'text-white/50'}`}>
           <div>&copy; {year} Margin Theory. Operated by JJE Strategy LLC.</div>
           <div class="flex items-center gap-3">
-            <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
+            <a href="/privacy" class={`${conversionPage ? 'hover:text-margin-ink' : 'hover:text-white'} transition-colors`}>Privacy</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms" class="hover:text-white transition-colors">Terms</a>
+            <a href="/terms" class={`${conversionPage ? 'hover:text-margin-ink' : 'hover:text-white'} transition-colors`}>Terms</a>
           </div>
           <div>Not investment, tax, or legal advice.</div>
         </div>
