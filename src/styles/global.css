@@ -3,33 +3,12 @@
 @theme {
   /* Margin Theory brand colors (from brand_kit.md) */
   --color-charcoal: #1E1E1E;
+  --color-brand-blue: #3271D2;
   --color-margin-blue: #1E90FF;
   --color-deep-blue: #1D4ED8;
   --color-soft-gray: #F5F5F5;
   --color-mid-gray: #6B7280;
   --color-margin-gold: #F4A93C;
-  --color-margin-navy: #0F1A2B;
-  --color-margin-navy-soft: #16243B;
-  --color-margin-stone: #1F1B17;
-  --color-margin-stone-soft: #2A2520;
-  /* Option B — cream + ink + oxblood editorial palette (conversion pages) */
-  --color-margin-cream: #EDE5D7;
-  --color-margin-cream-light: #F5EFE6;
-  --color-margin-ink: #1A1612;
-  --color-margin-oxblood: #9C2A1A;
-  /* Option A — Hampton system (deep teal-black + warm off-white + clay) */
-  --color-hampton-bg: #F1F2EF;
-  --color-hampton-dark: #031B1D;
-  --color-hampton-text: #032528;
-  --color-hampton-clay: #D1BFAE;
-  --color-hampton-tan: #C7A98D;
-  --color-hampton-khaki: #B39E8A;
-  /* Margin Coral — conversion-page accent (Anthropic's #D97757). Tested but Jake didn't like — kept for archival. */
-  --color-margin-coral: #D97757;
-  --color-margin-coral-deep: #C6613F;
-  --color-warm-cream: #F5F1EA;
-  /* Brand Blue per brand_kit.md — canonical Margin Theory accent (replaces #1E90FF margin-blue which was off-brand) */
-  --color-brand-blue: #3271D2;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
