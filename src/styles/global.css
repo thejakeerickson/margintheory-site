@@ -10,6 +10,8 @@
   --color-margin-gold: #F4A93C;
   --color-margin-navy: #0F1A2B;
   --color-margin-navy-soft: #16243B;
+  --color-margin-stone: #1F1B17;
+  --color-margin-stone-soft: #2A2520;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
