@@ -11,7 +11,7 @@ interface Props {
   noindex?: boolean;
   extraSchemas?: Record<string, unknown>[];
   noNav?: boolean;
-  lightTheme?: boolean;
+  conversionPage?: boolean;
   minimalFooter?: boolean;
 }
 
@@ -23,7 +23,7 @@ const {
   noindex = false,
   extraSchemas = [],
   noNav = false,
-  lightTheme = false,
+  conversionPage = false,
   minimalFooter = false,
 } = Astro.props;
 
@@ -161,19 +161,19 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class={`${lightTheme ? 'bg-soft-gray text-charcoal' : 'bg-charcoal text-white'} font-sans antialiased`}>
+  <body class={`${conversionPage ? 'bg-margin-navy text-white' : 'bg-charcoal text-white'} font-sans antialiased`}>
     {!noNav && <Nav />}
     <main>
       <slot />
     </main>
     {minimalFooter ? (
-      <footer class={`border-t ${lightTheme ? 'border-charcoal/10' : 'border-white/10'} mt-16`}>
-        <div class={`max-w-3xl mx-auto px-6 py-6 text-xs flex flex-col md:flex-row justify-between gap-2 md:items-center ${lightTheme ? 'text-charcoal/60' : 'text-white/40'}`}>
+      <footer class="border-t border-white/10 mt-16">
+        <div class="max-w-3xl mx-auto px-6 py-6 text-xs flex flex-col md:flex-row justify-between gap-2 md:items-center text-white/50">
           <div>&copy; {year} Margin Theory. Operated by JJE Strategy LLC.</div>
           <div class="flex items-center gap-3">
-            <a href="/privacy" class={`${lightTheme ? 'hover:text-charcoal' : 'hover:text-white'} transition-colors`}>Privacy</a>
+            <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms" class={`${lightTheme ? 'hover:text-charcoal' : 'hover:text-white'} transition-colors`}>Terms</a>
+            <a href="/terms" class="hover:text-white transition-colors">Terms</a>
           </div>
           <div>Not investment, tax, or legal advice.</div>
         </div>

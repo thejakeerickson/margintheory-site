@@ -26,12 +26,12 @@ const serviceSchema = {
   description="A short video on how Margin Theory works as the embedded financial operator for owner-operator businesses doing $500K to $20M."
   extraSchemas={[serviceSchema]}
   noNav={true}
-  lightTheme={true}
+  conversionPage={true}
   minimalFooter={true}
 >
   <!-- Logo bar — minimal brand presence, no nav -->
   <div class="max-w-3xl mx-auto px-6 pt-8">
-    <a href="/" class="font-bold text-lg tracking-tight text-charcoal">
+    <a href="/" class="font-bold text-lg tracking-tight text-white">
       Margin Theory
     </a>
   </div>
@@ -39,20 +39,20 @@ const serviceSchema = {
   <!-- Headline + Video -->
   <section>
     <div class="max-w-3xl mx-auto px-6 pt-10 pb-6 md:pt-14">
-      <h1 class="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-center mb-8 text-charcoal leading-[1.15]">
+      <h1 class="font-serif text-3xl md:text-5xl font-semibold tracking-tight text-center mb-8 text-white leading-[1.15]">
         If you're doing $500K to $20M and making <span class="italic text-margin-gold">big calls alone</span>, watch this.
       </h1>
 
       {loomEmbedUrl.includes('PLACEHOLDER') ? (
-        <div class="aspect-video w-full overflow-hidden border border-charcoal/15 shadow-md bg-charcoal/5 flex items-center justify-center">
+        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl bg-white/[0.03] flex items-center justify-center">
           <div class="text-center px-6">
             <div class="text-margin-gold text-5xl mb-4">▶</div>
-            <p class="text-charcoal/70 text-lg font-medium">5-minute video goes here</p>
-            <p class="text-charcoal/50 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
+            <p class="text-white/70 text-lg font-medium">5-minute video goes here</p>
+            <p class="text-white/40 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
           </div>
         </div>
       ) : (
-        <div class="aspect-video w-full overflow-hidden border border-charcoal/15 shadow-md">
+        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl">
           <iframe
             src={loomEmbedUrl}
             frameborder="0"
@@ -74,7 +74,7 @@ const serviceSchema = {
         href={calendlyUrl}
         target="_blank"
         rel="noopener"
-        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-md border-2 border-charcoal/10"
+        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-lg"
       >
         Get on my calendar. It's free.
       </a>
@@ -82,39 +82,39 @@ const serviceSchema = {
   </section>
 
   <!-- What happens after you click -->
-  <section class="border-t border-charcoal/10 bg-white">
+  <section class="border-t border-white/10 bg-margin-navy-soft">
     <div class="max-w-3xl mx-auto px-6 py-12 md:py-14">
-      <h2 class="font-serif text-2xl md:text-3xl font-semibold mb-8 text-charcoal">What happens after you click:</h2>
+      <h2 class="font-serif text-2xl md:text-3xl font-semibold mb-8 text-white">What happens after you click:</h2>
 
-      <ol class="space-y-5 text-charcoal">
+      <ol class="space-y-5 text-white">
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-white font-bold flex items-center justify-center">1</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-margin-gold text-charcoal font-bold flex items-center justify-center">1</span>
           <p class="text-lg leading-relaxed pt-0.5">Pick a time on my calendar. We hop on Zoom for 30 minutes.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-white font-bold flex items-center justify-center">2</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-margin-gold text-charcoal font-bold flex items-center justify-center">2</span>
           <p class="text-lg leading-relaxed pt-0.5">We talk about your business. What you're navigating right now. I ask questions and listen.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-white font-bold flex items-center justify-center">3</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-margin-gold text-charcoal font-bold flex items-center justify-center">3</span>
           <p class="text-lg leading-relaxed pt-0.5">By the time we're done, you'll have a clearer read on your situation.</p>
         </li>
         <li class="flex gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-charcoal text-white font-bold flex items-center justify-center">4</span>
+          <span class="flex-shrink-0 w-8 h-8 rounded-sm bg-margin-gold text-charcoal font-bold flex items-center justify-center">4</span>
           <p class="text-lg leading-relaxed pt-0.5">If there's something worth looking into, I'll show you exactly how I'd approach it.</p>
         </li>
       </ol>
     </div>
   </section>
 
-  <!-- Repeat CTA — high-converting pages repeat the CTA 5-7 times. This is repeat #2 -->
-  <section class="border-t border-charcoal/10">
+  <!-- Repeat CTA -->
+  <section class="border-t border-white/10">
     <div class="max-w-3xl mx-auto px-6 pt-10 pb-10 text-center">
       <a
         href={calendlyUrl}
         target="_blank"
         rel="noopener"
-        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-md border-2 border-charcoal/10"
+        class="inline-flex items-center justify-center px-10 py-5 bg-margin-gold text-charcoal text-xl font-bold rounded-sm hover:opacity-90 transition shadow-lg"
       >
         Get on my calendar. It's free.
       </a>
@@ -122,13 +122,13 @@ const serviceSchema = {
   </section>
 
   <!-- Got a Question -->
-  <section class="border-t border-charcoal/10 bg-white">
+  <section class="border-t border-white/10 bg-margin-navy-soft">
     <div class="max-w-3xl mx-auto px-6 py-12 text-center">
-      <p class="text-lg text-charcoal/85 mb-3">Got a question about your specific situation before booking?</p>
-      <p class="text-lg text-charcoal">
+      <p class="text-lg text-white/85 mb-3">Got a question about your specific situation before booking?</p>
+      <p class="text-lg text-white">
         Email me directly: <a href={`mailto:${contactEmail}`} class="text-margin-gold font-semibold hover:underline">{contactEmail}</a>
       </p>
-      <p class="text-sm text-charcoal/60 mt-2">I read every one. Usually reply within a day.</p>
+      <p class="text-sm text-white/60 mt-2">I read every one. Usually reply within a day.</p>
     </div>
   </section>
 </BaseLayout>
