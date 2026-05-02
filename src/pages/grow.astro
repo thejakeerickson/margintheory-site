@@ -95,12 +95,15 @@ const serviceSchema = {
 
         <!-- Card 1: Dan — video left, quote+name right (desktop); stacked (mobile). No external link — video is the engagement. -->
         <div class="border border-white/15 bg-white/[0.02] grid md:grid-cols-2">
-          <div class="bg-black flex items-center justify-center">
+          <div class="bg-black md:flex md:items-center md:justify-center">
             <video
               src="/dan-testimonial.mp4"
+              poster="/dan-testimonial-poster.jpg"
               controls
               preload="metadata"
               playsinline
+              webkit-playsinline
+              controlsList="nodownload"
               class="block w-full h-auto md:w-auto md:max-h-[560px] md:mx-auto"
             ></video>
           </div>
