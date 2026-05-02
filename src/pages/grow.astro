@@ -81,6 +81,23 @@ const serviceSchema = {
     </div>
   </section>
 
+  <!-- Does this apply to your business? — charcoal, between video CTA and inverted section -->
+  <section class="border-t border-white/10">
+    <div class="max-w-3xl mx-auto px-6 py-14 md:py-16">
+      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-white text-center">
+        Does this apply to your business?
+      </h2>
+      <p class="text-2xl text-brand-blue font-semibold mb-8 text-center">
+        Yes. The vertical doesn't matter.
+      </p>
+      <div class="space-y-4 text-lg text-white/85 leading-relaxed">
+        <p>Every owner doing $500K to $20M is making the same calls. Hire. Price. Invest in a project. Or figure out whether to expand.</p>
+        <p>The math underneath it is the same whether you're running a <span class="text-white font-bold">service</span>, selling a <span class="text-white font-bold">product</span>, or in the <span class="text-white font-bold">trades</span>.</p>
+        <p class="text-white font-semibold">That's where I work.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- What happens after you click — INVERTED soft-gray section (cool gray pairs with cool blue accent) -->
   <section class="bg-soft-gray text-charcoal">
     <div class="max-w-3xl mx-auto px-6 py-14 md:py-16">
@@ -104,6 +121,70 @@ const serviceSchema = {
           <p class="text-lg leading-relaxed pt-0.5">If there's something worth looking into, I'll show you exactly how I'd approach it.</p>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- Testimonials — From Owner-Operators (3 cards: Dan video + Restaurant Skool screenshot + Mark Google review) -->
+  <section class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-14 md:py-16">
+      <h2 class="text-2xl md:text-3xl font-semibold mb-10 text-white text-center">
+        From Owner-Operators
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Card 1: Dan — video testimonial -->
+        <div class="border border-white/15 bg-white/[0.02] flex flex-col">
+          <div class="aspect-[3/4] bg-black flex items-center justify-center">
+            <video
+              src="/dan-testimonial.mp4"
+              controls
+              preload="metadata"
+              playsinline
+              class="w-full h-full object-cover"
+            ></video>
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <p class="text-white/90 text-base leading-relaxed mb-4 italic">
+              "He's been able to help me understand things that I had no idea I even needed to understand."
+            </p>
+            <div class="mt-auto">
+              <p class="text-white font-bold text-sm">Dan</p>
+              <p class="text-white/60 text-xs">Construction owner, $9M+ revenue</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Restaurant client — Skool message screenshot -->
+        <div class="border border-white/15 bg-white/[0.02] flex flex-col">
+          <div class="aspect-[3/4] bg-white/[0.02] flex items-center justify-center p-2">
+            <img
+              src="/restaurant-client-skool.png"
+              alt="Restaurant client Skool message: profit margin from -3.02% to 13.3%"
+              class="max-w-full max-h-full object-contain"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-white font-bold text-sm">Restaurant client</p>
+            <p class="text-white/60 text-xs mt-1">-3.02% → 13.3% profit margin</p>
+          </div>
+        </div>
+
+        <!-- Card 3: Mark Annabelli — 5-star Google review screenshot -->
+        <div class="border border-white/15 bg-white/[0.02] flex flex-col">
+          <div class="aspect-[3/4] bg-white/[0.02] flex items-center justify-center p-2">
+            <img
+              src="/mark-google-review.png"
+              alt="Mark Annabelli 5-star Google review"
+              class="max-w-full max-h-full object-contain"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-white font-bold text-sm">Mark Annabelli</p>
+            <p class="text-white/60 text-xs mt-1">5-star Google review</p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
