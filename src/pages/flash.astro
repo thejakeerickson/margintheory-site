@@ -8,12 +8,12 @@ const pageSchema = {
   '@id': `${SITE_URL}/flash#webpage`,
   name: 'The Flash Report — Free Template',
   description:
-    'Free open-source template for the daily flash report I run for fractional CFO clients. POS data in, PDF flash out. Built to adapt to any owner-operator business.',
+    'Free open-source template for the daily flash report I run for fractional CFO clients. Plug in your data, render a clean 2-page PDF.',
 };
 ---
 <BaseLayout
-  title="The Flash Report. The daily-visibility template my CFO clients open with their coffee. | Margin Theory"
-  description="Free, open-source template for the daily flash report I run for my fractional CFO clients. Yesterday's revenue, same-day-of-week comparison, MTD pacing, variance flags. Adapt it to any business."
+  title="The Flash Report. Free template + build guide. | Margin Theory"
+  description="Free, open-source template for the daily flash report I run for my fractional CFO clients. Plug in your numbers, render a clean 2-page PDF every morning."
   extraSchemas={[pageSchema]}
   noNav={true}
   conversionPage={true}
@@ -25,40 +25,17 @@ const pageSchema = {
     </a>
   </div>
 
-  <!-- HERO -->
+  <!-- HERO + FORM -->
   <section>
-    <div class="max-w-3xl mx-auto px-6 pt-10 pb-6 md:pt-14">
-      <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-center mb-4 text-white leading-[1.15]">
+    <div class="max-w-2xl mx-auto px-6 pt-12 pb-20 md:pt-20">
+      <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-center mb-5 text-white leading-[1.15]">
         The daily flash my CFO clients open with their <span class="italic text-brand-blue">morning coffee</span>.
       </h1>
-      <p class="text-lg md:text-xl text-white/85 text-center mb-10 leading-relaxed max-w-2xl mx-auto">
-        Yesterday's revenue. Same-day-of-week last-year comparison. MTD pacing. Variance flags. <span class="text-white font-semibold">Free, open-source, and built to adapt to any owner-operator business.</span>
+      <p class="text-lg md:text-xl text-white/85 text-center mb-10 leading-relaxed">
+        Free template + build guide for the daily report I run for my fractional CFO clients. Drop in your email and I'll send you the GitHub repo.
       </p>
 
-      <!-- Preview image (visual proof) -->
-      <div class="border border-white/15 shadow-2xl bg-white">
-        <img
-          src="/flash-preview.png"
-          alt="Sample daily flash report showing yesterday's net sales, by-location breakdown, MTD vs last year, projected month-end, and variance indicators colored green/yellow/red against targets."
-          class="block w-full h-auto"
-          width="816"
-          height="1056"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- SUBSCRIBE FORM -->
-  <section>
-    <div class="max-w-xl mx-auto px-6 pt-4 pb-16">
       <div id="flash-form-card" class="border border-white/15 bg-white/[0.02] p-6 md:p-8">
-        <h2 class="text-xl md:text-2xl font-semibold text-white mb-2">
-          Get the Flash Report repo + build guide
-        </h2>
-        <p class="text-white/70 text-base mb-6 leading-relaxed">
-          Enter your email. I'll send you the GitHub link with the template, the math, and the Claude Code prompt to wire it up to your own data. You'll also get the Margin Theory newsletter (monthly for now, going weekly soon).
-        </p>
-
         <form id="flash-form" class="space-y-3" novalidate>
           <input
             id="flash-email"
@@ -79,7 +56,7 @@ const pageSchema = {
           </button>
           <p id="flash-error" class="text-sm text-red-300 hidden" role="alert"></p>
           <p class="text-xs text-white/50 text-center pt-2">
-            No spam. Unsubscribe in one click. Your email lives in Beehiiv only.
+            You'll also get the Margin Theory newsletter. Unsubscribe anytime.
           </p>
         </form>
       </div>
@@ -90,10 +67,7 @@ const pageSchema = {
           You're in. Check your inbox.
         </h2>
         <p class="text-white/85 text-base mb-5 leading-relaxed">
-          The welcome email with the GitHub link is on its way. If it lands in promotions, move it to primary so the next issue doesn't get lost.
-        </p>
-        <p class="text-white/85 text-base mb-3 leading-relaxed">
-          Or skip the email and grab the repo now:
+          The welcome email is on its way. If it lands in promotions, move it to primary so the next issue doesn't get lost.
         </p>
         <a
           id="flash-github"
@@ -105,56 +79,6 @@ const pageSchema = {
           Open the GitHub repo →
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- WHAT'S INSIDE -->
-  <section class="bg-soft-gray text-charcoal">
-    <div class="max-w-3xl mx-auto px-6 py-14 md:py-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-8 text-charcoal text-center">
-        What's in the repo
-      </h2>
-      <div class="space-y-5 text-lg text-charcoal/85 leading-relaxed">
-        <p><span class="text-charcoal font-bold">The working template.</span> Same HTML + CSS I use for paying clients, sanitized. Render a real 2-page PDF in under a minute.</p>
-        <p><span class="text-charcoal font-bold">The math behind it.</span> Same-day-of-week year-over-year (not same-date), MTD vs last-year-same-days, run-rate projection, severity-colored variance indicators against your own targets.</p>
-        <p><span class="text-charcoal font-bold">The build guide.</span> A README that walks you through the 7 numbers, why each one is there, and the Claude Code prompt to wire it up to your own data source.</p>
-        <p><span class="text-charcoal font-bold">The no-API path.</span> Most owner-operators get stuck on data access. The repo covers CSV exports, scraping, paid connectors, and the manual-bridge week if you want to ship this Friday.</p>
-        <p><span class="text-charcoal font-bold">Adapting to your business.</span> The sample is a 3-location food/retail business. The doc maps the same structure to home services, agencies, construction, SaaS, and e-commerce.</p>
-      </div>
-      <p class="text-charcoal/60 text-sm italic mt-8 text-center">
-        MIT licensed. Fork it, modify it, ship it.
-      </p>
-    </div>
-  </section>
-
-  <!-- WHO IT'S FOR / WHO IT'S NOT FOR -->
-  <section>
-    <div class="max-w-3xl mx-auto px-6 py-14 md:py-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-white text-center">
-        Who this is for
-      </h2>
-      <div class="space-y-4 text-lg text-white/85 leading-relaxed">
-        <p>Owner-operators running between <span class="text-white font-semibold">$500K and $20M</span> in revenue who want the daily visibility a full-time CFO would give them, without the $15K-$20K/month price tag.</p>
-        <p>You either build it yourself with the template, or you hire someone who already lives in these tools. Either way, the daily flash used to be a budget decision. Now it's a build decision.</p>
-      </div>
-      <p class="text-white/60 text-base italic mt-6">
-        Not your fit if your business doesn't have daily operational data, or if you'd rather wait for the bookkeeper's monthly close.
-      </p>
-    </div>
-  </section>
-
-  <!-- ABOUT JAKE / NEWSLETTER PITCH -->
-  <section class="border-t border-white/10">
-    <div class="max-w-3xl mx-auto px-6 py-12 text-center">
-      <p class="text-lg text-white/85 mb-3">
-        Written by <a href="https://www.linkedin.com/in/realjakeerickson" target="_blank" rel="noopener" class="text-brand-blue font-semibold hover:underline">Jake Erickson</a>, fractional CFO at Margin Theory.
-      </p>
-      <p class="text-base text-white/65 leading-relaxed max-w-2xl mx-auto">
-        I work with owner-operators doing $500K to $20M to find the margin hiding in their own books. The newsletter is where I write about what's working and what's not.
-      </p>
-      <p class="text-sm text-white/50 mt-6">
-        Questions? <a href="mailto:jake@margintheory.co" class="text-brand-blue hover:underline">jake@margintheory.co</a>
-      </p>
     </div>
   </section>
 
