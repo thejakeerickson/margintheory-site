@@ -1,0 +1,3578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Scoreboard</title>
+<style>
+  :root {
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-hover: #FCFCFD;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --accent: #2563EB;
+    --green: #15803D;
+    --green-bg: #DCFCE7;
+    --green-soft: #F0FDF4;
+    --yellow: #A16207;
+    --yellow-bg: #FEF9C3;
+    --yellow-soft: #FEFCE8;
+    --red: #B91C1C;
+    --red-bg: #FEE2E2;
+    --red-soft: #FEF2F2;
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
+    --shadow-md: 0 4px 12px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01" on, "cv02" on, "cv03" on, "cv04" on, "cv11" on;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  .header {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #fff;
+    padding: 28px 32px;
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-left .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .header-left h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .header-left .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+  .header-right .cycle { color: #fff; font-size: 14px; font-weight: 600; }
+  .header-right .meeting-date {
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ---------- Breadcrumb ---------- */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    font-weight: 500;
+  }
+  .breadcrumb a:hover { background: rgba(37,99,235,0.08); }
+  .breadcrumb .sep { color: var(--text-tertiary); font-size: 14px; user-select: none; }
+  .breadcrumb .current {
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 4px 8px;
+  }
+
+  /* ---------- Refresh button ---------- */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .toolbar .breadcrumb { margin-bottom: 0; }
+  .refresh-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .refresh-status {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+  .refresh-status.error { color: var(--red); font-weight: 600; }
+  .refresh-status.success { color: var(--green); font-weight: 600; }
+  .refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .refresh-btn:hover:not(:disabled) {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .refresh-btn .spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--border-strong);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+  }
+  .refresh-btn.loading .spinner { display: inline-block; }
+  .refresh-btn.loading .refresh-icon { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* "Publish to Client" — pushes the current local state to margintheory.co
+     so Andrew sees the update. Distinct visual treatment (accent blue fill) so
+     it reads as the deliberate "ship this" action, not just another refresh. */
+  .publish-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .publish-btn:hover:not(:disabled) {
+    background: #1D4ED8;
+    border-color: #1D4ED8;
+  }
+  .publish-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .publish-btn .spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+  }
+  .publish-btn.loading .spinner { display: inline-block; }
+  .publish-btn.loading .publish-icon { display: none; }
+
+  /* ---------- Cycle switcher (dropdown) ---------- */
+  .cycle-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cycle-dropdown-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .cycle-dropdown {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 32px 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .cycle-dropdown:hover { border-color: var(--border-strong); }
+  .cycle-dropdown:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .cycle-empty-msg {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-style: italic;
+    padding: 6px 10px;
+  }
+
+  /* ---------- Scoreboard section header (when scoreboard sits below the editable layers) ---------- */
+  .scoreboard-section-header {
+    margin: 28px 0 14px 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .scoreboard-section-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin-top: 2px;
+  }
+
+  /* ---------- Section ---------- */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 0 2px;
+  }
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: 700;
+  }
+  .section-meta {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* ---------- Card grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1000px) {
+    .grid, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .grid, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Driver card ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+    transition: all 0.18s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+  }
+  /* Score color treatment: full card tint + bold left-edge stripe */
+  .card.green {
+    background: var(--green-soft);
+    border-color: #BBF7D0;
+    border-left-color: var(--green);
+  }
+  .card.yellow {
+    background: var(--yellow-soft);
+    border-color: #FDE68A;
+    border-left-color: var(--yellow);
+  }
+  .card.red {
+    background: var(--red-soft);
+    border-color: #FECACA;
+    border-left-color: var(--red);
+  }
+  .card.has-drilldown {
+    cursor: pointer;
+  }
+  .card.has-drilldown:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .card.green.has-drilldown:hover  { border-color: var(--green); }
+  .card.yellow.has-drilldown:hover { border-color: var(--yellow); }
+  .card.red.has-drilldown:hover    { border-color: var(--red); }
+
+  /* Summary card: bigger, with score band across top */
+  .card.summary {
+    border-width: 1px;
+    border-left-width: 8px;
+    box-shadow: var(--shadow-sm);
+  }
+  .card.summary.green {
+    background: linear-gradient(180deg, #DCFCE7 0%, #FFFFFF 70%);
+    border-color: #BBF7D0;
+    border-left-color: var(--green);
+  }
+  .card.summary.yellow {
+    background: linear-gradient(180deg, #FEF9C3 0%, #FFFFFF 70%);
+    border-color: #FDE68A;
+    border-left-color: var(--yellow);
+  }
+  /* Brand-tinted slate wash instead of red wash on red summary cards.
+     Red signal lives in the 8px left stripe, dot, badge, and variance text — small, intentional
+     pips, not a card-wide alarm. Slate-100 → white in light mode reads as a quiet brand tint;
+     inverts cleanly to brand-navy in dark mode (matches the header). */
+  .card.summary.red {
+    background: linear-gradient(180deg, #F1F5F9 0%, #FFFFFF 50%);
+    border-color: #E2E8F0;
+    border-left-color: var(--red);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+  .card-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .card.summary .card-name { color: var(--text-primary); }
+
+  .score-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.6);
+  }
+  .score-dot.green  { background: var(--green); }
+  .score-dot.yellow { background: var(--yellow); }
+  .score-dot.red    { background: var(--red); }
+
+  .score-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .score-badge.green  { background: var(--green-bg); color: var(--green); }
+  .score-badge.yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .score-badge.red    { background: var(--red-bg); color: var(--red); }
+
+  .card-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .card.summary .card-value { font-size: 32px; }
+  .card-value-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+
+  .compare-table {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .compare-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .compare-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .compare-value {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .compare-row.target .compare-value { color: var(--text-secondary); font-weight: 500; }
+  .compare-row.comparable .compare-label,
+  .compare-row.comparable .compare-value {
+    color: var(--text-tertiary);
+    font-size: 11px;
+  }
+
+  /* Variance line under forecast headline (forecast vs target) */
+  .card-variance {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .card-variance.green  { color: var(--green); }
+  .card-variance.yellow { color: var(--yellow); }
+  .card-variance.red    { color: var(--red); }
+  /* Secondary variance line: this year YTD vs prior year same-period YTD.
+     Rendered neutral (no score color) so it reads as supplementary context, not judgment. */
+  .card-variance-ytd {
+    margin-top: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--text-tertiary);
+  }
+
+  /* Published mode (hosted, read-only): hide all edit affordances and save indicators.
+     The cycle switcher and card flip stay so the client can still navigate the snapshot. */
+  body[data-published-mode="true"] .refresh-group,
+  body[data-published-mode="true"] .refresh-btn,
+  body[data-published-mode="true"] .refresh-status,
+  body[data-published-mode="true"] .publish-btn,
+  body[data-published-mode="true"] .observations-add-btn,
+  body[data-published-mode="true"] .objectives-add-btn,
+  body[data-published-mode="true"] .next-step-add-btn,
+  body[data-published-mode="true"] .observation-delete,
+  body[data-published-mode="true"] .objective-delete,
+  body[data-published-mode="true"] .next-step-delete,
+  body[data-published-mode="true"] .reorder-btn,
+  body[data-published-mode="true"] .reorder-group,
+  body[data-published-mode="true"] .observations-save-status,
+  body[data-published-mode="true"] .objectives-save-status,
+  body[data-published-mode="true"] .action-save-status,
+  body[data-published-mode="true"] .publish-status {
+    display: none !important;
+  }
+  /* Empty contenteditable fields show "Click to edit" placeholders in live mode.
+     Suppress those in published mode — empty just renders as empty. */
+  body[data-published-mode="true"] [data-empty="true"]::before {
+    content: "" !important;
+  }
+  body[data-published-mode="true"] [contenteditable] {
+    cursor: default;
+  }
+  body[data-published-mode="true"] [contenteditable]:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* ---------- Publish status pill (auto-publish indicator) ---------- */
+  .publish-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .publish-status:empty { display: none; }
+  .publish-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--text-tertiary);
+  }
+  .publish-dot.green  { background: var(--green); }
+  .publish-dot.red    { background: var(--red); }
+  .publish-dot.amber  { background: var(--yellow); }
+  .publish-dot.pulse  { background: var(--accent); animation: publish-pulse 1.2s ease-in-out infinite; }
+  @keyframes publish-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .publish-action {
+    margin-left: 4px;
+    padding: 2px 8px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .publish-action:hover { background: rgba(37,99,235,0.08); border-color: var(--accent); }
+
+  /* ---------- Collapsible sections ----------
+     Section heads (.section-head) are click targets; clicking toggles the
+     [data-collapsed] attribute on the parent .section-collapsible. The chevron
+     rotates. The .section-body wrapper hides its content via display:none.
+     State persists in localStorage so reloads remember collapse state. */
+  .section-collapsible { position: relative; }
+  .section-head {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 36px;
+    border-radius: 6px;
+    transition: background 0.12s;
+  }
+  .section-head:hover { background: rgba(15, 23, 42, 0.025); }
+  .section-head:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .section-chevron {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--text-tertiary);
+    transition: transform 0.2s ease;
+    pointer-events: none;
+  }
+  .section-collapsible[data-collapsed="true"] .section-chevron {
+    transform: rotate(-90deg);
+  }
+  .section-collapsible[data-collapsed="true"] .section-body {
+    display: none;
+  }
+  /* When collapsed, also hide the subhead so the head row stays tight. */
+  .section-collapsible[data-collapsed="true"] .observations-subhead {
+    display: none;
+  }
+  /* The Scoreboard section doesn't have a card-style wrapper background — its
+     head needs explicit horizontal padding so the chevron sits cleanly. */
+  .scoreboard-section { margin-bottom: 28px; }
+
+  /* Auto-refresh toast: appears bottom-right when the workbook watcher pulls a
+     fresh data.js. Quiet and short — confirms the refresh without interrupting. */
+  .auto-refresh-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    padding: 10px 16px;
+    background: #0F172A;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .auto-refresh-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card flip (front/back commentary) */
+  .card-flip { perspective: 1200px; min-height: 200px; }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-face {
+    grid-column: 1;
+    grid-row: 1;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .card-face-back { transform: rotateY(180deg); }
+  .card-back-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .card-back-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .card-back-close {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .card-back-close:hover { background: var(--bg); color: var(--text-primary); border-color: var(--text-tertiary); }
+  .card-back-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+  .card-back-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    outline: none;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-y: auto;
+    max-height: 220px;
+  }
+  .card-back-text:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .card-back-text[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .card-back-sources {
+    margin-top: 8px;
+    padding: 6px 6px 0;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    outline: none;
+    transition: background 0.15s;
+    border-radius: 4px;
+  }
+  .card-back-sources:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .card-back-sources[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .card-flip .card-face-front > .card { cursor: pointer; }
+  .card-flip .card-face-front > .card::after {
+    content: "↻";
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    pointer-events: none;
+  }
+  .card-flip .card-face-front > .card:hover::after { opacity: 1; }
+
+  .card-flag {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.65);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .card-top-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .drilldown-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.18s;
+  }
+  .card.has-drilldown:hover .drilldown-icon {
+    background: var(--accent);
+    color: #FFFFFF;
+    transform: translateX(1px);
+  }
+
+  /* ---------- Drill-down view ---------- */
+  .drilldown-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .drilldown-info {
+    flex: 1;
+  }
+  .drilldown-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .drilldown-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .drilldown-context {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 680px;
+  }
+  .drilldown-rollup {
+    text-align: right;
+    padding-left: 24px;
+    border-left: 1px solid var(--border);
+  }
+  .drilldown-rollup .value {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .drilldown-rollup .label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  /* ---------- Commentary block (in drill-down) ---------- */
+  .commentary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+  .footer .legend {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ---------- Animations ---------- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  #content > * {
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  /* ---------- Action Plan ---------- */
+  .action-plan-section {
+    margin-top: 40px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .action-plan-head { margin-bottom: 18px; }
+  .action-plan-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .action-plan-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .action-plan-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+  }
+  .action-save-status {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: opacity 0.3s;
+  }
+  .action-save-status.saving { color: var(--accent); }
+  .action-save-status.saved { color: var(--green); font-weight: 600; }
+  .action-save-status.error { color: var(--red); font-weight: 600; }
+  .action-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+  }
+  .action-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 14px;
+    margin-bottom: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .action-item:hover { border-color: var(--border-strong); }
+  .action-item.done {
+    background: var(--green-soft);
+    border-color: #BBF7D0;
+  }
+  .action-item.done .action-text {
+    text-decoration: line-through;
+    color: var(--text-tertiary);
+  }
+  .action-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-strong);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    transition: all 0.15s;
+    user-select: none;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .action-checkbox:hover { border-color: var(--accent); }
+  .action-item.done .action-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .action-body { flex: 1; min-width: 0; }
+  .action-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    outline: none;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .action-text:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .action-text[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .action-pill-value[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .action-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .action-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .action-pill-label {
+    font-weight: 600;
+    color: var(--text-tertiary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .action-pill-value {
+    outline: none;
+    padding: 1px 2px;
+    border-radius: 3px;
+    min-width: 30px;
+    transition: background 0.15s;
+  }
+  .action-pill-value:focus { background: var(--yellow-soft); }
+  .action-delete {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    opacity: 0;
+  }
+  .action-item:hover .action-delete { opacity: 1; }
+  .action-delete:hover {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .action-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .action-add-btn:hover {
+    background: rgba(37,99,235,0.05);
+    border-color: var(--accent);
+    border-style: solid;
+  }
+  .action-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  /* ---------- Objectives ---------- */
+  .objectives-section {
+    margin-bottom: 28px;
+    padding: 24px 28px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .objectives-head { margin-bottom: 14px; }
+  .objectives-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .objectives-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .objectives-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+  }
+  .objectives-save-status {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: opacity 0.3s;
+  }
+  .objectives-save-status.saving { color: var(--accent); }
+  .objectives-save-status.saved { color: var(--green); font-weight: 600; }
+  .objectives-save-status.error { color: var(--red); font-weight: 600; }
+  .objectives-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .objective-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .objective-item:hover { border-color: var(--border-strong); }
+  .objective-item.green  { border-left-color: var(--green);  background: var(--green-soft); }
+  .objective-item.yellow { border-left-color: var(--yellow); background: var(--yellow-soft); }
+  .objective-item.red    { border-left-color: var(--red);    background: var(--red-soft); }
+  .objective-status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+    cursor: pointer;
+    background: var(--text-tertiary);
+    transition: all 0.15s;
+    box-shadow: 0 0 0 0 transparent;
+  }
+  .objective-status-dot:hover { box-shadow: 0 0 0 3px rgba(0,0,0,0.06); }
+  .objective-item.green  .objective-status-dot { background: var(--green); }
+  .objective-item.yellow .objective-status-dot { background: var(--yellow); }
+  .objective-item.red    .objective-status-dot { background: var(--red); }
+  .objective-body { flex: 1; min-width: 0; }
+  .objective-priority {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    outline: none;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .objective-priority:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .objective-priority[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .objective-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .objective-meta-block {
+    display: flex;
+    flex-direction: column;
+  }
+  .objective-meta-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 1px;
+  }
+  .objective-meta-value {
+    outline: none;
+    padding: 1px 3px;
+    border-radius: 3px;
+    transition: background 0.15s;
+    min-width: 30px;
+  }
+  .objective-meta-value:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .objective-meta-value[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .objective-delete {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    opacity: 0;
+  }
+  .objective-item:hover .objective-delete { opacity: 1; }
+  .objective-delete:hover {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  /* Reorder controls (up/down) for objectives + next steps */
+  .reorder-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    opacity: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+  }
+  .objective-item:hover .reorder-btn,
+  .next-step:hover .reorder-btn {
+    opacity: 1;
+  }
+  .reorder-btn:hover:not(:disabled) {
+    background: rgba(37,99,235,0.08);
+    color: var(--accent);
+  }
+  .reorder-btn:disabled {
+    opacity: 0.25 !important;
+    cursor: not-allowed;
+  }
+  .objective-item:hover .reorder-btn:disabled,
+  .next-step:hover .reorder-btn:disabled {
+    opacity: 0.25;
+  }
+  .reorder-group {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .reorder-group .reorder-btn { height: 18px; width: 22px; }
+  .objectives-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .objectives-add-btn:hover {
+    background: rgba(37,99,235,0.05);
+    border-color: var(--accent);
+    border-style: solid;
+  }
+  .objectives-empty {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  /* ---------- Observations (What's Working / What to Watch) ---------- */
+  .observations-section {
+    margin-bottom: 28px;
+    padding: 24px 28px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Thin two-tone spine: green→yellow across the top to echo the scoreboard's
+     color language without committing the whole section to one mood. */
+  .observations-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--green) 45%, var(--yellow) 55%, var(--yellow) 100%);
+    opacity: 0.85;
+  }
+  .observations-head { margin-bottom: 18px; }
+  .observations-subhead {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .observations-save-status {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: opacity 0.3s;
+  }
+  .observations-save-status.saving { color: var(--accent); }
+  .observations-save-status.saved { color: var(--green); font-weight: 600; }
+  .observations-save-status.error { color: var(--red); font-weight: 600; }
+  .observations-tabs {
+    display: inline-flex;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    margin-bottom: 14px;
+  }
+  .obs-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .obs-tab:hover { color: var(--text-primary); }
+  .obs-tab.active { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  /* Active tab takes on its category color — green-soft for Working, yellow-soft for Watch.
+     Mirrors the scoreboard's color-as-mood treatment. */
+  .obs-tab.working.active {
+    background: var(--green-soft);
+    color: var(--green);
+    box-shadow: 0 1px 3px rgba(21,128,61,0.12);
+  }
+  .obs-tab.watch.active {
+    background: var(--yellow-soft);
+    color: var(--yellow);
+    box-shadow: 0 1px 3px rgba(161,98,7,0.12);
+  }
+  .obs-tab .tab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .obs-tab.working .tab-dot { background: var(--green); }
+  .obs-tab.watch   .tab-dot { background: var(--yellow); }
+  .observations-pane {
+    display: none;
+  }
+  .observations-pane.active {
+    display: block;
+    animation: fadeIn 0.25s ease-out;
+  }
+  .observations-col {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: var(--surface);
+  }
+  .observations-col.working { border-left: 4px solid var(--green); }
+  .observations-col.watch   { border-left: 4px solid var(--yellow); }
+  .observations-col-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .obs-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .obs-dot.working { background: var(--green); }
+  .obs-dot.watch   { background: var(--yellow); }
+  .observations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .observation-item {
+    display: flex;
+    gap: 8px;
+    padding: 10px 10px 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .observation-item:hover { border-color: var(--border-strong); }
+  /* Per-category tint: green wash + green left edge for Working items;
+     yellow wash + yellow left edge for Watch items. Same color language as the driver cards. */
+  .observation-item[data-cat="working"] {
+    background: var(--green-soft);
+    border-color: #BBF7D0;
+    border-left-color: var(--green);
+  }
+  .observation-item[data-cat="working"]:hover { border-color: var(--green); border-left-color: var(--green); }
+  .observation-item[data-cat="watch"] {
+    background: var(--yellow-soft);
+    border-color: #FDE68A;
+    border-left-color: var(--yellow);
+  }
+  .observation-item[data-cat="watch"]:hover { border-color: var(--yellow); border-left-color: var(--yellow); }
+  .observation-body { flex: 1; min-width: 0; }
+  .obs-headline {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    outline: none;
+    padding: 1px 3px;
+    border-radius: 3px;
+    transition: background 0.15s;
+  }
+  .obs-headline:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .obs-headline[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .obs-body-text {
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    outline: none;
+    padding: 1px 3px;
+    border-radius: 3px;
+    transition: background 0.15s;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .obs-body-text:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .obs-body-text[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .observation-delete {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    opacity: 0;
+  }
+  .observation-item:hover .observation-delete,
+  .observation-item:hover .reorder-btn { opacity: 1; }
+  .observation-delete:hover {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .observations-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px dashed var(--border-strong);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .observations-add-btn:hover {
+    background: rgba(37,99,235,0.05);
+    border-color: var(--accent);
+    border-style: solid;
+  }
+
+  /* ---------- Objective with nested Next Steps ---------- */
+  .objective-item {
+    display: block;
+    padding: 16px 18px;
+  }
+  .objective-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .objective-number {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    background: var(--bg);
+    padding: 3px 8px;
+    border-radius: 4px;
+    outline: none;
+    flex-shrink: 0;
+    min-width: 22px;
+    text-align: center;
+  }
+  .objective-number:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .objective-number[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .objective-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    outline: none;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .objective-title:focus { background: var(--surface); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .objective-title[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .objective-header-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .objective-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .objective-pill-label {
+    font-weight: 700;
+    color: var(--text-tertiary);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .objective-pill-value {
+    outline: none;
+    padding: 1px 2px;
+    border-radius: 3px;
+    min-width: 28px;
+    font-weight: 600;
+  }
+  .objective-pill-value:focus { background: var(--yellow-soft); }
+  .objective-pill-value[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Override the old single-row priority styling so it's now the narrative line under the header */
+  .objective-priority {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 22px;
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+
+  /* ---------- Next Steps (nested under each Objective) ---------- */
+  .next-steps {
+    margin-left: 22px;
+    padding: 10px 12px 12px;
+    background: rgba(255,255,255,0.6);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .next-steps-head {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .next-steps-empty {
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-size: 12px;
+    padding: 6px 0 10px;
+  }
+  .next-steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .next-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .next-step:hover { border-color: var(--border-strong); }
+  .next-step.done { background: var(--green-soft); border-color: #BBF7D0; }
+  .next-step.done .next-step-action {
+    text-decoration: line-through;
+    color: var(--text-tertiary);
+  }
+  .next-step-check {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-strong);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    transition: all 0.15s;
+    user-select: none;
+    font-size: 11px;
+    line-height: 1;
+    color: #fff;
+  }
+  .next-step-check:hover { border-color: var(--accent); }
+  .next-step.done .next-step-check {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .next-step-prio {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+    user-select: none;
+    transition: all 0.15s;
+    min-width: 42px;
+    text-align: center;
+  }
+  .next-step-prio.prio-high { background: var(--red-bg); color: var(--red); }
+  .next-step-prio.prio-med  { background: var(--yellow-bg); color: var(--yellow); }
+  .next-step-prio.prio-low  { background: var(--green-bg); color: var(--green); }
+  .next-step-prio:hover { filter: brightness(0.92); }
+  .next-step-body { flex: 1; min-width: 0; }
+  .next-step-action {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    outline: none;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .next-step-action:focus { background: var(--bg); box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+  .next-step-action[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .next-step-meta {
+    display: flex;
+    gap: 6px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .next-step-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .next-step-pill-label {
+    font-weight: 700;
+    color: var(--text-tertiary);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .next-step-pill-value {
+    outline: none;
+    padding: 1px 2px;
+    border-radius: 3px;
+    min-width: 24px;
+  }
+  .next-step-pill-value:focus { background: var(--yellow-soft); }
+  .next-step-pill-value[data-empty="true"]::before {
+    content: attr(data-placeholder);
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+  .next-step-delete {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    opacity: 0;
+  }
+  .next-step:hover .next-step-delete { opacity: 1; }
+  .next-step-delete:hover {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .next-step-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px dashed var(--border-strong);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .next-step-add-btn:hover {
+    background: rgba(37,99,235,0.05);
+    border-color: var(--accent);
+    color: var(--accent);
+    border-style: solid;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">CraigO's Pizza · Lakeway</div>
+      <h1>Strategic Scoreboard</h1>
+      <div class="subtitle"></div>
+    </div>
+    <div class="header-right">
+      <div class="cycle" id="header-cycle-label">Reporting Period</div>
+      <div id="header-close-subtitle"></div>
+      <div class="meeting-date" id="header-meeting-date" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <nav class="breadcrumb" id="breadcrumb"></nav>
+    <div class="cycle-switcher" id="cycle-switcher" aria-label="Cycle"></div>
+    <div class="refresh-group">
+      <span class="refresh-status" id="refresh-status"></span>
+      <div class="publish-status" id="publish-status" title="Client portal status"></div>
+      <button class="refresh-btn" id="refresh-btn" onclick="refreshFromWorkbook()" title="Re-pull data from the production Workbook">
+        <span class="refresh-icon">⟳</span>
+        <span class="spinner"></span>
+        <span class="refresh-label">Refresh from Workbook</span>
+      </button>
+      <button class="publish-btn" id="publish-btn" onclick="publishToClient()" title="Push current state live to the client portal (margintheory.co)">
+        <span class="publish-icon">↗</span>
+        <span class="spinner"></span>
+        <span class="publish-label">Publish to Client</span>
+      </button>
+    </div>
+  </div>
+
+  <section class="observations-section section-collapsible" id="observations-section">
+    <div class="observations-head section-head" onclick="toggleSection('observations-section', event)" role="button" tabindex="0" onkeydown="onSectionHeadKey(event, 'observations-section')">
+      <div class="objectives-eyebrow">Reading the cycle</div>
+      <div class="objectives-title-row">
+        <h2 class="objectives-title">What's Working &amp; What to Watch</h2>
+        <span class="observations-save-status" id="observations-save-status"></span>
+      </div>
+      <div class="observations-subhead">Where the data is moving in our favor and where it needs attention.</div>
+      <span class="section-chevron" aria-hidden="true">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="observations-tabs" role="tablist">
+        <button class="obs-tab working active" onclick="switchObsTab('working')" id="obs-tab-working">
+          <span class="tab-dot"></span>What's Working
+        </button>
+        <button class="obs-tab watch" onclick="switchObsTab('watch')" id="obs-tab-watch">
+          <span class="tab-dot"></span>What to Watch
+        </button>
+      </div>
+      <div class="observations-pane active" id="obs-pane-working">
+        <div class="observations-col working" style="border-left:none; padding-left:0;">
+          <ul class="observations-list" id="working-list"></ul>
+          <button class="observations-add-btn" onclick="addObservation('working')">+ Add</button>
+        </div>
+      </div>
+      <div class="observations-pane" id="obs-pane-watch">
+        <div class="observations-col watch" style="border-left:none; padding-left:0;">
+          <ul class="observations-list" id="watch-list"></ul>
+          <button class="observations-add-btn" onclick="addObservation('watch')">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <section class="scoreboard-section section-collapsible" id="scoreboard-section">
+    <div class="scoreboard-section-header section-head" onclick="toggleSection('scoreboard-section', event)" role="button" tabindex="0" onkeydown="onSectionHeadKey(event, 'scoreboard-section')">
+      <div class="objectives-eyebrow">Current driver state (always live from workbook)</div>
+      <h2 class="scoreboard-section-title">Scoreboard</h2>
+      <span class="section-chevron" aria-hidden="true">▾</span>
+    </div>
+    <div class="section-body">
+      <div id="content"></div>
+    </div>
+  </section>
+
+  
+
+  <section class="objectives-section section-collapsible" id="objectives-section">
+    <div class="objectives-head section-head" onclick="toggleSection('objectives-section', event)" role="button" tabindex="0" onkeydown="onSectionHeadKey(event, 'objectives-section')">
+      <div class="objectives-eyebrow">What we're working on this cycle</div>
+      <div class="objectives-title-row">
+        <h2 class="objectives-title">Strategic Objectives</h2>
+        <span class="objectives-save-status" id="objectives-save-status"></span>
+      </div>
+      <span class="section-chevron" aria-hidden="true">▾</span>
+    </div>
+    <div class="section-body">
+      <ol class="objectives-list" id="objectives-list"></ol>
+      <button class="objectives-add-btn" id="objectives-add-btn" onclick="addObjective()">+ Add Objective</button>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div id="footer-generated">Margin Theory</div>
+    <div class="legend">
+      <span class="legend-item"><span class="score-dot green"></span>On track</span>
+      <span class="legend-item"><span class="score-dot yellow"></span>Watch</span>
+      <span class="legend-item"><span class="score-dot red"></span>Off track</span>
+    </div>
+  </div>
+</div>
+
+</script>
+<script>
+window.PUBLISHED_MODE = true;
+window.PUBLISHED_SLUG = "craigos";
+window.PUBLISHED_DATA = {"cycles":[{"id":"2026-05","displayName":"May 2026"},{"id":"2026-04","displayName":"April 2026"},{"id":"2026-03","displayName":"March 2026"}],"objectives":{"2026-05":{"meta":{"client":"CraigO's Pizza - Lakeway","cycle":"May 2026","displayName":"May 2026","isCurrent":true,"meeting":"Mon May 19 · 1pm CT"},"items":[{"id":"obj-03-may-targets","number":"03","title":"Recalibrate annual targets and the plan for the rest of 2026","priority":"Original 2026 targets were set before trailer mix dilution and the Hops reframe were known. Recalibrate to operational reality and lock the plan for the rest of the year.","impact":"","cycle":"May 2026","status":"green","nextSteps":[{"id":"ns-mpczvw26-o68l","action":"Get back with Andrew on finalizing cash flow driver targets.","owner":"Jake","priority":"Med","due":"","impact":"","status":"open"},{"id":"ns-mpd04f1d-rahg","action":"Answer Jake back on finalizing cash flow driver targets.","owner":"Andrew","priority":"Med","due":"","impact":"","status":"open"},{"id":"ns-mpd0y747-dtwf","action":"Send Andrew Events Manager Break-Even Analysis","owner":"Jake","priority":"Med","due":"","impact":"","status":"open"}]},{"id":"obj-02-may-events","number":"02","title":"Grow events to 12/mo at $1,300+","priority":"Grow food truck events from ~8/month to 12/month at $1,300+ average per event. External events lead hire is the bandwidth unlock.","impact":"","cycle":"May 2026","status":"green","nextSteps":[{"id":"ns-mpczz0ac-ny49","action":"Look into other companies that help with the booking process. Over the next few weeks to drive higher average event.","owner":"Andrew","priority":"Med","due":"","impact":"","status":"open"},{"id":"ns-mpd02551-rcg3","action":"Run deep research on newsletter strategies for past food truck clients monthly basis ahead of time to drive more events. Next call revisit it.","owner":"Jake","priority":"Med","due":"","impact":"","status":"open"}]},{"id":"obj-01-may-cash","number":"01","title":"Build cash to exit the PFG AmEx float","priority":"Build operating cash to the point where ACH-paying PFG on net-30 terms is safe. Exit the AmEx float.","impact":"","cycle":"May 2026","status":"green","nextSteps":[]}]},"2026-04":{"meta":{"client":"CraigO's Pizza - Lakeway","cycle":"April 2026","displayName":"April 2026","isCurrent":true},"items":[{"id":"obj-01-debt","number":"01","title":"Debt Additions (Repayments)","priority":"Make steady progress reducing AmEx CC-01005 balance as cash flow allows. Cash-flow-gated, not calendar-gated.","impact":"$14,000","cycle":"Q2 2026","status":"green","nextSteps":[{"id":"ns-debt-1","action":"Deploy AR collections and monthly cash surplus toward CC-01005 paydown as operating cash allows.","owner":"Andrew","priority":"High","due":"May 19","impact":"$14K","status":"open"},{"id":"ns-debt-2","action":"Transfer SXSW invoice payment (~$13K) from old bank account into main operating bank account.","owner":"Andrew","priority":"High","due":"May 19","impact":"$13K","status":"done"},{"id":"ns-debt-3","action":"Look into strategies for reducing current liabilities and improving the current ratio.","owner":"Jake","priority":"Med","due":"May 19","impact":"","status":"done"}]},{"id":"obj-02-orders","number":"02","title":"Total Orders","priority":"Grow food truck events from ~8/month to 12/month at $1,300+ average per event.","impact":"$40,000","cycle":"Q2 2026","status":"green","nextSteps":[{"id":"ns-orders-1","action":"Promote internal GM at CraigO's restaurant to free Andrew's time for events growth.","owner":"Andrew","priority":"High","due":"May 19","impact":"$40K","status":"done"},{"id":"ns-orders-2","action":"Decide on Trailer #1 repurpose to second event truck. 30 to 60 day window from 4/21. Is WIP first day yesterday, next 30 days will be the decisive point for us.","owner":"Andrew","priority":"High","due":"Mid-June","impact":"","status":"open"},{"id":"ns-orders-3","action":"Model events-manager role economics: salary impact plus GP delta under three scenarios.","owner":"Jake","priority":"Med","due":"May 17","impact":"","status":"done"},{"id":"ns-orders-4","action":"Track April and May events count and $/event in Margin Ledger to establish pace.","owner":"Jake","priority":"Med","due":"May 19","impact":"","status":"done"}]},{"id":"obj-03-cash","number":"03","title":"Cash Flow","priority":"Stop treating Hops & Thyme exposure as a CraigO's cash lever. Reclass on books, remove from Base assumption.","impact":"$24,000","cycle":"Q2 2026","status":"yellow","nextSteps":[{"id":"ns-cash-1","action":"Have conversation with Hops partners about modest $500/mo repayment gesture. (not ready to pull the trigger)","owner":"Andrew","priority":"Med","due":"May 19","impact":"$6K","status":"open"},{"id":"ns-cash-2","action":"Email Mindy to reclass Due From Hops & Thyme from current liability to current asset (intercompany).","owner":"Jake","priority":"High","due":"May 19","impact":"","status":"done"},{"id":"ns-cash-3","action":"Rerun Base forecast cash build with $0 Hops repayment assumption and show Andrew the new cash trajectory.","owner":"Jake","priority":"High","due":"May 17","impact":"$24K","status":"done"}]}]},"2026-03":{"meta":{"client":"CraigO's Pizza - Lakeway","cycle":"March 2026","displayName":"March 2026"},"items":[]}},"observations":{"2026-05":{"meta":{"client":"CraigO's Pizza - Lakeway","cycle":"May 2026"},"working":[{"id":"w-1","headline":"April NP +37% YoY","body":"$13,255 vs. PY April $9,709 (+$3,546). Best April in available 17-month history. Source: Actuals row 60."},{"id":"w-2","headline":"Gross margin trending up YoY; COS structurally lower","body":"GP% improved from FY 2025 64% blended to 2026 YTD 67%. COS dropped from 35.6% to 33.3% YTD (April 31.0% accrual). ~$36K/yr GP improvement at current revenue run-rate. Source: Actuals rows 49-51."},{"id":"w-3","headline":"Trailer #2 catering productivity surging","body":"April 2025: 9 event days, 279 tickets, $415 avg revenue/event. April 2026: 10 event days, 875 tickets, $1,011 avg. Revenue per event +2.4x YoY, tickets/event +3x. Trailer #2 is now a real catering channel, not a stationary truck pretending to be one. Source: Daily Log POS aggregates."},{"id":"w-4","headline":"Long-term debt deleveraging on plan","body":"LT debt $128K (Jan) to $107K (Apr) = -$21K paydown YTD. Forecast Debt Additions -$37,973 beats target -$32,400 by $5,573. Source: Actuals row 31."},{"id":"w-5","headline":"May pacing strong","body":"5/1-5/18 net sales $85,424, daily avg $4,746. Projecting +13-16% YoY vs. PY May $126,656. Volume momentum continuing post-April. Source: Daily Log POS."}],"watch":[{"id":"watch-1","headline":"YTD NP still behind PY despite April strength","body":"2026 YTD $16,498 vs. 2025 same 4-month period $25,569 = -$9,071 BEHIND. Q1 SXSW drag ($21K one-time) ate the headstart. April's $3.5K outperformance recovered ~40% of the gap. May and June need to continue the catch-up. Source: Actuals row 60."},{"id":"watch-2","headline":"Blended AOV at multi-year low: $28.55 April","body":"Lakeway-only AOV $33.02 is healthy and stable. Trailer #2 events at $11.56/ticket are the dilution. Mix is the issue, not store performance. $40 target structurally unreachable at current channel mix. Source: BvA, Daily Log."},{"id":"watch-3","headline":"Paper Supplies elevated, possibly structural","body":"5.2% of April revenue ($6,798) vs. 2.8% baseline ($3,670 expected). 100% PFG DISPOSABLES. ~$36K/yr drag if structural; $0 if PFG SKU misclassification. Single 10-min Andrew SKU audit resolves. Source: BvA."},{"id":"watch-4","headline":"PFG AmEx CC-01005 not deleveraging","body":"$43K April balance, roughly flat MoM. Other cards paid down $14K combined (AmEx-51006 plus 0% APR balance transfer), but the PFG float card itself is not moving. ~$14K/yr in 2% processing fees continuing until cash supports the ACH switch. Source: context.md, profile.json. Obj 01 is this lever."},{"id":"watch-5","headline":"Cash position narrowed in April","body":"$68.7K end-Mar to $51.4K end-Apr (-$17K MoM). Synopsys $13K still sitting in old account (Andrew commit from 4/21). AP $35.6K elevated. Working capital headroom got tighter even as revenue grew. Source: Actuals BS rows 17, 27."}]},"2026-04":{"meta":{},"working":[],"watch":[]},"2026-03":{"meta":{},"working":[],"watch":[]}},"commentary":{"2026-05":{"cards":{"orders":{"commentary":"Forecast 9% over target driven by trailers, not Lakeway alone. Trailer #2 tracking near target at 11 events rolling 30 days vs 12 target. April delivered 875 Trailer #2 tickets across those events. Lakeway tracking +12% YoY organic ex-SXSW. April delivered 4,581 consolidated, +20% over Base assumption.","sources":"Workbook Scoreboard, context.md May 2026 cycle, Daily Log POS"},"aov":{"commentary":"$40 blended target structurally unachievable under current channel mix. Trailer #2 event tickets average $11.56 and dilute the blended number by design. Lakeway-only AOV $33-34 is healthy under the franchisor menu price freeze. Target needs revision today.","sources":"Workbook Scoreboard, context.md, memory/target_validity.md"},"cos":{"commentary":"April actual 31.0% accrual, 28.2% post-Merchant Card reclass. Food Costs at 22.3% sit comfortably in USAR healthy pizza-shop band. Cost discipline is holding. Watch: Paper Supplies 5.2% vs typical 2.8% baseline. PFG SKU audit pending.","sources":"Workbook Scoreboard, state/2026-05/bva_report.md, context.md May 2026 cycle"},"payroll":{"commentary":"Dollar amount under target reads green. But Payroll % of Revenue was 36.1% in April, above industry healthy 28-32%. Dishwasher swap savings (~$1.5K/mo) not yet visible. May payroll close is the test. If savings land and GM pay bump stays deferred, full-year picture is cleaner.","sources":"Workbook Scoreboard, April Actuals row 53, context.md Team section"},"marketing":{"commentary":"On target. Marketing spend is structurally low and steady. No campaign activity beyond standard franchisee co-op. Growth lever is operational (events lead hire, channel mix optimization), not paid marketing.","sources":"Workbook Scoreboard, Actuals row 54"},"overhead":{"commentary":"Over target because target was set before Merchant Card Services reclass moved processing fees from COGS to Overhead. Other lines normal: Rent $8K/mo, Royalties quarterly $31K/yr, Auto $28K, Utilities $28K, Interest $24K. December 2025 had a $15K Interest spike (Rewards Network annual reclass). Target needs reset to reflect the new classification.","sources":"Workbook Scoreboard, Actuals row 56, context.md Key Overhead Lines"},"net-profit":{"commentary":"45% of stretch target. Base forecast reset from $125K (pre-April-close assumption) to $91K during this cycle's variance review. Model honesty: trailer mix dilution now baked in. Reverses 2025 loss of −$23,437. Path to $202K target requires food truck monetization + CC float exit + COS discipline holding. Each is a strategic objective, not baked in.","sources":"Workbook Scoreboard, Inputs Section 2, context.md May 2026 cycle"},"dso":{"commentary":"Cash + card business. Receivables only on catering and SXSW corporate accounts (Synopsys etc.), which clear fast. Effectively no DSO drag.","sources":"Workbook Scoreboard, context.md Cash Position"},"dio":{"commentary":"No inventory on the balance sheet. Restaurant runs direct-cost (PFG deliveries treated as expense, not inventory). DIO is structurally zero. Not a workbook error.","sources":"Workbook Scoreboard, Actuals row 19"},"sale-assets":{"commentary":"Target $24K reflects forecast OCA movement (Kaylani AR sweep + Synopsys SXSW receivable conversion). Synopsys $13K still sitting in an old account Andrew is transferring. Once that move completes, this line moves closer to target.","sources":"Workbook Scoreboard, Forecast Cash Flow Drivers, context.md (Synopsys, Kaylani)"},"dpo":{"commentary":"PFG runs net-30 by default. Andrew adds another 30 days via AmEx CC-01005 float, so cash-side DPO is closer to 60. The 25-day metric reflects AP turnover on books. Strategy: exit the AmEx float once cash flow supports ACH-paying PFG by day 30.","sources":"Workbook Scoreboard, context.md Primary Vendors, memory/cc_float_pattern.md"},"debt":{"commentary":"Forecast paydown $38K, beating target paydown $32K by $5.6K. Total debt down $17.7K MoM. AmEx CC-01005 (~$43K) is the PFG float. Remaining paydown from Broadway loan amort + LOC + AmEx-51006. ~$8-10K/yr interest savings if pace continues.","sources":"Workbook Scoreboard, context.md Debt Structure, Observations item 5"},"owner":{"commentary":"Andrew is not taking a meaningful draw. Strategic preference to rebuild cash. The −$5,526 actually reflects a Mindy Suspense plug on the books, not real owner activity. Reclass pending in May close.","sources":"Workbook Scoreboard, memory/bookkeeper_patterns.md"},"cash-flow":{"commentary":"Net build from debt paydown + operations. Below target because Hops & Thyme repayment was removed from Base assumptions per the 4/21 reframe (Hops is a partner entity, not a collectible). Target needs reset to reflect the Hops reframe (remove ~$24K assumption). The $58K real cash build is the operational truth from debt paydown + operations.","sources":"Workbook Scoreboard, meetings/2026-04-21-recap.md, memory/hops_thyme_relationship.md"}}},"2026-04":{"meta":{},"cards":{}},"2026-03":{"meta":{},"cards":{}}}};
+</script>
+<script>
+// Auto-generated by regenerate_scoreboard.py. do not edit by hand.
+// Generated 2026-05-19 from production Workbook.
+
+window.SCOREBOARD_DATA = {
+  "meta": {
+    "year": 2026,
+    "close_month_name": "April",
+    "close_month_short": "Apr",
+    "close_iso": "2026-04",
+    "scenario": "Base",
+    "actuals_label": "Q1 + Apr",
+    "forecast_range": "May-Dec",
+    "header_subtitle": "Full-year forecast at Base scenario · Year-to-date actuals + remaining-month forecast",
+    "close_subtitle": "April close · Base scenario",
+    "cycle_id": "2026-04",
+    "cycle_label": "April 2026",
+    "generated_at": "2026-05-19"
+  },
+  "root": {
+    "title": "Top-Level Drivers",
+    "sections": [
+      {
+        "name": "Profit Drivers",
+        "meta": "Full-year forecast at Base scenario · Year-to-date actuals + remaining-month forecast",
+        "summary": {
+          "id": "net-profit",
+          "name": "Net Profit",
+          "score": "red",
+          "forecast": "$90,964",
+          "lastYear": "−$23,437",
+          "target": "$68,159",
+          "ytd": "$16,498",
+          "lastYearYtd": "$25,568",
+          "variance": "+$22,805 vs target",
+          "varianceYtdVsPy": "−$9,070 (−35%) vs PY YTD",
+          "flag": null,
+          "drilldown": null
+        },
+        "drivers": [
+          {
+            "id": "orders",
+            "name": "Total Orders",
+            "score": "green",
+            "forecast": "47,679",
+            "lastYear": "41,441",
+            "target": "47,605",
+            "ytd": "14,973",
+            "lastYearYtd": "13,002",
+            "variance": "+73 vs target",
+            "varianceYtdVsPy": "+1,971 (+15%) vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "aov",
+            "name": "Avg. Order Value",
+            "score": "yellow",
+            "forecast": "$31.56",
+            "lastYear": "$35.00",
+            "target": "$32.40",
+            "ytd": "$33.13",
+            "lastYearYtd": "$36.43",
+            "variance": "−$1 vs target",
+            "varianceYtdVsPy": "−$3 (−9%) vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "cos",
+            "name": "COS (% of Revenue)",
+            "score": "green",
+            "forecast": "31.8%",
+            "lastYear": "35.6%",
+            "target": "32.0%",
+            "ytd": "33.3%",
+            "lastYearYtd": "35.7%",
+            "variance": "−0.2pp vs target",
+            "varianceYtdVsPy": "−2.4pp vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "payroll",
+            "name": "Payroll Expenses",
+            "score": "green",
+            "forecast": "$558,663",
+            "lastYear": "$571,465",
+            "target": "$575,000",
+            "ytd": "$182,663",
+            "lastYearYtd": "$177,681",
+            "variance": "−$16,337 vs target",
+            "varianceYtdVsPy": "+$4,982 (+3%) vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "marketing",
+            "name": "Mkt Expenses (% of Rev.)",
+            "score": "green",
+            "forecast": "2.0%",
+            "lastYear": "2.7%",
+            "target": "2.0%",
+            "ytd": "2.4%",
+            "lastYearYtd": "2.1%",
+            "variance": "−0.0pp vs target",
+            "varianceYtdVsPy": "+0.2pp vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "overhead",
+            "name": "Overhead Expenses",
+            "score": "yellow",
+            "forecast": "$371,047",
+            "lastYear": "$356,022",
+            "target": "$375,000",
+            "ytd": "$127,047",
+            "lastYearYtd": "$95,525",
+            "variance": "−$3,953 vs target",
+            "varianceYtdVsPy": "+$31,522 (+33%) vs PY YTD",
+            "flag": null,
+            "drilldown": null
+          }
+        ]
+      },
+      {
+        "name": "Cash Flow Drivers",
+        "meta": "Working-capital cycle + debt + owner movement",
+        "summary": {
+          "id": "cash-flow",
+          "name": "Cash Flow",
+          "score": "red",
+          "forecast": "$76,485",
+          "lastYear": "$11,195",
+          "target": "$65,555",
+          "ytd": "−$458",
+          "lastYearYtd": "",
+          "variance": "+$10,930 vs target",
+          "varianceYtdVsPy": "",
+          "flag": null,
+          "drilldown": null
+        },
+        "drivers": [
+          {
+            "id": "dso",
+            "name": "Days Sales Outstanding",
+            "score": "green",
+            "forecast": "0",
+            "lastYear": "0",
+            "target": "1",
+            "ytd": "0",
+            "lastYearYtd": "",
+            "variance": "−1 day vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "dio",
+            "name": "Days Inv. Outstanding",
+            "score": "green",
+            "forecast": "0",
+            "lastYear": "0",
+            "target": "0",
+            "ytd": "0",
+            "lastYearYtd": "",
+            "variance": "+0 days vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "sale-assets",
+            "name": "Sale (Purchase) of Assets",
+            "score": "green",
+            "forecast": "$1,755",
+            "lastYear": "−$9,809",
+            "target": "$24,000",
+            "ytd": "−$6,245",
+            "lastYearYtd": "",
+            "variance": "−$22,245 vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "dpo",
+            "name": "Days Payable Outstanding",
+            "score": "green",
+            "forecast": "25.2",
+            "lastYear": "16.8",
+            "target": "25.0",
+            "ytd": "26.2",
+            "lastYearYtd": "",
+            "variance": "+0.2 days vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "debt",
+            "name": "Debt Additions (Repayments)",
+            "score": "yellow",
+            "forecast": "−$37,973",
+            "lastYear": "$60,384",
+            "target": "−$32,400",
+            "ytd": "−$16,965",
+            "lastYearYtd": "",
+            "variance": "−$5,573 vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          },
+          {
+            "id": "owner",
+            "name": "Owners' Investments (Draws)",
+            "score": "green",
+            "forecast": "$12,474",
+            "lastYear": "−$11,556",
+            "target": "$0",
+            "ytd": "−$5,526",
+            "lastYearYtd": "",
+            "variance": "+$12,474 vs target",
+            "varianceYtdVsPy": "",
+            "flag": null,
+            "drilldown": null
+          }
+        ]
+      }
+    ]
+  }
+};
+
+</script>
+<script>
+// ============================================================================
+// DATA. Loaded from data.js (auto-generated from the production Workbook).
+// If data.js is missing or stale, the fallback below renders.
+// To refresh: run regenerate_scoreboard.py
+// ============================================================================
+
+const DATA = window.SCOREBOARD_DATA || { meta: {}, root: { sections: [] } };
+
+// ============================================================================
+// PUBLISHED MODE
+// Set by publish.py when assembling the hosted snapshot. Read-only; no backend.
+// All cycle data is inlined into window.PUBLISHED_DATA at publish time; the fetch
+// shim intercepts /cycles, /objectives, /observations, /commentary, /regen,
+// /workbook-status and serves from that frozen snapshot instead of hitting a
+// server that doesn't exist on margintheory.co.
+// ============================================================================
+const PUBLISHED_MODE = !!window.PUBLISHED_MODE;
+const PUBLISHED_DATA = window.PUBLISHED_DATA || { cycles: [], objectives: {}, observations: {}, commentary: {} };
+
+if (PUBLISHED_MODE) {
+  document.body.dataset.publishedMode = 'true';
+  installPublishedFetchShim();
+  // Block any input on contenteditable elements at capture phase. Selection /
+  // scrolling still works; typing, paste, and delete are silently dropped.
+  document.addEventListener('beforeinput', (e) => {
+    if (e.target && e.target.isContentEditable) e.preventDefault();
+  }, true);
+  document.addEventListener('paste', (e) => {
+    if (e.target && e.target.isContentEditable) e.preventDefault();
+  }, true);
+  document.addEventListener('drop', (e) => {
+    if (e.target && e.target.isContentEditable) e.preventDefault();
+  }, true);
+}
+
+function installPublishedFetchShim() {
+  const origFetch = window.fetch.bind(window);
+  const jsonResponse = (status, payload) => Promise.resolve(new Response(
+    JSON.stringify(payload),
+    { status, headers: { 'Content-Type': 'application/json' } }
+  ));
+  const cycleFromUrl = (url) => {
+    const m = url.match(/[?&]cycle=([^&]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  };
+  const defaultForKind = (kind) => {
+    if (kind === 'observations') return { meta: {}, working: [], watch: [] };
+    if (kind === 'commentary') return { meta: {}, cards: {} };
+    return { items: [] };
+  };
+  window.fetch = function(input, init) {
+    const url = typeof input === 'string' ? input : (input && input.url) || '';
+    const isPost = !!(init && init.method && init.method.toUpperCase() === 'POST');
+
+    if (!isPost && url.startsWith('/cycles')) {
+      return jsonResponse(200, { cycles: PUBLISHED_DATA.cycles || [] });
+    }
+    if (!isPost && url.startsWith('/workbook-status')) {
+      // Frozen snapshot. Version never bumps, polling becomes a no-op.
+      return jsonResponse(200, { version: 0, mtime: null, last_regen_ok: true });
+    }
+    if (!isPost) {
+      for (const kind of ['objectives', 'observations', 'commentary']) {
+        if (url.startsWith('/' + kind)) {
+          const cycleId = cycleFromUrl(url);
+          const bucket = PUBLISHED_DATA[kind] || {};
+          const body = cycleId && bucket[cycleId] ? bucket[cycleId] : defaultForKind(kind);
+          return jsonResponse(200, body);
+        }
+      }
+    }
+    // POSTs to write/refresh endpoints: silently succeed. Edit UI is hidden, but
+    // any stray client-side autosave gets absorbed without surfacing an error.
+    if (isPost && (
+      url.startsWith('/objectives') || url.startsWith('/observations') ||
+      url.startsWith('/commentary') || url.startsWith('/action-plan') ||
+      url.startsWith('/regen')
+    )) {
+      return jsonResponse(200, { ok: true, published: true });
+    }
+    return origFetch(input, init);
+  };
+}
+
+// ============================================================================
+// State + Rendering
+// ============================================================================
+
+const state = { path: ['root'] };
+
+function updateHeaderFromMeta() {
+  // Pulls every cycle-specific label from DATA.meta so nothing is hardcoded.
+  const m = (DATA && DATA.meta) || {};
+  const cycleEl = document.getElementById('header-cycle-label');
+  const subEl = document.getElementById('header-close-subtitle');
+  if (cycleEl) cycleEl.textContent = m.cycle_label || 'Reporting Period';
+  if (subEl) subEl.textContent = m.close_subtitle || '';
+  // Meeting date: optional. Populated from objectives.json meta if present.
+  const mtgEl = document.getElementById('header-meeting-date');
+  if (mtgEl) {
+    const mtg = (typeof objectives !== 'undefined' && objectives.meta && objectives.meta.meeting) ? objectives.meta.meeting : '';
+    if (mtg) { mtgEl.textContent = '📅 ' + mtg; mtgEl.style.display = ''; }
+    else { mtgEl.style.display = 'none'; }
+  }
+  // Footer generation date.
+  const footEl = document.getElementById('footer-generated');
+  if (footEl) {
+    footEl.textContent = m.generated_at ? 'Margin Theory · Generated ' + m.generated_at : 'Margin Theory';
+  }
+  // Page title.
+  if (m.cycle_label) document.title = 'Strategic Scoreboard · ' + m.cycle_label;
+}
+
+function nodeAt(id) { return DATA[id]; }
+function currentNode() { return nodeAt(state.path[state.path.length - 1]); }
+
+function navigateTo(id) {
+  if (!DATA[id]) return;
+  state.path.push(id);
+  render();
+}
+
+function navigateTopRoot() {
+  state.path = ['root'];
+  render();
+}
+
+function navigateUp(toIndex) {
+  state.path = state.path.slice(0, toIndex + 1);
+  render();
+}
+
+function renderBreadcrumb() {
+  const el = document.getElementById('breadcrumb');
+  if (state.path.length === 1) {
+    el.innerHTML = '<span class="current">Scoreboard</span>';
+    return;
+  }
+  const html = state.path.map((id, i) => {
+    const isLast = i === state.path.length - 1;
+    const label = id === 'root' ? 'Scoreboard' : (DATA[id]?.parentName || id);
+    if (isLast) {
+      return `<span class="current">${label}</span>`;
+    }
+    return `<a onclick="navigateUp(${i})">${label}</a><span class="sep">›</span>`;
+  }).join(' ');
+  el.innerHTML = html;
+}
+
+function driverCard(d, opts={}) {
+  const isSummary = opts.summary || false;
+  const summaryClass = isSummary ? 'summary' : '';
+  const flag = d.flag ? `<div class="card-flag">${d.flag}</div>` : '';
+  const variance = d.variance ? `<div class="card-variance ${d.score}">${d.variance}</div>` : '';
+  const varianceYtd = d.varianceYtdVsPy ? `<div class="card-variance-ytd">${d.varianceYtdVsPy}</div>` : '';
+  const cardId = escapeHtml(d.id);
+  const cmt = commentaryMap[d.id];
+  const commentaryRaw = (typeof cmt === 'string') ? cmt : (cmt && cmt.commentary) || '';
+  const sourcesRaw = (cmt && typeof cmt === 'object') ? (cmt.sources || '') : '';
+  const commentary = commentaryRaw.trim();
+  const sources = sourcesRaw.trim();
+  const commentaryEmpty = commentary === '' ? 'true' : 'false';
+  const sourcesEmpty = sources === '' ? 'true' : 'false';
+  const commentaryHtml = escapeHtml(commentary);
+  const sourcesHtml = escapeHtml(sources);
+  return `
+    <div class="card-flip">
+      <div class="card-inner" id="card-inner-${cardId}">
+        <div class="card-face card-face-front">
+          <div class="card ${summaryClass} ${d.score}" onclick="flipCard('${cardId}')">
+            <div class="card-top">
+              <div class="card-name">${d.name}</div>
+              <div class="card-top-right">
+                <div class="score-dot ${d.score}"></div>
+              </div>
+            </div>
+            <div class="card-value">${d.forecast}</div>
+            <div class="card-value-label">Forecast</div>
+            ${variance}
+            ${varianceYtd}
+            ${flag}
+            <div class="compare-table">
+              <div class="compare-row target">
+                <span class="compare-label">Target</span>
+                <span class="compare-value">${d.target}</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-label">Last Year</span>
+                <span class="compare-value">${d.lastYear}</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-label">Year-to-Date</span>
+                <span class="compare-value">${d.ytd}</span>
+              </div>
+              ${d.lastYearYtd ? `<div class="compare-row comparable">
+                <span class="compare-label">Last Year (same period)</span>
+                <span class="compare-value">${d.lastYearYtd}</span>
+              </div>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="card-face card-face-back">
+          <div class="card ${summaryClass} ${d.score}">
+            <div class="card-back-top">
+              <div class="card-back-name">${d.name}</div>
+              <button class="card-back-close" onclick="event.stopPropagation(); flipCard('${cardId}')" title="Flip back">↺</button>
+            </div>
+            <div class="card-back-eyebrow">What's driving this</div>
+            <div class="card-back-text"
+                 contenteditable="true"
+                 spellcheck="true"
+                 data-card-id="${cardId}"
+                 data-empty="${commentaryEmpty}"
+                 data-placeholder="What's driving this number? Why are we here? Click to edit."
+                 onfocus="this.dataset.empty='false'"
+                 onblur="onCommentaryBlur('${cardId}', this)"
+                 oninput="onCommentaryInput('${cardId}', this)">${commentaryHtml}</div>
+            <div class="card-back-sources"
+                 contenteditable="true"
+                 spellcheck="false"
+                 data-card-id="${cardId}"
+                 data-empty="${sourcesEmpty}"
+                 data-placeholder="Sources: workbook tab, file path, etc."
+                 onfocus="this.dataset.empty='false'"
+                 onblur="onSourcesBlur('${cardId}', this)"
+                 oninput="onSourcesInput('${cardId}', this)">${sourcesHtml ? 'Sources: ' + sourcesHtml : ''}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderRoot() {
+  const node = nodeAt('root');
+  const html = node.sections.map(section => {
+    const cards = section.drivers.map(d => driverCard(d)).join('');
+    const summaryHtml = driverCard(section.summary, {summary: true});
+    return `
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">${section.name}</div>
+          <div class="section-meta">${section.meta}</div>
+        </div>
+        <div class="grid grid-3">${cards}</div>
+        <div style="margin-top:14px;">
+          ${summaryHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('content').innerHTML = html;
+}
+
+function renderDrilldown() {
+  const node = currentNode();
+  const cards = node.drivers.map(d => driverCard(d)).join('');
+  const html = `
+    <div class="drilldown-header">
+      <div class="drilldown-info">
+        <div class="drilldown-eyebrow">Drilling into</div>
+        <div class="drilldown-title">${node.parentName}</div>
+        <div class="drilldown-context">${node.context}</div>
+      </div>
+      <div class="drilldown-rollup">
+        <div class="label">Forecast</div>
+        <div class="value">${node.parentValue}</div>
+        <div style="margin-top:8px;"><span class="score-dot ${node.parentScore}" style="display:inline-block;"></span></div>
+      </div>
+    </div>
+    <div class="commentary">${node.commentary}</div>
+    <div class="grid">${cards}</div>
+  `;
+  document.getElementById('content').innerHTML = html;
+}
+
+function render() {
+  renderBreadcrumb();
+  if (state.path.length === 1) renderRoot();
+  else renderDrilldown();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Make functions globally available for inline handlers
+window.navigateTo = navigateTo;
+window.navigateUp = navigateUp;
+window.navigateTopRoot = navigateTopRoot;
+
+// ============================================================================
+// REFRESH FROM WORKBOOK
+// Posts to /regen → runs regenerate_scoreboard.py → re-fetches data.js → re-renders.
+// Preserves the current drilldown path so users don't lose their place.
+// ============================================================================
+
+async function refreshFromWorkbook() {
+  const btn = document.getElementById('refresh-btn');
+  const status = document.getElementById('refresh-status');
+  if (!btn || btn.disabled) return;
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+  status.className = 'refresh-status';
+  status.textContent = 'Reading workbook…';
+
+  const setError = (msg) => {
+    status.className = 'refresh-status error';
+    status.textContent = msg;
+  };
+  const setSuccess = (msg) => {
+    status.className = 'refresh-status success';
+    status.textContent = msg;
+    setTimeout(() => { status.className = 'refresh-status'; status.textContent = ''; }, 4000);
+  };
+
+  try {
+    const res = await fetch('/regen', { method: 'POST' });
+    let payload = null;
+    try { payload = await res.json(); } catch (e) { /* non-JSON response */ }
+    if (!res.ok || !payload || !payload.ok) {
+      const err = (payload && (payload.error || payload.stderr)) || `HTTP ${res.status}`;
+      setError('Refresh failed. ' + err.split('\n')[0].slice(0, 120));
+      return;
+    }
+    await reloadDataAndRender();
+    setSuccess('Refreshed from workbook ✓');
+  } catch (e) {
+    setError('Refresh failed. ' + (e.message || String(e)).slice(0, 120));
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+// Pulls a fresh data.js (cache-busted) and re-renders the scoreboard in place.
+// Used by both the manual refresh button and the auto-refresh poller so the
+// client only has one place that knows how to swap in new workbook data.
+async function reloadDataAndRender() {
+  await new Promise((resolve, reject) => {
+    const old = document.querySelector('script[data-source="data"]');
+    if (old) old.remove();
+    const s = document.createElement('script');
+    s.src = `data.js?t=${Date.now()}`;
+    s.dataset.source = 'data';
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('Failed to reload data.js'));
+    document.head.appendChild(s);
+  });
+  Object.keys(DATA).forEach(k => delete DATA[k]);
+  Object.assign(DATA, window.SCOREBOARD_DATA || {});
+  // Trim any drilldown path entries that no longer exist
+  while (state.path.length > 1 && !DATA[state.path[state.path.length - 1]]) {
+    state.path.pop();
+  }
+  render();
+  updateHeaderFromMeta();
+}
+
+// Auto-refresh loop. Polls /workbook-status every 3s; when the server's version
+// counter bumps (set by either the workbook file-watcher or a manual /regen),
+// re-fetches data.js and re-renders. A small toast confirms the refresh.
+let _lastWorkbookVersion = null;
+let _autoRefreshTimer = null;
+
+async function pollWorkbookStatus() {
+  try {
+    const res = await fetch('/workbook-status', { cache: 'no-store' });
+    if (!res.ok) return;
+    const status = await res.json();
+    if (_lastWorkbookVersion === null) {
+      _lastWorkbookVersion = status.version;
+      return;
+    }
+    if (typeof status.version === 'number' && status.version > _lastWorkbookVersion) {
+      _lastWorkbookVersion = status.version;
+      try {
+        await reloadDataAndRender();
+        showAutoRefreshToast('Workbook updated · Refreshed ✓');
+      } catch (e) {
+        console.warn('Auto-refresh re-render failed:', e);
+      }
+    }
+  } catch (e) {
+    // Network blip or server restart. Skip this tick; next poll will retry.
+  }
+}
+
+function startWorkbookAutoRefresh(intervalMs = 3000) {
+  if (_autoRefreshTimer !== null) return;
+  pollWorkbookStatus();
+  _autoRefreshTimer = setInterval(pollWorkbookStatus, intervalMs);
+}
+
+// Client portal publish — manual only. Pressing "Publish to Client" posts to
+// /publish-now; the server spawns the publish chain (publish.py + git push) in
+// a background thread. The status pill polls /publish-status to show progress:
+// green dot + "Published HH:MM" when healthy, pulsing dot mid-flight, red dot
+// + Retry button on failure, gray "Not published yet" before the first push.
+const _publishUI = { intervalMs: 4000, state: null, timer: null };
+
+function fmtClockTime(ts) {
+  try {
+    return new Date(ts * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  } catch (e) {
+    return '';
+  }
+}
+
+function renderPublishStatus() {
+  const el = document.getElementById('publish-status');
+  const btn = document.getElementById('publish-btn');
+  if (!el) return;
+  const s = _publishUI.state;
+  if (!s) { el.innerHTML = ''; return; }
+
+  let dotClass = 'gray';
+  let text = 'Not published yet';
+  let action = null;
+  let actionLabel = '';
+
+  if (s.in_flight) {
+    dotClass = 'pulse';
+    text = 'Publishing…';
+    if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+  } else {
+    if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    if (s.last_publish_ok === false && s.last_publish_error) {
+      dotClass = 'red';
+      text = 'Publish error';
+      action = 'retry';
+      actionLabel = 'Retry';
+    } else if (s.last_publish_at) {
+      dotClass = 'green';
+      text = `Published ${fmtClockTime(s.last_publish_at)}`;
+    }
+  }
+
+  el.setAttribute('title', s.last_publish_error || (s.last_publish_at ? 'Last successful publish' : 'Press "Publish to Client" to push live'));
+  el.innerHTML = `
+    <span class="publish-dot ${dotClass}"></span>
+    <span>${escapeHtml(text)}</span>
+    ${action ? `<button class="publish-action" onclick="publishToClient()">${escapeHtml(actionLabel)}</button>` : ''}
+  `;
+}
+
+async function pollPublishStatus() {
+  try {
+    const res = await fetch('/publish-status', { cache: 'no-store' });
+    if (!res.ok) return;
+    _publishUI.state = await res.json();
+    renderPublishStatus();
+  } catch (e) {
+    // Server restart or network blip. Skip this tick.
+  }
+}
+
+// "Publish to Client" button handler. Kicks off the publish chain and polls
+// /publish-status until the in-flight state clears so the UI tracks progress.
+async function publishToClient() {
+  const btn = document.getElementById('publish-btn');
+  if (btn && btn.disabled) return;
+  if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+  try {
+    await fetch('/publish-now', { method: 'POST' });
+  } catch (e) {
+    // Network or server error — surface via the next poll.
+  }
+  // Poll immediately so the pill flips to "Publishing…" without waiting for
+  // the next interval tick.
+  pollPublishStatus();
+  // Speed up polling while in-flight so the user sees the transition.
+  const fast = setInterval(async () => {
+    await pollPublishStatus();
+    if (_publishUI.state && !_publishUI.state.in_flight) {
+      clearInterval(fast);
+    }
+  }, 1500);
+}
+
+function startPublishStatusPolling() {
+  if (PUBLISHED_MODE) return;
+  pollPublishStatus();
+  if (!_publishUI.timer) {
+    _publishUI.timer = setInterval(pollPublishStatus, _publishUI.intervalMs);
+  }
+}
+
+window.publishToClient = publishToClient;
+
+function showAutoRefreshToast(message) {
+  let toast = document.getElementById('auto-refresh-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'auto-refresh-toast';
+    toast.className = 'auto-refresh-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('visible');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+  }, 2400);
+}
+
+window.refreshFromWorkbook = refreshFromWorkbook;
+
+// ============================================================================
+// CYCLES
+// Each cycle (e.g., 2026-04, 2026-05) has its own objectives + action plan.
+// The switcher in the toolbar lets the user flip between cycles. Scoreboard
+// data is always live from the workbook, independent of cycle.
+// ============================================================================
+
+let currentCycle = null;
+let cyclesList = [];
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function cycleParam() {
+  return currentCycle ? `?cycle=${encodeURIComponent(currentCycle)}` : '';
+}
+
+function formatCycleLabel(cycle) {
+  if (!cycle) return '';
+  if (cycle.displayName) return cycle.displayName;
+  // Try to format YYYY-MM as "Mon YYYY"
+  const m = /^(\d{4})-(\d{2})$/.exec(cycle.id || '');
+  if (m) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monIdx = parseInt(m[2], 10) - 1;
+    if (monIdx >= 0 && monIdx < 12) return `${months[monIdx]} ${m[1]}`;
+  }
+  return cycle.id;
+}
+
+async function loadCycles() {
+  try {
+    const res = await fetch('/cycles', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    cyclesList = Array.isArray(data.cycles) ? data.cycles : [];
+  } catch (e) {
+    cyclesList = [];
+    console.warn('Cycles load failed:', e);
+  }
+  // Default to the most recent cycle (cyclesList is sorted desc by id)
+  if (cyclesList.length && !currentCycle) {
+    currentCycle = cyclesList[0].id;
+  }
+  renderCycleSwitcher();
+  updateScoreboardVisibility();
+  // Now that we know the cycle, load all data layers in parallel
+  await Promise.all([loadObjectives(), loadObservations(), loadCommentary()]);
+  // Re-render scoreboard with commentary populated on card backs
+  render();
+}
+
+function isOnCurrentCycle() {
+  return cyclesList.length > 0 && currentCycle === cyclesList[0].id;
+}
+
+function updateScoreboardVisibility() {
+  // Hide the live scoreboard + observations when viewing a Prior cycle (both reflect
+  // current workbook state, which is irrelevant context for retrospective review).
+  const header = document.querySelector('.scoreboard-section-header');
+  const content = document.getElementById('content');
+  const observations = document.getElementById('observations-section');
+  const visible = isOnCurrentCycle();
+  if (header) header.style.display = visible ? '' : 'none';
+  if (content) content.style.display = visible ? '' : 'none';
+  if (observations) observations.style.display = visible ? '' : 'none';
+  const oldHint = document.getElementById('prior-cycle-hint');
+  if (oldHint) oldHint.remove();
+  if (!visible && content) {
+    const hint = document.createElement('div');
+    hint.id = 'prior-cycle-hint';
+    hint.style.cssText = 'margin: 24px 0 40px; padding: 14px 18px; background: var(--bg); border: 1px dashed var(--border); border-radius: var(--radius-sm); color: var(--text-tertiary); font-size: 13px; font-style: italic;';
+    hint.textContent = 'Scoreboard + observations show current workbook state. Switch to Current to view them.';
+    content.parentNode.insertBefore(hint, content);
+  }
+}
+
+function relativeCycleLabel(index) {
+  if (index === 0) return 'Current';
+  if (index === 1) return 'Prior';
+  return 'Prior − ' + index;
+}
+
+function renderCycleSwitcher() {
+  const el = document.getElementById('cycle-switcher');
+  if (!el) return;
+  if (!cyclesList.length) {
+    el.innerHTML = '<span class="cycle-empty-msg">No cycles found</span>';
+    return;
+  }
+  const options = cyclesList.map((c, i) => {
+    const label = relativeCycleLabel(i);
+    const cycleName = formatCycleLabel(c);  // e.g. "April 2026"
+    const selected = c.id === currentCycle ? 'selected' : '';
+    return `<option value="${escapeHtml(c.id)}" ${selected}>${escapeHtml(label)} · ${escapeHtml(cycleName)}</option>`;
+  }).join('');
+  el.innerHTML = `
+    <span class="cycle-dropdown-label">Cycle</span>
+    <select class="cycle-dropdown" id="cycle-dropdown" onchange="setCurrentCycle(this.value)" aria-label="Select cycle">
+      ${options}
+    </select>
+  `;
+}
+
+async function setCurrentCycle(cycleId) {
+  if (cycleId === currentCycle) return;
+  currentCycle = cycleId;
+  renderCycleSwitcher();
+  updateScoreboardVisibility();
+  await Promise.all([loadObjectives(), loadObservations(), loadCommentary()]);
+  render();
+}
+
+window.setCurrentCycle = setCurrentCycle;
+
+// ============================================================================
+// OBJECTIVES
+// Live-editable annual objectives at the top of the page. Each edit auto-saves
+// to /objectives (POST) after a 600ms debounce. Persists across page reloads.
+// ============================================================================
+
+const objectives = { meta: {}, items: [] };
+let objSaveTimer = null;
+let objSaveInFlight = false;
+
+function setObjSaveStatus(state, msg) {
+  const el = document.getElementById('objectives-save-status');
+  if (!el) return;
+  el.className = 'objectives-save-status ' + (state || '');
+  el.textContent = msg || '';
+}
+
+async function loadObjectives() {
+  try {
+    const res = await fetch('/objectives' + cycleParam(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    objectives.meta = data.meta || {};
+    objectives.items = Array.isArray(data.items) ? data.items : [];
+  } catch (e) {
+    objectives.items = [];
+    console.warn('Objectives load failed:', e);
+  }
+  renderObjectives();
+  updateHeaderFromMeta();
+}
+
+function scheduleObjSave() {
+  setObjSaveStatus('saving', 'Saving...');
+  clearTimeout(objSaveTimer);
+  objSaveTimer = setTimeout(saveObjectives, 600);
+}
+
+async function saveObjectives() {
+  if (objSaveInFlight) {
+    setTimeout(scheduleObjSave, 200);
+    return;
+  }
+  objSaveInFlight = true;
+  try {
+    const res = await fetch('/objectives' + cycleParam(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meta: objectives.meta, items: objectives.items }),
+    });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error('HTTP ' + res.status + ' ' + txt.slice(0, 80));
+    }
+    setObjSaveStatus('saved', 'Saved ✓');
+    setTimeout(() => { setObjSaveStatus('', ''); }, 1800);
+  } catch (e) {
+    setObjSaveStatus('error', 'Save failed. ' + (e.message || e).slice(0, 80));
+  } finally {
+    objSaveInFlight = false;
+  }
+}
+
+function newObjectiveId() {
+  return 'o-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+}
+
+function findObjective(id) {
+  return objectives.items.find(i => i.id === id);
+}
+
+function normalizeStatus(s) {
+  const v = (s || '').toString().toLowerCase();
+  return (v === 'green' || v === 'yellow' || v === 'red') ? v : 'green';
+}
+
+function newStepId() {
+  return 'ns-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+}
+
+function findStep(objId, stepId) {
+  const obj = findObjective(objId);
+  if (!obj || !Array.isArray(obj.nextSteps)) return null;
+  return obj.nextSteps.find(s => s.id === stepId);
+}
+
+function normalizeStepPriority(p) {
+  const v = (p || '').toString().toLowerCase();
+  if (v.startsWith('h')) return 'High';
+  if (v.startsWith('m')) return 'Med';
+  if (v.startsWith('l')) return 'Low';
+  return 'Med';
+}
+
+function renderNextSteps(obj) {
+  const objId = escapeHtml(obj.id);
+  const steps = Array.isArray(obj.nextSteps) ? obj.nextSteps : [];
+  if (!steps.length) {
+    return `
+      <div class="next-steps">
+        <div class="next-steps-head">Next Steps</div>
+        <div class="next-steps-empty">No next steps yet.</div>
+        <button class="next-step-add-btn" onclick="addNextStep('${objId}')">+ Add Next Step</button>
+      </div>
+    `;
+  }
+  const rows = steps.map(s => {
+    const sid = escapeHtml(s.id);
+    const done = s.status === 'done';
+    const checkChar = done ? '✓' : '';
+    const action = escapeHtml(s.action || '');
+    const owner = escapeHtml(s.owner || '');
+    const due = escapeHtml(s.due || '');
+    const impact = escapeHtml(s.impact || '');
+    const prio = normalizeStepPriority(s.priority);
+    const actionEmpty = (s.action || '').trim() === '' ? 'true' : 'false';
+    const ownerEmpty = (s.owner || '').trim() === '' ? 'true' : 'false';
+    const dueEmpty = (s.due || '').trim() === '' ? 'true' : 'false';
+    const impactEmpty = (s.impact || '').trim() === '' ? 'true' : 'false';
+    return `
+      <li class="next-step ${done ? 'done' : ''}" data-obj-id="${objId}" data-step-id="${sid}">
+        <div class="next-step-check" onclick="toggleNextStepStatus('${objId}', '${sid}')" title="${done ? 'Mark open' : 'Mark done'}">${checkChar}</div>
+        <div class="next-step-prio prio-${prio.toLowerCase()}" onclick="cycleNextStepPriority('${objId}', '${sid}')" title="Click to change priority">${prio}</div>
+        <div class="next-step-body">
+          <div class="next-step-action"
+               contenteditable="true"
+               spellcheck="true"
+               data-empty="${actionEmpty}"
+               data-placeholder="Type the next step..."
+               onfocus="this.dataset.empty='false'"
+               onblur="onNextStepBlur('${objId}', '${sid}', 'action', this)"
+               oninput="onNextStepInput('${objId}', '${sid}', 'action', this)">${action}</div>
+          <div class="next-step-meta">
+            <span class="next-step-pill">
+              <span class="next-step-pill-label">Owner</span>
+              <span class="next-step-pill-value"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-empty="${ownerEmpty}"
+                    data-placeholder="set"
+                    onfocus="this.dataset.empty='false'"
+                    onblur="onNextStepBlur('${objId}', '${sid}', 'owner', this)"
+                    oninput="onNextStepInput('${objId}', '${sid}', 'owner', this)">${owner}</span>
+            </span>
+            <span class="next-step-pill">
+              <span class="next-step-pill-label">Due</span>
+              <span class="next-step-pill-value"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-empty="${dueEmpty}"
+                    data-placeholder="set"
+                    onfocus="this.dataset.empty='false'"
+                    onblur="onNextStepBlur('${objId}', '${sid}', 'due', this)"
+                    oninput="onNextStepInput('${objId}', '${sid}', 'due', this)">${due}</span>
+            </span>
+            <span class="next-step-pill">
+              <span class="next-step-pill-label">$ Impact</span>
+              <span class="next-step-pill-value"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-empty="${impactEmpty}"
+                    data-placeholder="set"
+                    onfocus="this.dataset.empty='false'"
+                    onblur="onNextStepBlur('${objId}', '${sid}', 'impact', this)"
+                    oninput="onNextStepInput('${objId}', '${sid}', 'impact', this)">${impact}</span>
+            </span>
+          </div>
+        </div>
+        <div class="reorder-group">
+          <button class="reorder-btn" onclick="moveNextStep('${objId}', '${sid}', -1)" title="Move up">▲</button>
+          <button class="reorder-btn" onclick="moveNextStep('${objId}', '${sid}', 1)" title="Move down">▼</button>
+        </div>
+        <button class="next-step-delete" onclick="deleteNextStep('${objId}', '${sid}')" title="Delete">×</button>
+      </li>
+    `;
+  }).join('');
+  return `
+    <div class="next-steps">
+      <div class="next-steps-head">Next Steps</div>
+      <ul class="next-steps-list">${rows}</ul>
+      <button class="next-step-add-btn" onclick="addNextStep('${objId}')">+ Add Next Step</button>
+    </div>
+  `;
+}
+
+function renderObjectives() {
+  const ul = document.getElementById('objectives-list');
+  if (!ul) return;
+  if (!objectives.items.length) {
+    ul.innerHTML = '<li class="objectives-empty">No objectives yet. Click "+ Add Objective" to start.</li>';
+    return;
+  }
+  ul.innerHTML = objectives.items.map(item => {
+    const id = escapeHtml(item.id);
+    const status = normalizeStatus(item.status);
+    const number = escapeHtml(item.number || '');
+    const title = escapeHtml(item.title || '');
+    const priority = escapeHtml(item.priority || '');
+    const impact = escapeHtml(item.impact || '');
+    const cycle = escapeHtml(item.cycle || '');
+    const titleEmpty = (item.title || '').trim() === '' ? 'true' : 'false';
+    const priorityEmpty = (item.priority || '').trim() === '' ? 'true' : 'false';
+    const impactEmpty = (item.impact || '').trim() === '' ? 'true' : 'false';
+    const cycleEmpty = (item.cycle || '').trim() === '' ? 'true' : 'false';
+    const numberEmpty = (item.number || '').trim() === '' ? 'true' : 'false';
+    return `
+      <li class="objective-item ${status}" data-id="${id}">
+        <div class="objective-header">
+          <div class="objective-status-dot" onclick="cycleObjectiveStatus('${id}')" title="Click to change status"></div>
+          <div class="objective-number"
+               contenteditable="true"
+               spellcheck="false"
+               data-empty="${numberEmpty}"
+               data-placeholder="##"
+               onfocus="this.dataset.empty='false'"
+               onblur="onObjectiveFieldBlur('${id}', 'number', this)"
+               oninput="onObjectiveFieldInput('${id}', 'number', this)">${number}</div>
+          <div class="objective-title"
+               contenteditable="true"
+               spellcheck="true"
+               data-empty="${titleEmpty}"
+               data-placeholder="Objective title (e.g., Total Orders)"
+               onfocus="this.dataset.empty='false'"
+               onblur="onObjectiveFieldBlur('${id}', 'title', this)"
+               oninput="onObjectiveFieldInput('${id}', 'title', this)">${title}</div>
+          <div class="objective-header-meta">
+            <span class="objective-pill">
+              <span class="objective-pill-label">Impact</span>
+              <span class="objective-pill-value"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-empty="${impactEmpty}"
+                    data-placeholder="set"
+                    onfocus="this.dataset.empty='false'"
+                    onblur="onObjectiveFieldBlur('${id}', 'impact', this)"
+                    oninput="onObjectiveFieldInput('${id}', 'impact', this)">${impact}</span>
+            </span>
+            <span class="objective-pill">
+              <span class="objective-pill-label">Cycle</span>
+              <span class="objective-pill-value"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-empty="${cycleEmpty}"
+                    data-placeholder="set"
+                    onfocus="this.dataset.empty='false'"
+                    onblur="onObjectiveFieldBlur('${id}', 'cycle', this)"
+                    oninput="onObjectiveFieldInput('${id}', 'cycle', this)">${cycle}</span>
+            </span>
+          </div>
+          <div class="reorder-group">
+            <button class="reorder-btn" onclick="moveObjective('${id}', -1)" title="Move up">▲</button>
+            <button class="reorder-btn" onclick="moveObjective('${id}', 1)" title="Move down">▼</button>
+          </div>
+          <button class="objective-delete" onclick="deleteObjective('${id}')" title="Delete">×</button>
+        </div>
+        <div class="objective-priority"
+             contenteditable="true"
+             spellcheck="true"
+             data-empty="${priorityEmpty}"
+             data-placeholder="What this objective is and why it matters..."
+             onfocus="this.dataset.empty='false'"
+             onblur="onObjectiveFieldBlur('${id}', 'priority', this)"
+             oninput="onObjectiveFieldInput('${id}', 'priority', this)">${priority}</div>
+        ${renderNextSteps(item)}
+      </li>
+    `;
+  }).join('');
+}
+
+function addNextStep(objId) {
+  const obj = findObjective(objId);
+  if (!obj) return;
+  if (!Array.isArray(obj.nextSteps)) obj.nextSteps = [];
+  const step = { id: newStepId(), action: '', owner: '', priority: 'Med', due: '', impact: '', status: 'open' };
+  obj.nextSteps.push(step);
+  renderObjectives();
+  scheduleObjSave();
+  requestAnimationFrame(() => {
+    const el = document.querySelector(`.next-step[data-obj-id="${objId}"][data-step-id="${step.id}"] .next-step-action`);
+    if (el) { el.dataset.empty = 'false'; el.focus(); }
+  });
+}
+
+function deleteNextStep(objId, stepId) {
+  const obj = findObjective(objId);
+  if (!obj || !Array.isArray(obj.nextSteps)) return;
+  const step = obj.nextSteps.find(s => s.id === stepId);
+  if (!step) return;
+  const hasContent = (step.action || '').trim() || (step.owner || '').trim() || (step.due || '').trim();
+  if (hasContent && !confirm('Delete this next step?')) return;
+  obj.nextSteps = obj.nextSteps.filter(s => s.id !== stepId);
+  renderObjectives();
+  scheduleObjSave();
+}
+
+function toggleNextStepStatus(objId, stepId) {
+  const step = findStep(objId, stepId);
+  if (!step) return;
+  step.status = (step.status === 'done') ? 'open' : 'done';
+  renderObjectives();
+  scheduleObjSave();
+}
+
+function cycleNextStepPriority(objId, stepId) {
+  const step = findStep(objId, stepId);
+  if (!step) return;
+  const order = ['High', 'Med', 'Low'];
+  const cur = normalizeStepPriority(step.priority);
+  step.priority = order[(order.indexOf(cur) + 1) % order.length];
+  renderObjectives();
+  scheduleObjSave();
+}
+
+function onNextStepInput(objId, stepId, field, el) {
+  const step = findStep(objId, stepId);
+  if (!step) return;
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  step[field] = val;
+  scheduleObjSave();
+}
+
+function onNextStepBlur(objId, stepId, field, el) {
+  const step = findStep(objId, stepId);
+  if (!step) return;
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  step[field] = val;
+  el.dataset.empty = (val === '') ? 'true' : 'false';
+  if (val === '') el.textContent = '';
+  scheduleObjSave();
+}
+
+function moveNextStep(objId, stepId, delta) {
+  const obj = findObjective(objId);
+  if (!obj || !Array.isArray(obj.nextSteps)) return;
+  const i = obj.nextSteps.findIndex(s => s.id === stepId);
+  const j = i + delta;
+  if (i < 0 || j < 0 || j >= obj.nextSteps.length) return;
+  [obj.nextSteps[i], obj.nextSteps[j]] = [obj.nextSteps[j], obj.nextSteps[i]];
+  renderObjectives();
+  scheduleObjSave();
+}
+
+window.addNextStep = addNextStep;
+window.deleteNextStep = deleteNextStep;
+window.toggleNextStepStatus = toggleNextStepStatus;
+window.cycleNextStepPriority = cycleNextStepPriority;
+window.onNextStepInput = onNextStepInput;
+window.onNextStepBlur = onNextStepBlur;
+window.moveNextStep = moveNextStep;
+
+function onObjectiveFieldInput(id, field, el) {
+  const item = findObjective(id);
+  if (!item) return;
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  item[field] = val;
+  scheduleObjSave();
+}
+
+function onObjectiveFieldBlur(id, field, el) {
+  const item = findObjective(id);
+  if (!item) return;
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  item[field] = val;
+  el.dataset.empty = (val === '') ? 'true' : 'false';
+  if (val === '') el.textContent = '';
+  scheduleObjSave();
+}
+
+function cycleObjectiveStatus(id) {
+  const item = findObjective(id);
+  if (!item) return;
+  const order = ['green', 'yellow', 'red'];
+  const cur = normalizeStatus(item.status);
+  item.status = order[(order.indexOf(cur) + 1) % order.length];
+  renderObjectives();
+  scheduleObjSave();
+}
+
+function nextObjectiveNumber() {
+  const used = objectives.items
+    .map(i => parseInt((i.number || '').toString().replace(/\D/g, ''), 10))
+    .filter(n => !isNaN(n));
+  const next = (used.length ? Math.max(...used) : 0) + 1;
+  return String(next).padStart(2, '0');
+}
+
+function addObjective() {
+  const item = {
+    id: newObjectiveId(),
+    number: nextObjectiveNumber(),
+    title: '',
+    priority: '',
+    impact: '',
+    cycle: objectives.meta?.cycle || '',
+    status: 'green',
+    nextSteps: [],
+  };
+  objectives.items.push(item);
+  renderObjectives();
+  scheduleObjSave();
+  requestAnimationFrame(() => {
+    const el = document.querySelector(`.objective-item[data-id="${item.id}"] .objective-title`);
+    if (el) {
+      el.dataset.empty = 'false';
+      el.focus();
+    }
+  });
+}
+
+function deleteObjective(id) {
+  const item = findObjective(id);
+  if (!item) return;
+  const hasContent = (item.title || '').trim() || (item.priority || '').trim()
+                  || (item.impact || '').trim()
+                  || (Array.isArray(item.nextSteps) && item.nextSteps.length > 0);
+  if (hasContent && !confirm('Delete this objective and all its next steps?')) return;
+  objectives.items = objectives.items.filter(i => i.id !== id);
+  renderObjectives();
+  scheduleObjSave();
+}
+
+function moveObjective(id, delta) {
+  const i = objectives.items.findIndex(o => o.id === id);
+  const j = i + delta;
+  if (i < 0 || j < 0 || j >= objectives.items.length) return;
+  [objectives.items[i], objectives.items[j]] = [objectives.items[j], objectives.items[i]];
+  renderObjectives();
+  scheduleObjSave();
+}
+
+window.addObjective = addObjective;
+window.deleteObjective = deleteObjective;
+window.cycleObjectiveStatus = cycleObjectiveStatus;
+window.onObjectiveFieldInput = onObjectiveFieldInput;
+window.onObjectiveFieldBlur = onObjectiveFieldBlur;
+window.moveObjective = moveObjective;
+
+// ============================================================================
+// OBSERVATIONS — What's Working / What to Watch
+// Two parallel lists per cycle: items with headline + body, editable + reorderable.
+// ============================================================================
+
+const observations = { meta: {}, working: [], watch: [] };
+let obsSaveTimer = null;
+let obsSaveInFlight = false;
+
+function setObsSaveStatus(state, msg) {
+  const el = document.getElementById('observations-save-status');
+  if (!el) return;
+  el.className = 'observations-save-status ' + (state || '');
+  el.textContent = msg || '';
+}
+
+async function loadObservations() {
+  try {
+    const res = await fetch('/observations' + cycleParam(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    observations.meta = data.meta || {};
+    observations.working = Array.isArray(data.working) ? data.working : [];
+    observations.watch = Array.isArray(data.watch) ? data.watch : [];
+  } catch (e) {
+    observations.working = [];
+    observations.watch = [];
+    console.warn('Observations load failed:', e);
+  }
+  renderObservations();
+}
+
+function scheduleObsSave() {
+  setObsSaveStatus('saving', 'Saving...');
+  clearTimeout(obsSaveTimer);
+  obsSaveTimer = setTimeout(saveObservations, 600);
+}
+
+async function saveObservations() {
+  if (obsSaveInFlight) { setTimeout(scheduleObsSave, 200); return; }
+  obsSaveInFlight = true;
+  try {
+    const res = await fetch('/observations' + cycleParam(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meta: observations.meta, working: observations.working, watch: observations.watch }),
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    setObsSaveStatus('saved', 'Saved ✓');
+    setTimeout(() => setObsSaveStatus('', ''), 1800);
+  } catch (e) {
+    setObsSaveStatus('error', 'Save failed. ' + (e.message || e).slice(0, 80));
+  } finally {
+    obsSaveInFlight = false;
+  }
+}
+
+function newObsId(prefix) {
+  return prefix + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+}
+
+function obsListFor(category) {
+  return category === 'watch' ? observations.watch : observations.working;
+}
+
+function findObservation(category, id) {
+  return obsListFor(category).find(o => o.id === id);
+}
+
+function observationRowHtml(category, o) {
+  const id = escapeHtml(o.id);
+  const headline = escapeHtml(o.headline || '');
+  const body = escapeHtml(o.body || '');
+  const headEmpty = (o.headline || '').trim() === '' ? 'true' : 'false';
+  const bodyEmpty = (o.body || '').trim() === '' ? 'true' : 'false';
+  const cat = escapeHtml(category);
+  return `
+    <li class="observation-item" data-id="${id}" data-cat="${cat}">
+      <div class="observation-body">
+        <div class="obs-headline"
+             contenteditable="true"
+             spellcheck="true"
+             data-empty="${headEmpty}"
+             data-placeholder="Short headline"
+             onfocus="this.dataset.empty='false'"
+             onblur="onObsFieldBlur('${cat}', '${id}', 'headline', this)"
+             oninput="onObsFieldInput('${cat}', '${id}', 'headline', this)">${headline}</div>
+        <div class="obs-body-text"
+             contenteditable="true"
+             spellcheck="true"
+             data-empty="${bodyEmpty}"
+             data-placeholder="Detail + annual dollar tie..."
+             onfocus="this.dataset.empty='false'"
+             onblur="onObsFieldBlur('${cat}', '${id}', 'body', this)"
+             oninput="onObsFieldInput('${cat}', '${id}', 'body', this)">${body}</div>
+      </div>
+      <div class="reorder-group">
+        <button class="reorder-btn" onclick="moveObservation('${cat}', '${id}', -1)" title="Move up">▲</button>
+        <button class="reorder-btn" onclick="moveObservation('${cat}', '${id}', 1)" title="Move down">▼</button>
+      </div>
+      <button class="observation-delete" onclick="deleteObservation('${cat}', '${id}')" title="Delete">×</button>
+    </li>
+  `;
+}
+
+function renderObservations() {
+  const renderInto = (id, list, cat) => {
+    const ul = document.getElementById(id);
+    if (!ul) return;
+    if (!list.length) {
+      ul.innerHTML = `<li class="objectives-empty" style="padding:10px 4px;">No items yet. Click "+ Add" to start.</li>`;
+      return;
+    }
+    ul.innerHTML = list.map(o => observationRowHtml(cat, o)).join('');
+  };
+  renderInto('working-list', observations.working, 'working');
+  renderInto('watch-list', observations.watch, 'watch');
+}
+
+function onObsFieldInput(category, id, field, el) {
+  const item = findObservation(category, id);
+  if (!item) return;
+  item[field] = el.innerText.replace(/ /g, ' ').trim();
+  scheduleObsSave();
+}
+
+function onObsFieldBlur(category, id, field, el) {
+  const item = findObservation(category, id);
+  if (!item) return;
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  item[field] = val;
+  el.dataset.empty = (val === '') ? 'true' : 'false';
+  if (val === '') el.textContent = '';
+  scheduleObsSave();
+}
+
+function addObservation(category) {
+  const item = { id: newObsId(category === 'watch' ? 'watch' : 'w'), headline: '', body: '' };
+  obsListFor(category).push(item);
+  renderObservations();
+  scheduleObsSave();
+  requestAnimationFrame(() => {
+    const el = document.querySelector(`.observation-item[data-id="${item.id}"][data-cat="${category}"] .obs-headline`);
+    if (el) { el.dataset.empty = 'false'; el.focus(); }
+  });
+}
+
+function deleteObservation(category, id) {
+  const item = findObservation(category, id);
+  if (!item) return;
+  const hasContent = (item.headline || '').trim() || (item.body || '').trim();
+  if (hasContent && !confirm('Delete this item?')) return;
+  if (category === 'watch') {
+    observations.watch = observations.watch.filter(o => o.id !== id);
+  } else {
+    observations.working = observations.working.filter(o => o.id !== id);
+  }
+  renderObservations();
+  scheduleObsSave();
+}
+
+function moveObservation(category, id, delta) {
+  const list = obsListFor(category);
+  const i = list.findIndex(o => o.id === id);
+  const j = i + delta;
+  if (i < 0 || j < 0 || j >= list.length) return;
+  [list[i], list[j]] = [list[j], list[i]];
+  renderObservations();
+  scheduleObsSave();
+}
+
+window.addObservation = addObservation;
+window.deleteObservation = deleteObservation;
+window.moveObservation = moveObservation;
+window.onObsFieldInput = onObsFieldInput;
+window.onObsFieldBlur = onObsFieldBlur;
+
+// ============================================================================
+// OBSERVATIONS TAB SWITCHER (Working / Watch)
+// ============================================================================
+
+function switchObsTab(which) {
+  document.getElementById('obs-tab-working').classList.toggle('active', which === 'working');
+  document.getElementById('obs-tab-watch').classList.toggle('active', which === 'watch');
+  document.getElementById('obs-pane-working').classList.toggle('active', which === 'working');
+  document.getElementById('obs-pane-watch').classList.toggle('active', which === 'watch');
+}
+window.switchObsTab = switchObsTab;
+
+// ============================================================================
+// CARD COMMENTARY (back-of-card explanation, cycle-scoped, editable)
+// ============================================================================
+
+let commentaryMap = {};  // { card_id: text }
+let commentarySaveTimer = null;
+let commentarySaveInFlight = false;
+const flippedCards = new Set();
+
+async function loadCommentary() {
+  try {
+    const res = await fetch('/commentary' + cycleParam(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    commentaryMap = (data && typeof data.cards === 'object') ? data.cards : {};
+  } catch (e) {
+    commentaryMap = {};
+    console.warn('Commentary load failed:', e);
+  }
+}
+
+function scheduleCommentarySave() {
+  clearTimeout(commentarySaveTimer);
+  commentarySaveTimer = setTimeout(saveCommentary, 600);
+}
+
+async function saveCommentary() {
+  if (commentarySaveInFlight) { setTimeout(scheduleCommentarySave, 200); return; }
+  commentarySaveInFlight = true;
+  try {
+    await fetch('/commentary' + cycleParam(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cards: commentaryMap }),
+    });
+  } catch (e) {
+    console.warn('Commentary save failed:', e);
+  } finally {
+    commentarySaveInFlight = false;
+  }
+}
+
+function ensureCardObj(cardId) {
+  const existing = commentaryMap[cardId];
+  if (typeof existing === 'string') {
+    commentaryMap[cardId] = { commentary: existing, sources: '' };
+  } else if (!existing) {
+    commentaryMap[cardId] = { commentary: '', sources: '' };
+  }
+  return commentaryMap[cardId];
+}
+
+function onCommentaryInput(cardId, el) {
+  const obj = ensureCardObj(cardId);
+  obj.commentary = el.innerText.replace(/ /g, ' ').trim();
+  scheduleCommentarySave();
+}
+
+function onCommentaryBlur(cardId, el) {
+  const obj = ensureCardObj(cardId);
+  const val = el.innerText.replace(/ /g, ' ').trim();
+  obj.commentary = val;
+  el.dataset.empty = (val === '') ? 'true' : 'false';
+  if (val === '') el.textContent = '';
+  scheduleCommentarySave();
+}
+
+function onSourcesInput(cardId, el) {
+  const obj = ensureCardObj(cardId);
+  // Strip leading "Sources:" if user kept it from the placeholder rendering
+  let val = el.innerText.replace(/ /g, ' ').trim();
+  val = val.replace(/^Sources:\s*/i, '');
+  obj.sources = val;
+  scheduleCommentarySave();
+}
+
+function onSourcesBlur(cardId, el) {
+  const obj = ensureCardObj(cardId);
+  let val = el.innerText.replace(/ /g, ' ').trim();
+  val = val.replace(/^Sources:\s*/i, '');
+  obj.sources = val;
+  el.dataset.empty = (val === '') ? 'true' : 'false';
+  if (val === '') el.textContent = '';
+  else if (!el.innerText.match(/^Sources:/i)) el.textContent = 'Sources: ' + val;
+  scheduleCommentarySave();
+}
+
+window.onSourcesInput = onSourcesInput;
+window.onSourcesBlur = onSourcesBlur;
+
+function flipCard(cardId) {
+  const inner = document.getElementById('card-inner-' + cardId);
+  if (!inner) return;
+  inner.classList.toggle('flipped');
+  if (flippedCards.has(cardId)) flippedCards.delete(cardId);
+  else flippedCards.add(cardId);
+}
+
+window.flipCard = flipCard;
+window.onCommentaryInput = onCommentaryInput;
+window.onCommentaryBlur = onCommentaryBlur;
+
+// ============================================================================
+// COLLAPSIBLE SECTIONS
+// Each .section-collapsible has a .section-head (click target) and .section-body
+// (content). Toggling adds/removes [data-collapsed="true"] on the parent.
+// Collapse state persists in localStorage so reloads remember user preference.
+// ============================================================================
+
+const COLLAPSE_STORAGE_KEY = 'scoreboard.collapse.' + (window.PUBLISHED_SLUG || 'local');
+
+function getCollapseState() {
+  try {
+    const raw = localStorage.getItem(COLLAPSE_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function setCollapseState(state) {
+  try {
+    localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(state));
+  } catch (e) { /* localStorage disabled — silently degrade */ }
+}
+
+function toggleSection(sectionId, evt) {
+  // Don't toggle if the click landed on an interactive child (button, link, input).
+  if (evt && evt.target) {
+    const interactive = evt.target.closest('button, a, input, select, textarea, [contenteditable="true"]');
+    if (interactive && interactive !== evt.currentTarget) return;
+  }
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  const willCollapse = section.getAttribute('data-collapsed') !== 'true';
+  if (willCollapse) {
+    section.setAttribute('data-collapsed', 'true');
+  } else {
+    section.removeAttribute('data-collapsed');
+  }
+  const state = getCollapseState();
+  state[sectionId] = willCollapse;
+  setCollapseState(state);
+}
+
+function onSectionHeadKey(evt, sectionId) {
+  if (evt.key === 'Enter' || evt.key === ' ') {
+    evt.preventDefault();
+    toggleSection(sectionId, evt);
+  }
+}
+
+function restoreCollapseState() {
+  const state = getCollapseState();
+  Object.entries(state).forEach(([sectionId, collapsed]) => {
+    const section = document.getElementById(sectionId);
+    if (section && collapsed) section.setAttribute('data-collapsed', 'true');
+  });
+}
+
+window.toggleSection = toggleSection;
+window.onSectionHeadKey = onSectionHeadKey;
+
+// Boot: render scoreboard immediately from data.js, then async-load cycles + objectives + observations.
+updateHeaderFromMeta();
+render();
+loadCycles();
+restoreCollapseState();
+if (!PUBLISHED_MODE) {
+  startWorkbookAutoRefresh();
+  startPublishStatusPolling();
+}
+</script>
+</body>
+</html>
