@@ -636,25 +636,30 @@
     transform: translateY(0);
   }
 
-  /* Card flip (front/back commentary) */
+  /* Card flip (front/back commentary).
+     Front face drives card-inner height (relative flow). Back face overlays (absolute)
+     so its long commentary doesn't inflate card height and create empty space
+     on the front of shorter cards. */
   .card-flip { perspective: 1200px; min-height: 200px; }
   .card-inner {
     position: relative;
     width: 100%;
     transform-style: preserve-3d;
     transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
   }
   .card-inner.flipped { transform: rotateY(180deg); }
   .card-face {
-    grid-column: 1;
-    grid-row: 1;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
-  .card-face-back { transform: rotateY(180deg); }
+  .card-face-front { position: relative; }
+  .card-face-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    overflow: hidden;
+  }
+  .card-face-back > .card { height: 100%; }
   .card-back-top {
     display: flex;
     align-items: flex-start;
