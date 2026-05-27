@@ -1799,6 +1799,256 @@
     color: var(--accent);
     border-style: solid;
   }
+
+  /* ============================================================
+     MOBILE OPTIMIZATION
+     Layered breakpoints (in addition to the grid-column rules above):
+       768px → tablet adjustments (header stacks, padding eases)
+       600px → full mobile stack (single column, reduced padding,
+               smaller fonts, larger tap targets, full-width controls)
+       400px → small-phone tightening (iPhone SE-class widths)
+     The existing 1000px / 600px grid rules near the top still own
+     .grid column counts; this block handles everything else.
+     ============================================================ */
+
+  @media (max-width: 768px) {
+    .container { padding: 24px 16px 56px; }
+
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 22px 22px;
+      gap: 12px;
+    }
+    .header-right { text-align: left; }
+
+    .toolbar { gap: 10px; }
+
+    .drilldown-header { padding: 22px 22px; gap: 16px; }
+  }
+
+  @media (max-width: 600px) {
+    /* Container: tighter side padding so cards reach edge-to-edge */
+    .container { padding: 16px 12px 48px; }
+
+    /* Header: stacked, smaller display sizes */
+    .header {
+      padding: 18px 18px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    .header-left h1 { font-size: 22px; }
+    .header-left .subtitle { font-size: 13px; }
+    .header-right { font-size: 12px; }
+    .header-right .cycle { font-size: 13px; }
+    .header-right .meeting-date {
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    /* Toolbar: stack as a column, full-width controls */
+    .toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .toolbar .breadcrumb { flex-wrap: wrap; }
+    .cycle-switcher {
+      width: 100%;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .cycle-dropdown {
+      width: 100%;
+      padding: 10px 32px 10px 14px;
+      font-size: 14px;
+    }
+    .refresh-group {
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+    /* One button per row at full width so labels never wrap to 2 lines
+       ("Refresh from Workbook" is too long for a half-row at 375px). */
+    .refresh-btn,
+    .publish-btn {
+      flex: 0 0 100%;
+      width: 100%;
+      justify-content: center;
+      padding: 11px 14px;
+      min-height: 44px;
+    }
+    /* Status pills sit at natural width above buttons; they previously stretched
+       to 100% which made them look like full-width separator bars. */
+    .refresh-status,
+    .publish-status {
+      flex: 0 0 auto;
+      width: auto;
+      text-align: left;
+      order: 0;
+    }
+
+    /* Section heads: chevron tighter, head can wrap */
+    .section-head { padding-right: 28px; }
+    .section-chevron { top: 12px; right: 10px; font-size: 16px; }
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .section { margin-bottom: 24px; }
+    .scoreboard-section-title { font-size: 18px; }
+    .section-title { font-size: 12px; }
+
+    /* Drilldown header: stack info + rollup, lose vertical divider */
+    .drilldown-header {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 18px 18px;
+      gap: 14px;
+    }
+    .drilldown-title { font-size: 19px; }
+    .drilldown-context { font-size: 13px; }
+    .drilldown-rollup {
+      text-align: left;
+      padding-left: 0;
+      border-left: none;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .drilldown-rollup .value { font-size: 26px; }
+
+    /* Sections: tighter padding */
+    .observations-section,
+    .objectives-section,
+    .action-plan-section {
+      padding: 18px 16px;
+      margin-bottom: 20px;
+    }
+    .objectives-title,
+    .action-plan-title { font-size: 18px; }
+
+    /* Driver cards: let height flow to content, tighter padding */
+    .card {
+      padding: 14px 14px 12px;
+      min-height: 0;
+    }
+    .card-flip { min-height: 0; }
+    .card-flip .card-face-back { position: absolute; inset: 0; }
+    .card-value { font-size: 24px; }
+    .card.summary .card-value { font-size: 26px; }
+    .card-value-label { margin-bottom: 10px; }
+    .compare-table { padding-top: 10px; }
+    .compare-row { font-size: 12.5px; }
+    .compare-row.comparable .compare-label,
+    .compare-row.comparable .compare-value { font-size: 11px; }
+
+    /* Card back commentary: bounded for portrait viewports */
+    .card-back-text { font-size: 12.5px; max-height: 180px; }
+
+    /* Objectives: header allowed to wrap; next-steps lose the deep indent */
+    .objective-item { padding: 14px 14px; }
+    .objective-header { flex-wrap: wrap; gap: 8px; }
+    .objective-title { font-size: 15px; }
+    .objective-priority {
+      margin-left: 0;
+      font-size: 12.5px;
+      margin-bottom: 10px;
+    }
+    .objective-meta { gap: 10px; }
+    .next-steps {
+      margin-left: 0;
+      padding: 10px 10px 12px;
+    }
+    /* next-step: wrap so the body gets a full row. Check + priority pill
+       (and delete) ride the top row; action text + meta drop to row 2 and
+       use the full width instead of being squeezed to ~140px. */
+    .next-step {
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 12px;
+    }
+    .next-step-body {
+      flex: 1 1 100%;
+      width: 100%;
+      min-width: 0;
+    }
+    .next-step-action { font-size: 13px; }
+    .next-step-prio {
+      min-width: 38px;
+      font-size: 9px;
+      padding: 3px 6px;
+    }
+    .next-step-check {
+      width: 24px;
+      height: 24px;
+    }
+    .next-step-delete { opacity: 0.6; margin-left: auto; }
+
+    /* Action plan items: same wrap pattern so action text gets full width */
+    .action-item { flex-wrap: wrap; }
+    .action-body { flex: 1 1 100%; width: 100%; min-width: 0; }
+
+    /* Action plan items */
+    .action-item { padding: 12px; gap: 10px; }
+    .action-text { font-size: 13px; }
+    .action-checkbox { width: 24px; height: 24px; }
+    .action-delete { opacity: 1; }
+    .observation-delete,
+    .objective-delete,
+    .next-step-delete { opacity: 0.6; }
+
+    /* Observations: tabs become full-width pair, taller for tap target */
+    .observations-tabs {
+      width: 100%;
+      display: flex;
+    }
+    .obs-tab {
+      flex: 1;
+      justify-content: center;
+      padding: 12px 10px;
+      font-size: 13px;
+      min-height: 44px;
+    }
+    .observations-col { padding: 12px; }
+    .observation-item { padding: 10px 10px 10px 12px; }
+    .obs-headline { font-size: 12.5px; }
+    .obs-body-text { font-size: 11.5px; }
+
+    /* Footer: stack legend below brand */
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 36px;
+    }
+    .footer .legend { flex-wrap: wrap; gap: 12px; }
+
+    /* Auto-refresh toast: full-width along bottom */
+    .auto-refresh-toast {
+      bottom: 16px;
+      right: 16px;
+      left: 16px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .container { padding: 12px 10px 40px; }
+    .header { padding: 16px 14px; }
+    .header-left h1 { font-size: 20px; }
+    .drilldown-title { font-size: 18px; }
+    .drilldown-rollup .value { font-size: 24px; }
+    .card-value { font-size: 22px; }
+    .card.summary .card-value { font-size: 24px; }
+    .observations-section,
+    .objectives-section,
+    .action-plan-section { padding: 16px 14px; }
+    .objectives-title,
+    .action-plan-title { font-size: 17px; }
+    .obs-tab { font-size: 11px; padding: 8px 8px; }
+  }
 </style>
 </head>
 <body>
@@ -1918,7 +2168,7 @@ window.PUBLISHED_DATA = {"cycles":[{"id":"2026-05","displayName":"May 2026"},{"i
 </script>
 <script>
 // Auto-generated by regenerate_scoreboard.py. do not edit by hand.
-// Generated 2026-05-26 from production Workbook.
+// Generated 2026-05-27 from production Workbook.
 
 window.SCOREBOARD_DATA = {
   "meta": {
@@ -1933,7 +2183,7 @@ window.SCOREBOARD_DATA = {
     "close_subtitle": "April close · Base scenario",
     "cycle_id": "2026-04",
     "cycle_label": "April 2026",
-    "generated_at": "2026-05-26"
+    "generated_at": "2026-05-27"
   },
   "root": {
     "title": "Top-Level Drivers",
