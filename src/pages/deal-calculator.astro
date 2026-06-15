@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout
   title="Deal Calculator | Margin Theory"
-  description="Quick acquisition cash flow check. Drop in the price and SDE from a listing and see the cash flow after the loan and an operator."
+  description="Quick acquisition cash flow check, built on Codie Sanchez's deal math. Enter price, SDE, and operator pay and see whether it's a business or a job."
 >
   <section>
     <div class="max-w-5xl mx-auto px-6 pt-10 md:pt-14 pb-20">
@@ -15,8 +15,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Deal Calculator
         </h1>
         <p class="text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
-          Drop in the numbers from a listing. See the cash flow after the loan and an operator.
-          Green cash flow means the deal pays you. Red means it does not.
+          Drop in the numbers from a listing. The cash has to cover four things in order: the loan, an operator,
+          reinvestment, then you. Green cash flow means the deal pays you. Red means it does not.
         </p>
       </div>
 
@@ -131,14 +131,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <input id="i-operator" type="text" inputmode="numeric" placeholder="0"
                   class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
               </div>
-              <p class="text-xs text-white/45 mt-1.5">What you'd pay someone to run it instead of you. Leave at 0 if you'll run it yourself.</p>
+              <p class="text-xs text-white/45 mt-1.5">What you'd pay someone to run it instead of you. Codie's rule: pay the operator first. Leave at 0 only if you'll run it yourself.</p>
+            </div>
+
+            <div>
+              <label for="i-reinvest" class="block text-sm font-semibold text-white/80 mb-1.5">Reinvest in growth (annual)</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
+                <input id="i-reinvest" type="text" inputmode="numeric" placeholder="0"
+                  class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+              </div>
+              <p class="text-xs text-white/45 mt-1.5">Money back into the business each year (equipment, marketing, software). Codie's third tier. Leave at 0 to skip.</p>
             </div>
 
             <details class="border-t border-white/10 pt-4 group" open>
               <summary class="cursor-pointer text-sm font-semibold text-white/70 hover:text-white select-none list-none flex items-center gap-2">
                 <span class="text-brand-blue transition-transform group-open:rotate-90">&rsaquo;</span>
-                Financing assumptions
+                Financing &amp; your bar
               </summary>
+
+              <div class="grid grid-cols-2 gap-2 mt-4" id="fin-toggle">
+                <button type="button" data-fin="sba"
+                  class="fin-btn px-3 py-2 text-sm font-semibold rounded-sm border transition text-center">
+                  SBA loan
+                </button>
+                <button type="button" data-fin="seller"
+                  class="fin-btn px-3 py-2 text-sm font-semibold rounded-sm border transition text-center">
+                  Seller financing
+                </button>
+              </div>
+              <p class="text-xs text-white/45 mt-2" id="fin-hint"></p>
+
               <div class="grid grid-cols-2 gap-3 mt-4">
                 <div>
                   <label for="i-down" class="block text-xs font-semibold text-white/60 mb-1">Down payment %</label>
@@ -161,7 +184,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     class="w-full px-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
                 </div>
               </div>
-              <p class="text-xs text-white/45 mt-3">Defaults are a 90% SBA 7(a) loan, 10 years, ~11%, plus ~3% closing. Change any of them.</p>
+
+              <div class="mt-3">
+                <label for="i-floor" class="block text-xs font-semibold text-white/60 mb-1">Your profit floor (annual)</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/50 text-sm pointer-events-none">$</span>
+                  <input id="i-floor" type="text" inputmode="numeric" value="90,000"
+                    class="w-full pl-7 pr-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                </div>
+                <p class="text-xs text-white/45 mt-1">The income this has to clear after debt, operator, and reinvestment. Your deal-box floor is $90K.</p>
+              </div>
             </details>
           </div>
         </div>
@@ -179,16 +211,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
             <div style="font-size:14px;line-height:2.0;">
               <div><span style="color:#3271D2;font-weight:bold;">Price:</span> <span style="color:#ededed;" id="r-price">&mdash;</span></div>
-              <div><span style="color:#3271D2;font-weight:bold;" id="r-sde-label">SDE (annual):</span> <span style="color:#ededed;" id="r-sde">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;" id="r-sde-label">SDE (annual):</span> <span style="color:#ededed;" id="r-sde">&mdash;</span> <span style="font-size:11.5px;font-weight:bold;" id="r-mult-flag"></span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Debt service (est.):</span> <span style="color:#8a8a8a;" id="r-debt">&mdash;</span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Operator pay:</span> <span style="color:#8a8a8a;" id="r-operator">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Reinvest in growth:</span> <span style="color:#8a8a8a;" id="r-reinvest">&mdash;</span></div>
               <div style="margin-top:6px;padding-top:6px;border-top:1px solid #2e2e2e;"><span style="color:#3271D2;font-weight:bold;">Cash flow:</span> <span style="font-weight:bold;" id="r-cashflow">&mdash;</span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Cash to close:</span> <span style="color:#ededed;" id="r-close">&mdash;</span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Cash on cash:</span> <span style="font-weight:bold;" id="r-coc">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Payback period:</span> <span style="color:#ededed;" id="r-payback">&mdash;</span></div>
+            </div>
+
+            <!-- Verdict (Codie scorecard) -->
+            <div style="border-top:1px solid #2e2e2e;margin-top:14px;padding-top:14px;">
+              <span id="r-verdict" style="display:inline-block;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;padding:5px 12px;border-radius:3px;color:#9a9a9a;">&mdash;</span>
+              <div id="r-verdict-note" style="margin-top:8px;font-size:12.5px;color:#9a9a9a;line-height:1.5;">Enter price and SDE to see the verdict.</div>
+              <div style="margin-top:12px;font-size:12.5px;line-height:1.95;">
+                <div><span id="chk-mult" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Multiple in Codie's 2-5x range</span></div>
+                <div><span id="chk-sde" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">SDE clears your $270K deal-box line</span></div>
+                <div><span id="chk-job" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Covers an operator (a business, not a job)</span></div>
+                <div><span id="chk-floor" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Cash flow clears your $90K floor</span></div>
+              </div>
             </div>
 
             <div style="border-top:1px solid #2e2e2e;margin-top:16px;padding-top:12px;font-size:11.5px;color:#7e7e7e;line-height:1.7;font-style:italic;">
-              Debt service is estimated from the financing assumptions on the left. Operator pay is what you pay someone to run it. Cash on cash is that cash flow divided by the cash to close, the annual return on the cash you put in.
+              Codie's four tiers: the cash covers the loan, an operator, reinvestment, then you. Two gut checks before you sign: will it pay for itself, and what happens if it does not. Payback is the cash to close divided by yearly cash flow, how fast your money comes back.
             </div>
           </div>
         </div>
@@ -198,13 +244,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <script>
     type Role = 'owner' | 'manager';
+    type Basis = 'sde' | 'profit';
+    type Fin = 'sba' | 'seller';
 
     const $ = (id: string) => document.getElementById(id) as HTMLElement;
     const $i = (id: string) => document.getElementById(id) as HTMLInputElement;
 
     const GREEN = '#5cc98a';
     const RED = '#e8736b';
+    const GOLD = '#F4A93C';
     const MUTED = '#9a9a9a';
+
+    const DEALBOX_SDE_LINE = 270000; // Jake's deal-box SDE minimum
 
     // strip everything but digits and a single decimal point
     function parseNum(raw: string): number {
@@ -215,7 +266,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     const usd = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
 
-    // live comma formatting for the big dollar fields (cursor stays at end)
+    // live comma formatting for the dollar fields (cursor stays at end)
     function formatMoneyField(el: HTMLInputElement) {
       const digits = el.value.replace(/[^0-9]/g, '');
       el.value = digits === '' ? '' : parseInt(digits, 10).toLocaleString('en-US');
@@ -225,13 +276,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     let role: Role = 'owner';
     const roleBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.role-btn'));
 
-    function paintRole() {
-      roleBtns.forEach((b) => {
-        const active = b.dataset.role === role;
-        b.style.backgroundColor = active ? '#3271D2' : 'transparent';
-        b.style.borderColor = active ? '#3271D2' : 'rgba(255,255,255,0.2)';
-        b.style.color = active ? '#ffffff' : 'rgba(255,255,255,0.7)';
+    function paintToggle(btns: HTMLButtonElement[], attr: string, active: string) {
+      btns.forEach((b) => {
+        const on = b.dataset[attr] === active;
+        b.style.backgroundColor = on ? '#3271D2' : 'transparent';
+        b.style.borderColor = on ? '#3271D2' : 'rgba(255,255,255,0.2)';
+        b.style.color = on ? '#ffffff' : 'rgba(255,255,255,0.7)';
       });
+    }
+
+    function paintRole() {
+      paintToggle(roleBtns, 'role', role);
       const wrap = $('operator-wrap');
       const hint = $('role-hint');
       const opInput = $i('i-operator');
@@ -257,17 +312,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     );
 
     // ----- earnings basis toggle (SDE direct, or recast from net profit) -----
-    type Basis = 'sde' | 'profit';
     let basis: Basis = 'sde';
     const basisBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.basis-btn'));
 
     function paintBasis() {
-      basisBtns.forEach((b) => {
-        const active = b.dataset.basis === basis;
-        b.style.backgroundColor = active ? '#3271D2' : 'transparent';
-        b.style.borderColor = active ? '#3271D2' : 'rgba(255,255,255,0.2)';
-        b.style.color = active ? '#ffffff' : 'rgba(255,255,255,0.7)';
-      });
+      paintToggle(basisBtns, 'basis', basis);
       $('sde-mode').style.display = basis === 'sde' ? '' : 'none';
       $('profit-mode').style.display = basis === 'profit' ? '' : 'none';
     }
@@ -280,6 +329,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       })
     );
 
+    // ----- financing type toggle (SBA bank loan vs Codie's seller financing) -----
+    let fin: Fin = 'sba';
+    const finBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.fin-btn'));
+    const FIN_PRESETS: Record<Fin, { down: string; rate: string; term: string; closing: string }> = {
+      sba: { down: '10', rate: '11', term: '10', closing: '3' },
+      seller: { down: '15', rate: '6', term: '7', closing: '1' },
+    };
+
+    function paintFin() {
+      paintToggle(finBtns, 'fin', fin);
+      $('fin-hint').textContent =
+        fin === 'seller'
+          ? "Codie's Profit Payback Method: the seller carries the note and the business's profits pay them back. Baseline 10-50% down, 3-10 years, rate often beats the bank, closes fast."
+          : 'SBA 7(a) baseline: 10% down, ~11%, 10 years, 3% closing. Most common, but slowest to close (~90 days).';
+    }
+
+    finBtns.forEach((b) =>
+      b.addEventListener('click', () => {
+        fin = (b.dataset.fin as Fin) || 'sba';
+        const p = FIN_PRESETS[fin];
+        $i('i-down').value = p.down;
+        $i('i-rate').value = p.rate;
+        $i('i-term').value = p.term;
+        $i('i-closing').value = p.closing;
+        paintFin();
+        recompute();
+      })
+    );
+
     // ----- amortization (annual debt service on the acquisition loan) -----
     function annualDebtService(price: number, downPct: number, ratePct: number, termYears: number): number {
       const loan = price * (1 - downPct / 100);
@@ -288,6 +366,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const n = termYears * 12;
       const monthly = r === 0 ? loan / n : (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
       return monthly * 12;
+    }
+
+    function setCheck(id: string, pass: boolean) {
+      const el = $(id);
+      el.textContent = pass ? '✓' : '✗';
+      el.style.color = pass ? GREEN : RED;
     }
 
     // ----- main compute -----
@@ -313,27 +397,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const term = parseNum($i('i-term').value) || 0;
       const closing = parseNum($i('i-closing').value) || 0;
       const operatorRaw = parseNum($i('i-operator').value);
+      const reinvestRaw = parseNum($i('i-reinvest').value);
+      const floor = parseNum($i('i-floor').value) || 0;
 
       const hasPrice = !isNaN(price) && price > 0;
       const hasSDE = !isNaN(sde) && sde > 0;
 
-      // name
-      const nameVal = $i('i-name').value.trim();
-      $('r-name').textContent = nameVal || 'Untitled deal';
-
-      // owner role line
+      // name + owner role
+      $('r-name').textContent = $i('i-name').value.trim() || 'Untitled deal';
       $('r-role').textContent = role === 'manager' ? 'manager in place' : 'operator installed';
 
       // price
       $('r-price').textContent = hasPrice ? usd(price) : '—';
 
-      // SDE with multiple appended
+      // SDE with multiple + 2-5x flag
+      const multFlag = $('r-mult-flag');
       if (hasSDE) {
         let sdeTxt = usd(sde);
-        if (hasPrice) sdeTxt += '  ·  ' + (price / sde).toFixed(1) + 'x';
+        if (hasPrice) {
+          const m = price / sde;
+          sdeTxt += '  ·  ' + m.toFixed(1) + 'x';
+          if (m >= 2 && m <= 5) {
+            multFlag.textContent = 'in 2-5x';
+            multFlag.style.color = GREEN;
+          } else if (m > 5) {
+            multFlag.textContent = 'above 2-5x';
+            multFlag.style.color = GOLD;
+          } else {
+            multFlag.textContent = 'under 2x, dig in';
+            multFlag.style.color = GOLD;
+          }
+        } else {
+          multFlag.textContent = '';
+        }
         $('r-sde').textContent = sdeTxt;
       } else {
         $('r-sde').textContent = '—';
+        multFlag.textContent = '';
       }
 
       // debt service
@@ -341,19 +441,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       $('r-debt').textContent = hasPrice ? usd(debt) + '/yr' : '—';
 
       // operator pay
-      const operatorPay = role === 'manager' ? 0 : (isNaN(operatorRaw) ? 0 : operatorRaw);
+      const operatorPay = role === 'manager' ? 0 : isNaN(operatorRaw) ? 0 : operatorRaw;
       $('r-operator').textContent =
-        role === 'manager' ? 'already in SDE' : (isNaN(operatorRaw) ? '$0/yr' : usd(operatorPay) + '/yr');
+        role === 'manager' ? 'already in SDE' : isNaN(operatorRaw) ? '$0/yr' : usd(operatorPay) + '/yr';
 
-      // cash flow + cash on cash
+      // reinvestment
+      const reinvest = isNaN(reinvestRaw) ? 0 : reinvestRaw;
+      $('r-reinvest').textContent = isNaN(reinvestRaw) ? '$0/yr' : usd(reinvest) + '/yr';
+
+      // cash flow + cash on cash + payback (Codie's four tiers)
       const cfEl = $('r-cashflow');
       const cocEl = $('r-coc');
+      const paybackEl = $('r-payback');
       const cashToClose = hasPrice ? price * ((down + closing) / 100) : 0;
+      const cf = hasSDE ? sde - debt - operatorPay - reinvest : NaN;
 
       if (hasSDE) {
-        const cf = sde - debt - operatorPay;
-        const cfMo = cf / 12;
         const positive = cf >= 0;
+        const cfMo = cf / 12;
         cfEl.textContent =
           (positive ? '' : '−') + usd(Math.abs(cf)) + '/yr  (' + (positive ? '~' : '−') + usd(Math.abs(cfMo)) + '/mo)' + (positive ? '' : '  underwater');
         cfEl.style.color = positive ? GREEN : RED;
@@ -363,23 +468,73 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           const cocPos = coc >= 0;
           cocEl.textContent = (cocPos ? '~' : '−') + Math.abs(Math.round(coc)) + '%';
           cocEl.style.color = cocPos ? GREEN : RED;
+
+          if (cf > 0) {
+            const yrs = cashToClose / cf;
+            paybackEl.textContent = yrs < 1 ? Math.round(yrs * 12) + ' mo' : yrs.toFixed(1) + ' yrs';
+            paybackEl.style.color = '#ededed';
+          } else {
+            paybackEl.textContent = 'never';
+            paybackEl.style.color = MUTED;
+          }
         } else {
           cocEl.textContent = '—';
           cocEl.style.color = MUTED;
+          paybackEl.textContent = '—';
+          paybackEl.style.color = MUTED;
         }
       } else {
         cfEl.textContent = 'enter SDE';
         cfEl.style.color = MUTED;
         cocEl.textContent = '—';
         cocEl.style.color = MUTED;
+        paybackEl.textContent = '—';
+        paybackEl.style.color = MUTED;
       }
 
-      // cash to close
       $('r-close').textContent = hasPrice ? '~' + usd(cashToClose) : '—';
+
+      // ----- verdict (scored against the deal box) -----
+      const vEl = $('r-verdict');
+      const nEl = $('r-verdict-note');
+      if (hasSDE && hasPrice) {
+        const m = price / sde;
+        setCheck('chk-mult', m >= 2 && m <= 5);
+        setCheck('chk-sde', sde >= DEALBOX_SDE_LINE);
+        setCheck('chk-job', sde - operatorPay - reinvest > 0);
+        setCheck('chk-floor', cf >= floor);
+
+        if (cf <= 0) {
+          vEl.textContent = "It's a job";
+          vEl.style.color = RED;
+          vEl.style.backgroundColor = 'rgba(232,115,107,0.14)';
+          nEl.textContent = 'Underwater after the loan and an operator. You would be buying yourself a job, not income.';
+        } else if (cf < floor) {
+          vEl.textContent = 'Tight';
+          vEl.style.color = GOLD;
+          vEl.style.backgroundColor = 'rgba(244,169,60,0.14)';
+          nEl.textContent = 'It pays you, but under your ' + usd(floor) + ' floor. Work the price or the terms to clear the bar.';
+        } else {
+          vEl.textContent = 'Fit';
+          vEl.style.color = GREEN;
+          vEl.style.backgroundColor = 'rgba(92,201,138,0.14)';
+          nEl.textContent = 'Clears your ' + usd(floor) + ' floor after the loan and a real operator.';
+        }
+      } else {
+        ['chk-mult', 'chk-sde', 'chk-job', 'chk-floor'].forEach((id) => {
+          const el = $(id);
+          el.textContent = '·';
+          el.style.color = '#666666';
+        });
+        vEl.textContent = '—';
+        vEl.style.color = MUTED;
+        vEl.style.backgroundColor = 'transparent';
+        nEl.textContent = 'Enter price and SDE to see the verdict.';
+      }
     }
 
     // ----- wire up -----
-    ['i-price', 'i-sde', 'i-operator', 'i-netprofit', 'i-owner-salary', 'i-da', 'i-interest'].forEach((id) => {
+    ['i-price', 'i-sde', 'i-operator', 'i-netprofit', 'i-owner-salary', 'i-da', 'i-interest', 'i-reinvest', 'i-floor'].forEach((id) => {
       const el = $i(id);
       el.addEventListener('input', () => {
         formatMoneyField(el);
@@ -390,6 +545,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       $i(id).addEventListener('input', recompute);
     });
 
+    paintFin();
     paintBasis();
     paintRole();
     recompute();
