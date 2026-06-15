@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Deal Calculator | Margin Theory"
+  description="Quick acquisition cash flow check. Drop in the price and SDE from a listing and see the cash flow after the loan and an operator."
+>
+  <section>
+    <div class="max-w-5xl mx-auto px-6 pt-10 md:pt-14 pb-20">
+      <div class="mb-8">
+        <div class="text-xs font-bold tracking-[0.15em] uppercase text-brand-blue mb-2">
+          Acquisition Pipeline
+        </div>
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-white leading-[1.15] mb-3">
+          Deal Calculator
+        </h1>
+        <p class="text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
+          Drop in the numbers from a listing. See the cash flow after the loan and an operator.
+          Green cash flow means the deal pays you. Red means it does not.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
+        <!-- INPUTS -->
+        <div class="border border-white/15 bg-white/[0.02] p-6 md:p-7 rounded-sm">
+          <div class="space-y-5">
+            <div>
+              <label for="i-name" class="block text-sm font-semibold text-white/80 mb-1.5">Business name <span class="text-white/40 font-normal">(optional)</span></label>
+              <input id="i-name" type="text" placeholder="Austin pool route"
+                class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+            </div>
+
+            <div>
+              <label for="i-price" class="block text-sm font-semibold text-white/80 mb-1.5">Asking price</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
+                <input id="i-price" type="text" inputmode="numeric" placeholder="900,000"
+                  class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+              </div>
+            </div>
+
+            <div>
+              <label for="i-sde" class="block text-sm font-semibold text-white/80 mb-1.5">SDE (annual)</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
+                <input id="i-sde" type="text" inputmode="numeric" placeholder="300,000"
+                  class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+              </div>
+              <p class="text-xs text-white/45 mt-1.5">Use SDE if the listing shows it. Otherwise drop in profit or owner earnings.</p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-white/80 mb-1.5">Who runs it?</label>
+              <div class="grid grid-cols-2 gap-2" id="role-toggle">
+                <button type="button" data-role="owner"
+                  class="role-btn px-3 py-2.5 text-sm font-semibold rounded-sm border transition text-center">
+                  You install an operator
+                </button>
+                <button type="button" data-role="manager"
+                  class="role-btn px-3 py-2.5 text-sm font-semibold rounded-sm border transition text-center">
+                  Manager already in place
+                </button>
+              </div>
+              <p class="text-xs text-white/45 mt-1.5" id="role-hint"></p>
+            </div>
+
+            <div id="operator-wrap">
+              <label for="i-operator" class="block text-sm font-semibold text-white/80 mb-1.5">Operator pay (annual)</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
+                <input id="i-operator" type="text" inputmode="numeric" placeholder="0"
+                  class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+              </div>
+              <p class="text-xs text-white/45 mt-1.5">What you'd pay someone to run it instead of you. Leave at 0 if you'll run it yourself.</p>
+            </div>
+
+            <details class="border-t border-white/10 pt-4 group" open>
+              <summary class="cursor-pointer text-sm font-semibold text-white/70 hover:text-white select-none list-none flex items-center gap-2">
+                <span class="text-brand-blue transition-transform group-open:rotate-90">&rsaquo;</span>
+                Financing assumptions
+              </summary>
+              <div class="grid grid-cols-2 gap-3 mt-4">
+                <div>
+                  <label for="i-down" class="block text-xs font-semibold text-white/60 mb-1">Down payment %</label>
+                  <input id="i-down" type="text" inputmode="decimal" value="10"
+                    class="w-full px-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                </div>
+                <div>
+                  <label for="i-rate" class="block text-xs font-semibold text-white/60 mb-1">Interest rate %</label>
+                  <input id="i-rate" type="text" inputmode="decimal" value="11"
+                    class="w-full px-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                </div>
+                <div>
+                  <label for="i-term" class="block text-xs font-semibold text-white/60 mb-1">Loan term (years)</label>
+                  <input id="i-term" type="text" inputmode="decimal" value="10"
+                    class="w-full px-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                </div>
+                <div>
+                  <label for="i-closing" class="block text-xs font-semibold text-white/60 mb-1">Closing costs %</label>
+                  <input id="i-closing" type="text" inputmode="decimal" value="3"
+                    class="w-full px-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue" />
+                </div>
+              </div>
+              <p class="text-xs text-white/45 mt-3">Defaults are a 90% SBA 7(a) loan, 10 years, ~11%, plus ~3% closing. Change any of them.</p>
+            </details>
+          </div>
+        </div>
+
+        <!-- RESULT CARD -->
+        <div class="md:sticky md:top-24">
+          <div style="background-color:#1E1E1E;font-family:'Inter','Helvetica Neue',Arial,sans-serif;padding:24px 26px;border:1px solid #333333;border-radius:2px;">
+            <div style="border-bottom:1px solid #2e2e2e;padding-bottom:12px;margin-bottom:16px;">
+              <div style="font-size:22px;font-weight:bold;letter-spacing:1px;color:#FFFFFF;text-transform:uppercase;">The Deal Sheet</div>
+              <div style="margin-top:5px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3271D2;">Margin Theory &middot; Quick Underwrite</div>
+            </div>
+
+            <div style="font-size:16px;font-weight:bold;text-transform:uppercase;color:#FFFFFF;margin-bottom:6px;" id="r-name">Untitled deal</div>
+            <div style="font-size:12.5px;color:#9a9a9a;margin-bottom:12px;"><span style="color:#3271D2;font-weight:bold;">Owner role:</span> <span id="r-role">operator installed</span></div>
+
+            <div style="font-size:14px;line-height:2.0;">
+              <div><span style="color:#3271D2;font-weight:bold;">Price:</span> <span style="color:#ededed;" id="r-price">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">SDE (annual):</span> <span style="color:#ededed;" id="r-sde">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Debt service (est.):</span> <span style="color:#8a8a8a;" id="r-debt">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Operator pay:</span> <span style="color:#8a8a8a;" id="r-operator">&mdash;</span></div>
+              <div style="margin-top:6px;padding-top:6px;border-top:1px solid #2e2e2e;"><span style="color:#3271D2;font-weight:bold;">Cash flow:</span> <span style="font-weight:bold;" id="r-cashflow">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Cash to close:</span> <span style="color:#ededed;" id="r-close">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;">Cash on cash:</span> <span style="font-weight:bold;" id="r-coc">&mdash;</span></div>
+            </div>
+
+            <div style="border-top:1px solid #2e2e2e;margin-top:16px;padding-top:12px;font-size:11.5px;color:#7e7e7e;line-height:1.7;font-style:italic;">
+              Debt service is estimated from the financing assumptions on the left. Operator pay is what you pay someone to run it. Cash on cash is that cash flow divided by the cash to close, the annual return on the cash you put in.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    type Role = 'owner' | 'manager';
+
+    const $ = (id: string) => document.getElementById(id) as HTMLElement;
+    const $i = (id: string) => document.getElementById(id) as HTMLInputElement;
+
+    const GREEN = '#5cc98a';
+    const RED = '#e8736b';
+    const MUTED = '#9a9a9a';
+
+    // strip everything but digits and a single decimal point
+    function parseNum(raw: string): number {
+      if (!raw) return NaN;
+      const cleaned = raw.replace(/[^0-9.]/g, '');
+      if (cleaned === '' || cleaned === '.') return NaN;
+      return parseFloat(cleaned);
+    }
+    const usd = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+
+    // live comma formatting for the big dollar fields (cursor stays at end)
+    function formatMoneyField(el: HTMLInputElement) {
+      const digits = el.value.replace(/[^0-9]/g, '');
+      el.value = digits === '' ? '' : parseInt(digits, 10).toLocaleString('en-US');
+    }
+
+    // ----- role toggle -----
+    let role: Role = 'owner';
+    const roleBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.role-btn'));
+
+    function paintRole() {
+      roleBtns.forEach((b) => {
+        const active = b.dataset.role === role;
+        b.style.backgroundColor = active ? '#3271D2' : 'transparent';
+        b.style.borderColor = active ? '#3271D2' : 'rgba(255,255,255,0.2)';
+        b.style.color = active ? '#ffffff' : 'rgba(255,255,255,0.7)';
+      });
+      const wrap = $('operator-wrap');
+      const hint = $('role-hint');
+      const opInput = $i('i-operator');
+      if (role === 'manager') {
+        wrap.style.opacity = '0.4';
+        wrap.style.pointerEvents = 'none';
+        opInput.disabled = true;
+        hint.textContent = 'A manager is already in place, so their pay is already inside the SDE. No operator pay subtracted.';
+      } else {
+        wrap.style.opacity = '1';
+        wrap.style.pointerEvents = 'auto';
+        opInput.disabled = false;
+        hint.textContent = 'You would install an operator. Their pay comes out of SDE.';
+      }
+    }
+
+    roleBtns.forEach((b) =>
+      b.addEventListener('click', () => {
+        role = (b.dataset.role as Role) || 'owner';
+        paintRole();
+        recompute();
+      })
+    );
+
+    // ----- amortization (annual debt service on the acquisition loan) -----
+    function annualDebtService(price: number, downPct: number, ratePct: number, termYears: number): number {
+      const loan = price * (1 - downPct / 100);
+      if (loan <= 0 || termYears <= 0) return 0;
+      const r = ratePct / 100 / 12;
+      const n = termYears * 12;
+      const monthly = r === 0 ? loan / n : (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      return monthly * 12;
+    }
+
+    // ----- main compute -----
+    function recompute() {
+      const price = parseNum($i('i-price').value);
+      const sde = parseNum($i('i-sde').value);
+      const down = parseNum($i('i-down').value) || 0;
+      const rate = parseNum($i('i-rate').value) || 0;
+      const term = parseNum($i('i-term').value) || 0;
+      const closing = parseNum($i('i-closing').value) || 0;
+      const operatorRaw = parseNum($i('i-operator').value);
+
+      const hasPrice = !isNaN(price) && price > 0;
+      const hasSDE = !isNaN(sde) && sde > 0;
+
+      // name
+      const nameVal = $i('i-name').value.trim();
+      $('r-name').textContent = nameVal || 'Untitled deal';
+
+      // owner role line
+      $('r-role').textContent = role === 'manager' ? 'manager in place' : 'operator installed';
+
+      // price
+      $('r-price').textContent = hasPrice ? usd(price) : '—';
+
+      // SDE with multiple appended
+      if (hasSDE) {
+        let sdeTxt = usd(sde);
+        if (hasPrice) sdeTxt += '  ·  ' + (price / sde).toFixed(1) + 'x';
+        $('r-sde').textContent = sdeTxt;
+      } else {
+        $('r-sde').textContent = '—';
+      }
+
+      // debt service
+      const debt = hasPrice ? annualDebtService(price, down, rate, term) : 0;
+      $('r-debt').textContent = hasPrice ? usd(debt) + '/yr' : '—';
+
+      // operator pay
+      const operatorPay = role === 'manager' ? 0 : (isNaN(operatorRaw) ? 0 : operatorRaw);
+      $('r-operator').textContent =
+        role === 'manager' ? 'already in SDE' : (isNaN(operatorRaw) ? '$0/yr' : usd(operatorPay) + '/yr');
+
+      // cash flow + cash on cash
+      const cfEl = $('r-cashflow');
+      const cocEl = $('r-coc');
+      const cashToClose = hasPrice ? price * ((down + closing) / 100) : 0;
+
+      if (hasSDE) {
+        const cf = sde - debt - operatorPay;
+        const cfMo = cf / 12;
+        const positive = cf >= 0;
+        cfEl.textContent =
+          (positive ? '' : '−') + usd(Math.abs(cf)) + '/yr  (' + (positive ? '~' : '−') + usd(Math.abs(cfMo)) + '/mo)' + (positive ? '' : '  underwater');
+        cfEl.style.color = positive ? GREEN : RED;
+
+        if (cashToClose > 0) {
+          const coc = (cf / cashToClose) * 100;
+          const cocPos = coc >= 0;
+          cocEl.textContent = (cocPos ? '~' : '−') + Math.abs(Math.round(coc)) + '%';
+          cocEl.style.color = cocPos ? GREEN : RED;
+        } else {
+          cocEl.textContent = '—';
+          cocEl.style.color = MUTED;
+        }
+      } else {
+        cfEl.textContent = 'enter SDE';
+        cfEl.style.color = MUTED;
+        cocEl.textContent = '—';
+        cocEl.style.color = MUTED;
+      }
+
+      // cash to close
+      $('r-close').textContent = hasPrice ? '~' + usd(cashToClose) : '—';
+    }
+
+    // ----- wire up -----
+    ['i-price', 'i-sde', 'i-operator'].forEach((id) => {
+      const el = $i(id);
+      el.addEventListener('input', () => {
+        formatMoneyField(el);
+        recompute();
+      });
+    });
+    ['i-name', 'i-down', 'i-rate', 'i-term', 'i-closing'].forEach((id) => {
+      $i(id).addEventListener('input', recompute);
+    });
+
+    paintRole();
+    recompute();
+  </script>
+</BaseLayout>
