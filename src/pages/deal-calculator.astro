@@ -40,13 +40,73 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
 
             <div>
+              <label class="block text-sm font-semibold text-white/80 mb-1.5">Earnings basis</label>
+              <div class="grid grid-cols-2 gap-2" id="basis-toggle">
+                <button type="button" data-basis="sde"
+                  class="basis-btn px-3 py-2.5 text-sm font-semibold rounded-sm border transition text-center">
+                  SDE
+                </button>
+                <button type="button" data-basis="profit"
+                  class="basis-btn px-3 py-2.5 text-sm font-semibold rounded-sm border transition text-center">
+                  Net profit
+                </button>
+              </div>
+            </div>
+
+            <!-- SDE mode -->
+            <div id="sde-mode">
               <label for="i-sde" class="block text-sm font-semibold text-white/80 mb-1.5">SDE (annual)</label>
               <div class="relative">
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
                 <input id="i-sde" type="text" inputmode="numeric" placeholder="300,000"
                   class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
               </div>
-              <p class="text-xs text-white/45 mt-1.5">Use SDE if the listing shows it. Otherwise drop in profit or owner earnings.</p>
+              <p class="text-xs text-white/45 mt-1.5">The listing's SDE or seller's cash flow. On BizBuySell this is the "cash flow" number.</p>
+            </div>
+
+            <!-- Net profit mode -->
+            <div id="profit-mode" style="display:none;">
+              <label for="i-netprofit" class="block text-sm font-semibold text-white/80 mb-1.5">Net profit (annual)</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/50 text-base pointer-events-none">$</span>
+                <input id="i-netprofit" type="text" inputmode="numeric" placeholder="150,000"
+                  class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+              </div>
+              <p class="text-xs text-white/45 mt-1.5 mb-3">Bottom-line profit, after the owner paid themselves. Add the items below back to rebuild SDE.</p>
+
+              <div class="border border-white/10 rounded-sm p-3 space-y-2.5">
+                <div class="text-xs font-semibold uppercase tracking-wide text-white/50">Add backs to rebuild SDE</div>
+                <div>
+                  <label for="i-owner-salary" class="block text-xs font-semibold text-white/60 mb-1">+ Owner's salary</label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/50 text-sm pointer-events-none">$</span>
+                    <input id="i-owner-salary" type="text" inputmode="numeric" placeholder="90,000"
+                      class="w-full pl-7 pr-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="i-da" class="block text-xs font-semibold text-white/60 mb-1">+ Deprec. &amp; amort.</label>
+                    <div class="relative">
+                      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/50 text-sm pointer-events-none">$</span>
+                      <input id="i-da" type="text" inputmode="numeric" placeholder="0"
+                        class="w-full pl-7 pr-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+                    </div>
+                  </div>
+                  <div>
+                    <label for="i-interest" class="block text-xs font-semibold text-white/60 mb-1">+ Interest</label>
+                    <div class="relative">
+                      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/50 text-sm pointer-events-none">$</span>
+                      <input id="i-interest" type="text" inputmode="numeric" placeholder="0"
+                        class="w-full pl-7 pr-3 py-2 bg-white text-charcoal text-sm rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between border-t border-white/10 pt-2.5 mt-1">
+                  <span class="text-sm font-semibold text-brand-blue">= SDE (recast)</span>
+                  <span class="text-base font-bold text-white" id="r-recast">$0</span>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -119,7 +179,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
             <div style="font-size:14px;line-height:2.0;">
               <div><span style="color:#3271D2;font-weight:bold;">Price:</span> <span style="color:#ededed;" id="r-price">&mdash;</span></div>
-              <div><span style="color:#3271D2;font-weight:bold;">SDE (annual):</span> <span style="color:#ededed;" id="r-sde">&mdash;</span></div>
+              <div><span style="color:#3271D2;font-weight:bold;" id="r-sde-label">SDE (annual):</span> <span style="color:#ededed;" id="r-sde">&mdash;</span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Debt service (est.):</span> <span style="color:#8a8a8a;" id="r-debt">&mdash;</span></div>
               <div><span style="color:#3271D2;font-weight:bold;">Operator pay:</span> <span style="color:#8a8a8a;" id="r-operator">&mdash;</span></div>
               <div style="margin-top:6px;padding-top:6px;border-top:1px solid #2e2e2e;"><span style="color:#3271D2;font-weight:bold;">Cash flow:</span> <span style="font-weight:bold;" id="r-cashflow">&mdash;</span></div>
@@ -196,6 +256,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       })
     );
 
+    // ----- earnings basis toggle (SDE direct, or recast from net profit) -----
+    type Basis = 'sde' | 'profit';
+    let basis: Basis = 'sde';
+    const basisBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.basis-btn'));
+
+    function paintBasis() {
+      basisBtns.forEach((b) => {
+        const active = b.dataset.basis === basis;
+        b.style.backgroundColor = active ? '#3271D2' : 'transparent';
+        b.style.borderColor = active ? '#3271D2' : 'rgba(255,255,255,0.2)';
+        b.style.color = active ? '#ffffff' : 'rgba(255,255,255,0.7)';
+      });
+      $('sde-mode').style.display = basis === 'sde' ? '' : 'none';
+      $('profit-mode').style.display = basis === 'profit' ? '' : 'none';
+    }
+
+    basisBtns.forEach((b) =>
+      b.addEventListener('click', () => {
+        basis = (b.dataset.basis as Basis) || 'sde';
+        paintBasis();
+        recompute();
+      })
+    );
+
     // ----- amortization (annual debt service on the acquisition loan) -----
     function annualDebtService(price: number, downPct: number, ratePct: number, termYears: number): number {
       const loan = price * (1 - downPct / 100);
@@ -209,7 +293,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     // ----- main compute -----
     function recompute() {
       const price = parseNum($i('i-price').value);
-      const sde = parseNum($i('i-sde').value);
+
+      // SDE: entered directly, or recast from net profit + add-backs
+      let sde: number;
+      if (basis === 'profit') {
+        const np = parseNum($i('i-netprofit').value);
+        const ownerSalary = parseNum($i('i-owner-salary').value) || 0;
+        const da = parseNum($i('i-da').value) || 0;
+        const interestAddback = parseNum($i('i-interest').value) || 0;
+        sde = isNaN(np) ? NaN : np + ownerSalary + da + interestAddback;
+        $('r-recast').textContent = isNaN(np) ? '$0' : usd(sde);
+      } else {
+        sde = parseNum($i('i-sde').value);
+      }
+      $('r-sde-label').textContent = basis === 'profit' ? 'SDE (recast):' : 'SDE (annual):';
+
       const down = parseNum($i('i-down').value) || 0;
       const rate = parseNum($i('i-rate').value) || 0;
       const term = parseNum($i('i-term').value) || 0;
@@ -281,7 +379,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
 
     // ----- wire up -----
-    ['i-price', 'i-sde', 'i-operator'].forEach((id) => {
+    ['i-price', 'i-sde', 'i-operator', 'i-netprofit', 'i-owner-salary', 'i-da', 'i-interest'].forEach((id) => {
       const el = $i(id);
       el.addEventListener('input', () => {
         formatMoneyField(el);
@@ -292,6 +390,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       $i(id).addEventListener('input', recompute);
     });
 
+    paintBasis();
     paintRole();
     recompute();
   </script>
