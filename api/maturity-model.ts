@@ -55,6 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const name = (body?.name || '').trim();
+  const phone = (body?.phone || '').trim();
   const stage = STAGE_SLUGS.includes(body?.stage || '') ? body!.stage! : 'unknown';
   const employees = (body?.employees || '').trim();
   const revenue = (body?.revenue || '').trim();
@@ -62,21 +63,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const customFields = [
     { name: 'First Name', value: name },
+    { name: 'Phone', value: phone },
     { name: 'Maturity Stage', value: stage },
     { name: 'Employees', value: employees },
     { name: 'Revenue Band', value: revenue },
     { name: 'Ownership', value: ownership },
   ].filter((f) => f.value);
 
+  // 1) Beehiiv subscribe (non-blocking; the client redirects to the stage page regardless)
   try {
     const r = await fetch(
       `https://api.beehiiv.com/v2/publications/${pubId}/subscriptions`,
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
           email,
           reactivate_existing: true,
@@ -89,16 +89,54 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }),
       }
     );
-
-    if (!r.ok) {
-      const detail = await r.text();
-      console.error(`maturity-model: beehiiv ${r.status}: ${detail}`);
-      return res.status(502).json({ error: 'Capture failed upstream.' });
-    }
-
-    return res.status(200).json({ ok: true, stage });
+    if (!r.ok) console.error(`maturity-model: beehiiv ${r.status}: ${await r.text()}`);
   } catch (err) {
-    console.error('maturity-model: network error', err);
-    return res.status(502).json({ error: 'Capture failed.' });
+    console.error('maturity-model: beehiiv error', err);
   }
+
+  // 2) Capsule CRM lead (non-blocking). Needs CAPSULE_API_TOKEN on Vercel.
+  // De-dupes by email so repeat submits don't pile up duplicate leads.
+  const capsuleToken = process.env.CAPSULE_API_TOKEN;
+  if (capsuleToken) {
+    try {
+      const cHeaders = {
+        Authorization: `Bearer ${capsuleToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      };
+      let exists = false;
+      const search = await fetch(
+        `https://api.capsulecrm.com/api/v2/parties/search?q=${encodeURIComponent(email)}`,
+        { headers: cHeaders }
+      );
+      if (search.ok) {
+        const sj = (await search.json()) as { parties?: Array<{ emailAddresses?: Array<{ address?: string }> }> };
+        exists = (sj.parties || []).some((p) =>
+          (p.emailAddresses || []).some((e) => (e.address || '').toLowerCase() === email)
+        );
+      }
+      if (!exists) {
+        const about = `Business Maturity Model lead. Stage: ${stage}. Employees: ${employees || 'n/a'}, revenue ${revenue || 'n/a'}, ownership ${ownership || 'n/a'}. Source: margintheory.co/maturity-model.`;
+        const party: Record<string, unknown> = {
+          type: 'person',
+          firstName: name || 'Maturity Model',
+          lastName: name ? '' : 'Lead',
+          about,
+          emailAddresses: [{ type: 'Work', address: email }],
+          tags: [{ name: 'Maturity Model' }],
+        };
+        if (phone) party.phoneNumbers = [{ type: 'Mobile', number: phone }];
+        const create = await fetch('https://api.capsulecrm.com/api/v2/parties', {
+          method: 'POST',
+          headers: cHeaders,
+          body: JSON.stringify({ party }),
+        });
+        if (!create.ok) console.error(`maturity-model: capsule create ${create.status}: ${await create.text()}`);
+      }
+    } catch (err) {
+      console.error('maturity-model: capsule error', err);
+    }
+  }
+
+  return res.status(200).json({ ok: true, stage });
 }

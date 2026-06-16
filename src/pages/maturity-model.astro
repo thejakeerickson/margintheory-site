@@ -76,6 +76,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
           <input id="i-email" type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@yourcompany.com"
             class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+          <input id="i-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" required placeholder="Phone number"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
           <button id="i-submit" type="submit"
             class="w-full inline-flex items-center justify-center px-6 py-4 bg-brand-blue text-white text-lg font-bold rounded-sm hover:opacity-90 transition shadow-lg disabled:opacity-60 disabled:cursor-not-allowed">
             Show me my stage
@@ -159,6 +161,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const nameInput = document.getElementById('i-name') as HTMLInputElement;
     const emailInput = document.getElementById('i-email') as HTMLInputElement;
+    const phoneInput = document.getElementById('i-phone') as HTMLInputElement;
     const submitBtn = document.getElementById('i-submit') as HTMLButtonElement;
     const errEl = document.getElementById('i-error') as HTMLParagraphElement;
 
@@ -167,10 +170,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       errEl.classList.add('hidden');
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errEl.textContent = 'Please enter a valid email address.';
         errEl.classList.remove('hidden');
         emailInput.focus();
+        return;
+      }
+      if (!phone || phone.replace(/\D/g, '').length < 7) {
+        errEl.textContent = 'Please enter a valid phone number.';
+        errEl.classList.remove('hidden');
+        phoneInput.focus();
         return;
       }
 
@@ -185,7 +195,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name, email,
+            name, email, phone,
             employees: answers.emp,
             revenue: answers.rev,
             ownership: answers.own,
