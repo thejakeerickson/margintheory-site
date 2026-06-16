@@ -48,6 +48,10 @@ const desc = data ? `Your business is at the ${data.name} stage. ${data.tagline}
         {data.stats && (
           <div class="text-xs font-bold tracking-[0.18em] uppercase text-brand-blue">{data.stats.headcount} &middot; {data.stats.revenue} revenue</div>
         )}
+        <a href={`/maturity-model/${stage.slug}.pdf`} download={`The Business Maturity Model - ${data.name}.pdf`}
+          class="inline-flex items-center gap-2 mt-7 px-5 py-2.5 border border-white/20 bg-white/[0.04] text-white/90 text-sm font-semibold rounded-sm hover:bg-white/10 transition">
+          Download this as a PDF
+        </a>
       </section>
 
       <!-- YOU ARE HERE -->
