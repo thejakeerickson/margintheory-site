@@ -1,0 +1,298 @@
+{
+  "title": "Business Maturity Model — Stage 4: Focus",
+  "description": "Canonical source for the Focus stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 4,
+  "name": "Focus",
+  "band": "cfo",
+  "tagline": "You're past survival. Now the business is pulling you ten directions at once, and working harder isn't fixing it.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "5 to 9 people",
+    "revenue": "$1M to $3M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "5 to 9 people. You manage the work now instead of doing all of it.",
+    "constraint": "You're trying to be everything to everyone. That's why you feel scattered.",
+    "graduate_by": "Niching down. More of your best-fit customers, fewer of everyone else."
+  },
+  "big_picture": [
+    "The early stages were about survival. Make the first sale, get steady customers, hire your first people. You did it. Now you've got a small team and money coming in, and a new problem shows up. You took every kind of customer and every kind of job to get here, and now the business pulls you in ten directions at once. You're busy every single day and it still feels like you're spinning.",
+    "The longer you wait, the more the business gets built around the mess. You add systems to handle work you never should have taken, and hire people who only know their corner of it. Focus only gets harder from here, which is why this is the stage to take seriously now.",
+    "Working harder won't fix this stage. The businesses that break through get specific about who they serve and what they sell, and they let the rest go. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one decision: who you're for, and what you'll stop doing. The next pages run that decision across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines, and eight parts inside them. At Focus, one part is breaking each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "A hundred leads come in and you'd take any of them.",
+          "constraint": "You're drowning in leads that aren't a fit. Plenty of inquiries come in, but they don't turn into much money.",
+          "do_this": "Make your marketing more specific. Pick the one customer you just decided to build for and write to their problem in their words, so the wrong-fit leads rule themselves out before they ever call. Ten right-fit leads you can close beat a hundred tire-kickers who eat your week.",
+          "sources": []
+        },
+        {
+          "name": "Sales",
+          "start_here": false,
+          "constraint": "Deals slip and you can't see why. Nobody's tracking the funnel.",
+          "do_this": "Put your numbers on one weekly sheet, by person: leads, demos, closes, cash. Read down the funnel to where you fall off. The two that decide this stage are speed-to-lead and show rate.",
+          "sources": [
+            {
+              "concept": "the funnel",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "You quote a $500 job and a $50,000 job the same way.",
+          "constraint": "You said yes to everyone to get here, so you deliver ten slightly different things and none of them is the best at anything.",
+          "do_this": "Pull your customer list and find the 20% who pay the most and complain the least. Build your best version of the business for them, and stop bending the offer for everyone else. That's the Hedgehog. Be the best at one thing instead of decent at ten.",
+          "sources": [
+            {
+              "concept": "The Hedgehog Concept",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "You can't see who's happy and who's about to walk.",
+          "do_this": "Get a basic CRM and track who you keep, who you lose, who refers. The customer who slips away quietly costs you more than the one who complains, because you never got the chance to save them.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "The team's on scattered tools, personal logins, and notes in five places.",
+          "do_this": "Get everyone on the same platforms. One place to talk, one to track work, a password manager so nothing lives in one person's head. Nothing fancy, just shared.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "One slow-paying customer changes your whole month.",
+          "constraint": "Cash is lumpy. Some months are flush, some are tight, and one big bill can knock you sideways, because nobody's looking more than a few weeks out.",
+          "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash.",
+          "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever. I built the 15 Profit and Cash Flow Drivers Worksheet for businesses at this stage. Run your numbers in it and you'll see in an afternoon which drivers are working against you.",
+          "sources": [
+            {
+              "concept": "Gross profit per labor dollar",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "You hire the best interview, then wonder where that person went.",
+          "do_this": "Hire to a scorecard. Write the outcomes the role must produce before you meet anyone, interview against it, and call their references. That's the A-Method. A bad hire at five people hurts more than at fifty.",
+          "sources": [
+            {
+              "concept": "the A-Method",
+              "book": "Who",
+              "author": "Geoff Smart"
+            }
+          ]
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "Nobody wrote the rules down, so everyone runs their own.",
+          "do_this": "Write the basics down: time off, conduct, how things work here. Then get each person clear on what they're there to contribute. Lencioni calls the first part creating clarity; Drucker the second, focusing on contribution.",
+          "sources": [
+            {
+              "concept": "create clarity",
+              "book": "The Advantage",
+              "author": "Patrick Lencioni"
+            },
+            {
+              "concept": "focus on contribution",
+              "book": "The Essential Drucker",
+              "author": "Peter Drucker"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "You can name your best 20% of customers",
+      "Your marketing speaks to one kind of person",
+      "You track your sales numbers, even by hand",
+      "You've got a P&L and a rough cash forecast",
+      "Your team knows the rules"
+    ],
+    "needs_work": [
+      "You still take every customer who'll pay",
+      "You couldn't show last month's profit on one page",
+      "One big bill still scares you",
+      "You're the only one who knows how anything works",
+      "Every decision still runs through you"
+    ]
+  },
+  "graduating": "You'll know you're ready when you've niched down and it's working: better-fit customers, steadier cash, a team that runs without you in every call. The next stage is about giving those good customers something else to buy.",
+  "cta": {
+    "headline": "Want the finance side built around your numbers?",
+    "body": "Start with the 15 Profit and Cash Flow Drivers Worksheet. It shows the numbers that decide whether this stage makes money, and it's yours to keep. Book a call and we run them on your business, so you can see the tight months before they hit and plan around them."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Who",
+      "author": "Geoff Smart"
+    },
+    {
+      "book": "The Advantage",
+      "author": "Patrick Lencioni"
+    },
+    {
+      "book": "The Essential Drucker",
+      "author": "Peter Drucker"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "A hundred leads come in and you'd take any of them.",
+      "constraint": "You're drowning in leads that aren't a fit. Plenty of inquiries come in, but they don't turn into much money.",
+      "do_this": "Make your marketing more specific. Pick the one customer you just decided to build for and write to their problem in their words, so the wrong-fit leads rule themselves out before they ever call. Ten right-fit leads you can close beat a hundred tire-kickers who eat your week.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "You quote a $500 job and a $50,000 job the same way.",
+      "constraint": "You said yes to everyone to get here, so you deliver ten slightly different things and none of them is the best at anything.",
+      "do_this": "Pull your customer list and find the 20% who pay the most and complain the least. Build your best version of the business for them, and stop bending the offer for everyone else. That's the Hedgehog. Be the best at one thing instead of decent at ten.",
+      "sources": [
+        {
+          "concept": "The Hedgehog Concept",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "One slow-paying customer changes your whole month.",
+      "constraint": "Cash is lumpy. Some months are flush, some are tight, and one big bill can knock you sideways, because nobody's looking more than a few weeks out.",
+      "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash.",
+      "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever. I built the 15 Profit and Cash Flow Drivers Worksheet for businesses at this stage. Run your numbers in it and you'll see in an afternoon which drivers are working against you.",
+      "sources": [
+        {
+          "concept": "Gross profit per labor dollar",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Sales",
+      "start_here": false,
+      "constraint": "Deals slip and you can't see why. Nobody's tracking the funnel.",
+      "do_this": "Put your numbers on one weekly sheet, by person: leads, demos, closes, cash. Read down the funnel to where you fall off. The two that decide this stage are speed-to-lead and show rate.",
+      "sources": [
+        {
+          "concept": "the funnel",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "You can't see who's happy and who's about to walk.",
+      "do_this": "Get a basic CRM and track who you keep, who you lose, who refers. The customer who slips away quietly costs you more than the one who complains, because you never got the chance to save them.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "The team's on scattered tools, personal logins, and notes in five places.",
+      "do_this": "Get everyone on the same platforms. One place to talk, one to track work, a password manager so nothing lives in one person's head. Nothing fancy, just shared.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "You hire the best interview, then wonder where that person went.",
+      "do_this": "Hire to a scorecard. Write the outcomes the role must produce before you meet anyone, interview against it, and call their references. That's the A-Method. A bad hire at five people hurts more than at fifty.",
+      "sources": [
+        {
+          "concept": "the A-Method",
+          "book": "Who",
+          "author": "Geoff Smart"
+        }
+      ],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "Nobody wrote the rules down, so everyone runs their own.",
+      "do_this": "Write the basics down: time off, conduct, how things work here. Then get each person clear on what they're there to contribute. Lencioni calls the first part creating clarity; Drucker the second, focusing on contribution.",
+      "sources": [
+        {
+          "concept": "create clarity",
+          "book": "The Advantage",
+          "author": "Patrick Lencioni"
+        },
+        {
+          "concept": "focus on contribution",
+          "book": "The Essential Drucker",
+          "author": "Peter Drucker"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ]
+}

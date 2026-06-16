@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="The Business Maturity Model | Margin Theory"
+  description="Answer three questions and find the exact stage your business is in, the one constraint holding it back, and what your money needs to do next. Free, under a minute."
+  noNav={true}
+  conversionPage={true}
+  minimalFooter={true}
+  noindex={true}
+>
+  <div class="max-w-2xl mx-auto px-6 pt-8">
+    <a href="/" class="font-bold text-lg tracking-tight text-white">Margin Theory</a>
+  </div>
+
+  <section>
+    <div class="max-w-2xl mx-auto px-6 pt-10 pb-24 md:pt-14">
+      <div class="text-xs font-bold tracking-[0.2em] uppercase text-brand-blue mb-3">The Business Maturity Model</div>
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight text-white leading-tight mb-2">Find the stage your business is in.</h1>
+      <p class="text-white/65 text-base mb-8 leading-relaxed">Three questions, under a minute. You get the exact stage you're in, the one constraint holding you back, and what your money needs to do to reach the next one.</p>
+
+      <!-- progress -->
+      <div class="h-1 w-full bg-white/10 rounded-full mb-9 overflow-hidden">
+        <div id="bar" class="h-full bg-brand-blue transition-all duration-300" style="width:25%"></div>
+      </div>
+
+      <!-- STEP 1: employees -->
+      <div class="step" data-step="1">
+        <div class="text-lg md:text-xl font-semibold text-white mb-5">How many full-time people, counting you?</div>
+        <div class="space-y-2.5">
+          <button type="button" class="opt" data-val="solo-norev">Just me, pre-revenue</button>
+          <button type="button" class="opt" data-val="solo-somerev">Just me, earning some</button>
+          <button type="button" class="opt" data-val="vendors">Me plus vendors or contractors</button>
+          <button type="button" class="opt" data-val="2-4">2 to 4</button>
+          <button type="button" class="opt" data-val="5-9">5 to 9</button>
+          <button type="button" class="opt" data-val="10-19">10 to 19</button>
+          <button type="button" class="opt" data-val="20-49">20 to 49</button>
+          <button type="button" class="opt" data-val="50-99">50 to 99</button>
+          <button type="button" class="opt" data-val="100-249">100 to 249</button>
+          <button type="button" class="opt" data-val="250-500">250 to 500</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: revenue -->
+      <div class="step hidden" data-step="2">
+        <div class="text-lg md:text-xl font-semibold text-white mb-5">Roughly what's your annual revenue?</div>
+        <div class="space-y-2.5">
+          <button type="button" class="opt" data-val="under-100k">Under $100K</button>
+          <button type="button" class="opt" data-val="100-250k">$100K to $250K</button>
+          <button type="button" class="opt" data-val="250-500k">$250K to $500K</button>
+          <button type="button" class="opt" data-val="500k-1m">$500K to $1M</button>
+          <button type="button" class="opt" data-val="1-3m">$1M to $3M</button>
+          <button type="button" class="opt" data-val="3-10m">$3M to $10M</button>
+          <button type="button" class="opt" data-val="10-30m">$10M to $30M</button>
+          <button type="button" class="opt" data-val="30m-plus">$30M and up</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ownership -->
+      <div class="step hidden" data-step="3">
+        <div class="text-lg md:text-xl font-semibold text-white mb-5">How much of it do you own?</div>
+        <div class="space-y-2.5">
+          <button type="button" class="opt" data-val="majority">I own most of it, over 51%</button>
+          <button type="button" class="opt" data-val="half">50-50 with a partner</button>
+          <button type="button" class="opt" data-val="minority">I own a minority, under 50%</button>
+          <button type="button" class="opt" data-val="employee">I run it but don't own it</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: contact -->
+      <div class="step hidden" data-step="4">
+        <div class="text-lg md:text-xl font-semibold text-white mb-2">Where do I send your stage read?</div>
+        <p class="text-white/60 text-sm mb-5 leading-relaxed">Your full stage breakdown opens on the next screen. Drop your name and email and I'll keep a copy in your inbox too.</p>
+        <form id="contact-form" class="space-y-3" novalidate>
+          <input id="i-name" type="text" name="name" autocomplete="name" placeholder="First name"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+          <input id="i-email" type="email" name="email" inputmode="email" autocomplete="email" required placeholder="you@yourcompany.com"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
+          <button id="i-submit" type="submit"
+            class="w-full inline-flex items-center justify-center px-6 py-4 bg-brand-blue text-white text-lg font-bold rounded-sm hover:opacity-90 transition shadow-lg disabled:opacity-60 disabled:cursor-not-allowed">
+            Show me my stage
+          </button>
+          <p id="i-error" class="text-sm text-red-300 hidden" role="alert"></p>
+          <p class="text-xs text-white/50 text-center pt-1">You'll also get the Margin Theory newsletter. Unsubscribe anytime.</p>
+        </form>
+      </div>
+
+      <button id="back" type="button" class="mt-7 text-sm text-white/45 hover:text-white/80 transition hidden">&larr; Back</button>
+    </div>
+  </section>
+
+  <style>
+    .opt {
+      width: 100%;
+      text-align: left;
+      padding: 0.95rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: border-color .15s, background-color .15s;
+      cursor: pointer;
+    }
+    .opt:hover { border-color: #3271D2; background: rgba(255,255,255,0.06); }
+  </style>
+
+  <script>
+    const SLUGS = ['foundation','validation','traction','structure','focus','expansion','efficiency','systems','division','reinvention'];
+
+    const steps = Array.from(document.querySelectorAll<HTMLElement>('.step'));
+    const bar = document.getElementById('bar') as HTMLElement;
+    const backBtn = document.getElementById('back') as HTMLButtonElement;
+    const TOTAL = 4;
+    let step = 1;
+    const answers: { emp?: string; rev?: string; own?: string } = {};
+
+    function render() {
+      steps.forEach((s) => s.classList.toggle('hidden', Number(s.dataset.step) !== step));
+      bar.style.width = (step / TOTAL) * 100 + '%';
+      backBtn.classList.toggle('hidden', step === 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('.opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const s = Number((btn.closest('.step') as HTMLElement).dataset.step);
+        const val = btn.dataset.val || '';
+        if (s === 1) answers.emp = val;
+        else if (s === 2) answers.rev = val;
+        else if (s === 3) answers.own = val;
+        if (step < TOTAL) { step++; render(); }
+      });
+    });
+
+    backBtn.addEventListener('click', () => { if (step > 1) { step--; render(); } });
+
+    // (employees, revenue) -> stage index 0-9. Headcount is primary; revenue
+    // breaks the tie for the solo / very-early stages (the scaling_roadmap_hub diagnostic).
+    function stageIndex(emp?: string, rev?: string): number {
+      const lowRev = rev === 'under-100k';
+      const under250 = rev === 'under-100k' || rev === '100-250k';
+      switch (emp) {
+        case 'solo-norev': return 0;
+        case 'solo-somerev': return lowRev ? 1 : 2;
+        case 'vendors': return under250 ? 2 : 3;
+        case '2-4': return 3;
+        case '5-9': return 4;
+        case '10-19': return 5;
+        case '20-49': return 6;
+        case '50-99': return 7;
+        case '100-249': return 8;
+        case '250-500': return 9;
+        default: return 4;
+      }
+    }
+
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const nameInput = document.getElementById('i-name') as HTMLInputElement;
+    const emailInput = document.getElementById('i-email') as HTMLInputElement;
+    const submitBtn = document.getElementById('i-submit') as HTMLButtonElement;
+    const errEl = document.getElementById('i-error') as HTMLParagraphElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errEl.classList.add('hidden');
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.classList.remove('hidden');
+        emailInput.focus();
+        return;
+      }
+
+      const slug = SLUGS[stageIndex(answers.emp, answers.rev)];
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Finding your stage...';
+
+      // Capture is non-blocking: the redirect happens whether or not it succeeds
+      // (env vars only exist on Vercel, so this is a no-op in local dev).
+      try {
+        await fetch('/api/maturity-model', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, email,
+            employees: answers.emp,
+            revenue: answers.rev,
+            ownership: answers.own,
+            stage: slug,
+          }),
+        });
+      } catch (err) {
+        /* ignore, still route them to their stage */
+      }
+
+      window.location.href = '/maturity-model/' + slug;
+    });
+
+    render();
+  </script>
+</BaseLayout>
