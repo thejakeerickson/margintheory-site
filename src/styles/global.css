@@ -12,9 +12,6 @@
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  /* Editorial heading serif. Scoped to the maturity-model report pages (sanctioned brand_kit.md exception, like Anton on thumbnails). */
-  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-
   /* Editorial-light surface, used on the maturity-model report pages (web is light, the PDF stays dark) */
   --color-paper: #FCFBF7;
   --color-rule: #DBD7CC;
