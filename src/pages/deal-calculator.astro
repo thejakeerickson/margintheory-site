@@ -264,22 +264,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div>
             <div class="text-sm font-semibold text-white/85 mb-1">Boring in the good way <span class="text-white/40 font-normal">(SOWS)</span></div>
             <p class="text-xs text-white/45 mb-3">Stale, old, weak competition, simple. The neglect is your upside.</p>
-            <div class="flex flex-wrap gap-2" data-group="sows">
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Stale (behind on tech &amp; marketing)</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Old (5+ years, repeat customers)</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Weak competitors nearby</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Simple (an 8-year-old gets it)</button>
+            <div class="flex flex-col gap-2.5" data-group="sows">
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Stale</span><span class="block text-xs text-white/45 mt-1 leading-snug">Old website, no reviews, still runs on paper. Every upgrade they skipped is money you add.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Old</span><span class="block text-xs text-white/45 mt-1 leading-snug">Five years or more, with customers who keep coming back. Lasting this long is the proof.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Weak competitors nearby</span><span class="block text-xs text-white/45 mt-1 leading-snug">The shops around it are worse than it is. Easy to become the best one in town.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Simple</span><span class="block text-xs text-white/45 mt-1 leading-snug">You could explain it to an 8-year-old. Lots of demand, few moving parts.</span></span>
+              </button>
             </div>
           </div>
           <!-- BRRT -->
           <div>
             <div class="text-sm font-semibold text-white/85 mb-1">Upside is real <span class="text-white/40 font-normal">(BRRT)</span></div>
             <p class="text-xs text-white/45 mb-3">Cash flow, recession-resistant, room to raise prices, tech to add.</p>
-            <div class="flex flex-wrap gap-2" data-group="brrt">
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Recurring cash flow (not cash-suck)</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Recession-resistant (a need, not a want)</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Room to raise prices</button>
-              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Tech you can add</button>
+            <div class="flex flex-col gap-2.5" data-group="brrt">
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Recurring revenue</span><span class="block text-xs text-white/45 mt-1 leading-snug">The money comes in on repeat. Contracts, memberships, routes. Not one-off jobs you chase.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Recession-resistant</span><span class="block text-xs text-white/45 mt-1 leading-snug">People pay for it even when money is tight. A need, not a want.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Room to raise prices</span><span class="block text-xs text-white/45 mt-1 leading-snug">Underpriced, and nobody has touched the rates in years. A day-one lever.</span></span>
+              </button>
+              <button type="button" data-trig class="trig-btn w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+                <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+                <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Tech you can add</span><span class="block text-xs text-white/45 mt-1 leading-snug">No booking app, no CRM, no automation. Simple tech makes it worth more.</span></span>
+              </button>
             </div>
           </div>
         </div>
@@ -288,15 +312,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="mt-7">
           <div class="text-sm font-semibold text-white/85 mb-1">Deal-breakers <span class="text-white/40 font-normal">(any one and you walk)</span></div>
           <p class="text-xs text-white/45 mb-3">The seven deadly businesses plus your can't-stands. High failure rate, lopsided risk, or it does not transfer.</p>
-          <div class="flex flex-wrap gap-2" data-group="kill">
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Restaurant, bar, or hotel</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Retail storefront (no float)</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Consulting / project shop</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Personal brand or owner is the face</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Credential-gated (owner is the licensed producer)</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">One customer over 25% of revenue</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Amazon FBA / platform-dependent</button>
-            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Dry cleaner</button>
+          <div class="grid md:grid-cols-2 gap-2.5" data-group="kill">
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Restaurant, bar, or hotel</span><span class="block text-xs text-white/45 mt-1 leading-snug">Most close in a few years, and banks will not lend on them. Brutal odds.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Retail storefront</span><span class="block text-xs text-white/45 mt-1 leading-snug">You buy the inventory up front and eat what does not sell. Rent takes the rest.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Consulting or project shop</span><span class="block text-xs text-white/45 mt-1 leading-snug">You are buying a job. The work leaves when the people do.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Personal brand, owner is the face</span><span class="block text-xs text-white/45 mt-1 leading-snug">The customers come for the owner. You cannot buy a face.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Credential-gated practice</span><span class="block text-xs text-white/45 mt-1 leading-snug">The revenue needs a license you do not hold. You cannot run it or staff it.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">One customer over 25% of revenue</span><span class="block text-xs text-white/45 mt-1 leading-snug">Lose that one account and the whole thing goes with it.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Amazon FBA or platform-dependent</span><span class="block text-xs text-white/45 mt-1 leading-snug">Amazon owns your reviews, your price, and your account. Gone overnight.</span></span>
+            </button>
+            <button type="button" data-trig class="trig-btn trig-kill w-full px-3.5 py-3 rounded-sm border text-left transition flex items-start gap-3">
+              <span class="trig-ind shrink-0 text-base leading-tight" aria-hidden="true">&#9675;</span>
+              <span class="min-w-0"><span class="block text-sm font-semibold leading-tight">Dry cleaner</span><span class="block text-xs text-white/45 mt-1 leading-snug">Toxic chemicals and cleanup bills. Hard to keep staff, easy to inherit a mess.</span></span>
+            </button>
           </div>
         </div>
 
@@ -629,14 +677,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     function paintTrig(btn: HTMLButtonElement, on: boolean) {
       const kill = btn.classList.contains('trig-kill');
+      const ind = btn.querySelector('.trig-ind') as HTMLElement | null;
       if (on) {
-        btn.style.backgroundColor = kill ? 'rgba(232,115,107,0.16)' : 'rgba(50,113,210,0.18)';
-        btn.style.borderColor = kill ? TRED : TBLUE;
+        btn.style.backgroundColor = kill ? 'rgba(232,115,107,0.14)' : 'rgba(92,201,138,0.13)';
+        btn.style.borderColor = kill ? TRED : TGREEN;
         btn.style.color = '#ffffff';
+        if (ind) { ind.innerHTML = kill ? '&#10007;' : '&#10003;'; ind.style.color = kill ? TRED : TGREEN; }
       } else {
         btn.style.backgroundColor = 'transparent';
-        btn.style.borderColor = 'rgba(255,255,255,0.2)';
-        btn.style.color = 'rgba(255,255,255,0.7)';
+        btn.style.borderColor = 'rgba(255,255,255,0.18)';
+        btn.style.color = 'rgba(255,255,255,0.72)';
+        if (ind) { ind.innerHTML = '&#9675;'; ind.style.color = 'rgba(255,255,255,0.38)'; }
       }
     }
 
