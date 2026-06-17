@@ -1,0 +1,282 @@
+{
+  "title": "Business Maturity Model, Stage 6: Efficiency",
+  "description": "Canonical source for the Efficiency stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 6,
+  "name": "Efficiency",
+  "band": "cfo",
+  "tagline": "You're spending more every quarter to grow, and the growth isn't keeping up. The machine got bigger and somehow less profitable.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "20 to 49 people",
+    "revenue": "$10M to $30M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "20 to 49 people. You lead through managers now, two layers between you and the work.",
+    "constraint": "You keep spending to grow, and the money's going somewhere you can't see.",
+    "graduate_by": "Grow by getting better, not by getting bigger. Read the numbers and make the move they point to."
+  },
+  "big_picture": [
+    "You built a company. Two layers of managers, product that sells, a team that runs the day without you in every room. The early stages were about deciding who you serve and giving them more to buy, and you did it. Now a quieter problem shows up. You add headcount and ad spend and another tool every quarter, the top line climbs, and the profit doesn't move with it. The machine got bigger and somehow less efficient.",
+    "At this size you can't run the company from your head anymore. There are too many calls to make and too many of them are wrong by a little, and a little times forty people times twelve months is most of your profit. The business wins on paper and loses money in places nobody can point to.",
+    "Spending harder won't fix this stage. The businesses that break through stop assuming and start reading the numbers, one decision at a time. Which product to improve, which channel still pays, which rep needs which skill. You grow by getting better, not by getting bigger. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one shift: you stop running the business with no numbers to back you up and start running it from the numbers. The next pages run that shift across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Efficiency, one part is leaking in each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "Your cost to get a customer keeps climbing and nobody can say why.",
+          "constraint": "You've worked the warm audience, so every new dollar chases colder people who convert worse. Your cost per customer climbs and the easy growth is gone.",
+          "do_this": "Stop reinventing the ad every time. Build a batch of proven hooks and a handful of core messages, then recombine them into dozens of variations a week. Test them against each other and let the winners spend. Borrow the authority of people your buyer trusts, because a colder audience defers to a known name faster than to you. You're assembling tested parts.",
+          "sources": [
+            {
+              "concept": "assembling ads from tested parts",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "borrowed authority on cold traffic",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "One rep crushes the same lead another rep lets die, and you can't say what the good one does differently.",
+          "constraint": "Your closing rate slips as you grow, and it swings rep to rep. The wins live in a few people's heads and you can't copy them.",
+          "do_this": "Write down how your best people sell, then teach it as one method everyone runs. Coach each rep on the single skill their numbers say is weakest. Pull the funnel by person, find where each one falls off, and drill that one stage with recorded calls until it moves. Standardize the play, then coach it by the numbers.",
+          "sources": [
+            {
+              "concept": "coach one skill the funnel picks",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "a documented, teachable method",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": false,
+          "constraint": "You try to improve two products at once and both stall. Everything gets a little better and nothing gets meaningfully better.",
+          "do_this": "Fix one thing at a time. Rank every possible improvement by the gain it buys, the cost to do it, and the risk it carries, then work the top one until it's done before you touch the next. Prune the features nobody values. Delete them, and add one back only if someone misses it.",
+          "sources": []
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Churn climbs as volume grows. You can't see which customers are leaving or why.",
+          "do_this": "Break your churn down by how long they stayed, by which product, and by which rep sold and serves them. That shows you which customers leave and why. Then fix the early experience that decides whether a new customer sticks, and test one change at a time so you know what worked.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "People come and go with access to your data and your accounts, and offboarding is a scramble.",
+          "do_this": "Tighten the front and back doors. Put proper security on the basics, run onboarding and offboarding off a checklist, and wire it so one click cuts a leaver's access the day they walk out.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "Profit's up on paper and the bank account doesn't agree.",
+          "constraint": "You're spending to grow and the money goes missing. The P&L looks fine while cash gets tight, because nobody's reading the business at the level where the leaks live.",
+          "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash. Above 15% is a great business, and competition and cost pressure bring it back toward 10 over time.",
+          "do_this": "Build a financial-operations dashboard that reads the business by the slice. Break gross profit and cost-to-acquire-a-customer out by product, by department, and by lead source, so you can see which parts pay and which lose money, and make the call from the numbers. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back, because at twenty to forty-nine people payroll is still your biggest cost and your biggest lever. Start a balance sheet, and watch the ratio of what a customer is worth over their life against what you paid to land them, segment by segment.",
+          "sources": [
+            {
+              "concept": "gross profit per labor dollar",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            },
+            {
+              "concept": "the four forces of cash flow",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "The roles you need now sit outside your network, and you're filling them off whoever you happen to know.",
+          "do_this": "Hunt instead of waiting. Go find the people you need where they already work, run each finalist through a four-way fit check across the role and the team, and put yourself in the last interview with four or five reference calls behind it.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "You're trying to land senior talent and losing them on pay. They want full benefits and a retirement plan and you don't have one.",
+          "do_this": "Build the comp that senior people expect. Choose a benefits package against a clear set of criteria, and stand up retirement and the advanced pieces of pay, so the offer competes for the people you're now trying to hire.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "You build ads from tested parts instead of starting over each time",
+      "Your reps run one written method and you coach one skill at a time",
+      "You can read profit and cost-to-acquire by product and channel",
+      "You know your gross profit per labor dollar",
+      "You've got a balance sheet and two months of cash"
+    ],
+    "needs_work": [
+      "Your cost to get a customer keeps climbing and you can't say why",
+      "Your best rep's playbook lives in their head",
+      "You decide where to spend with no numbers to back it up",
+      "Profit's up but the cash isn't there",
+      "You improve everything a little and nothing a lot"
+    ]
+  },
+  "graduating": "You'll know you're ready when the company grows because it got better. Your spend is efficient, your sales team runs one proven play, and you trust your numbers enough to decide by them. The next stage is about organizing all of it into systems before the volume overwhelms you.",
+  "cta": {
+    "headline": "What's this business worth to you when you're done?",
+    "body": "Book a call and tell me the number you're building toward. I'll read where your spend is leaking and where your cash is going, and show you the one or two moves that turn this year's growth into profit you keep."
+  },
+  "built_on": [
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "Your cost to get a customer keeps climbing and nobody can say why.",
+      "constraint": "You've worked the warm audience, so every new dollar chases colder people who convert worse. Your cost per customer climbs and the easy growth is gone.",
+      "do_this": "Stop reinventing the ad every time. Build a batch of proven hooks and a handful of core messages, then recombine them into dozens of variations a week. Test them against each other and let the winners spend. Borrow the authority of people your buyer trusts, because a colder audience defers to a known name faster than to you. You're assembling tested parts.",
+      "sources": [
+        {
+          "concept": "assembling ads from tested parts",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "borrowed authority on cold traffic",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "One rep crushes the same lead another rep lets die, and you can't say what the good one does differently.",
+      "constraint": "Your closing rate slips as you grow, and it swings rep to rep. The wins live in a few people's heads and you can't copy them.",
+      "do_this": "Write down how your best people sell, then teach it as one method everyone runs. Coach each rep on the single skill their numbers say is weakest. Pull the funnel by person, find where each one falls off, and drill that one stage with recorded calls until it moves. Standardize the play, then coach it by the numbers.",
+      "sources": [
+        {
+          "concept": "coach one skill the funnel picks",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "a documented, teachable method",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "Profit's up on paper and the bank account doesn't agree.",
+      "constraint": "You're spending to grow and the money goes missing. The P&L looks fine while cash gets tight, because nobody's reading the business at the level where the leaks live.",
+      "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash. Above 15% is a great business, and competition and cost pressure bring it back toward 10 over time.",
+      "do_this": "Build a financial-operations dashboard that reads the business by the slice. Break gross profit and cost-to-acquire-a-customer out by product, by department, and by lead source, so you can see which parts pay and which lose money, and make the call from the numbers. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back, because at twenty to forty-nine people payroll is still your biggest cost and your biggest lever. Start a balance sheet, and watch the ratio of what a customer is worth over their life against what you paid to land them, segment by segment.",
+      "sources": [
+        {
+          "concept": "gross profit per labor dollar",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        },
+        {
+          "concept": "the four forces of cash flow",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Product & service",
+      "start_here": false,
+      "constraint": "You try to improve two products at once and both stall. Everything gets a little better and nothing gets meaningfully better.",
+      "do_this": "Fix one thing at a time. Rank every possible improvement by the gain it buys, the cost to do it, and the risk it carries, then work the top one until it's done before you touch the next. Prune the features nobody values. Delete them, and add one back only if someone misses it.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Churn climbs as volume grows. You can't see which customers are leaving or why.",
+      "do_this": "Break your churn down by how long they stayed, by which product, and by which rep sold and serves them. That shows you which customers leave and why. Then fix the early experience that decides whether a new customer sticks, and test one change at a time so you know what worked.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "People come and go with access to your data and your accounts, and offboarding is a scramble.",
+      "do_this": "Tighten the front and back doors. Put proper security on the basics, run onboarding and offboarding off a checklist, and wire it so one click cuts a leaver's access the day they walk out.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "The roles you need now sit outside your network, and you're filling them off whoever you happen to know.",
+      "do_this": "Hunt instead of waiting. Go find the people you need where they already work, run each finalist through a four-way fit check across the role and the team, and put yourself in the last interview with four or five reference calls behind it.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "You're trying to land senior talent and losing them on pay. They want full benefits and a retirement plan and you don't have one.",
+      "do_this": "Build the comp that senior people expect. Choose a benefits package against a clear set of criteria, and stand up retirement and the advanced pieces of pay, so the offer competes for the people you're now trying to hire.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

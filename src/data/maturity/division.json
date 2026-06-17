@@ -1,0 +1,286 @@
+{
+  "title": "Business Maturity Model, Stage 8: Division",
+  "description": "Canonical source for the Division stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 8,
+  "name": "Division",
+  "band": "late",
+  "tagline": "You've got a few hundred people and you're still trying to keep your hands on all of it. Nobody knows everything, and the business has outgrown one person's reach.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "100-249 people",
+    "revenue": "$75M-$150M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "100-249 people, four layers deep. You run a team of teams now.",
+    "constraint": "You're spread across more products and markets than one person can know well.",
+    "graduate_by": "Build dedicated specialist teams and prune. Fewer things, done deeper, owned by people you trust."
+  },
+  "big_picture": [
+    "You built systems in the last stage so the place stopped feeling like chaos. It worked. Now you've got a few hundred people across products, markets, and departments, and a different problem shows up. The business knows more than any one person can hold. You used to keep tabs on everything that mattered. You can't anymore, and trying to is what's slowing you down.",
+    "Growth you don't control will hurt you here. The more you add without pruning, the more the business sprawls into things it's only average at. Each extra product and market dilutes what made you good. The companies that break through this stage hire specialists who go deeper than you could, and they cut what isn't earning its place.",
+    "This stage comes down to letting go on purpose. Put specialists on each part of the business, give them room to own it, and prune everything else. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to two moves: put specialists deep on each part of the business, and prune what you're only decent at. The next pages run both across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Division, one part is straining each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": false,
+          "constraint": "Creative got broad to cover everything, so the leads come in lower quality and the brand blurs.",
+          "do_this": "Tighten the message back to a one-to-three-word association and say it a hundred ways. Put free value out front. The broader you got, the more the wrong people raised their hands.",
+          "sources": []
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "Your best closer and your newest rep get handed the same leads off the same pile.",
+          "constraint": "Your premium-closing efficiency is dropping because the team's flat. Everyone gets the same leads and the same coaching, so your best people aren't aimed at your best deals and your weak spots stay hidden.",
+          "do_this": "Route the best leads to the best closers, and split the floor into specialists by product and by deal size. Track the numbers granular, by rep and by product, so a bad ratio points at one skill in one person you can coach. Coach that skill, then check next month whether it moved. Grow your next sales leaders off your own bench.",
+          "sources": [
+            {
+              "concept": "metrics-driven coaching",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "promote from within",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "You keep shipping features, and the more you ship the more people cancel.",
+          "constraint": "You said yes to too much, so the product sprawled. Overwhelm is the number-one reason customers leave, and you're piling on more of it.",
+          "do_this": "Prune to what you're best at. Survey your customers, cut the features almost nobody uses, and let go of the markets and lines you're only average in. Collins calls it the Hedgehog. Be the best in the world at one thing. The features you cut don't vanish. The strong ones come back as add-ons and cross-sells.",
+          "sources": [
+            {
+              "concept": "The Hedgehog Concept",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            },
+            {
+              "concept": "pruning and simplicity",
+              "book": "The Essential Drucker",
+              "author": "Peter Drucker"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Different customers need different journeys, and yours collide or land at the wrong time.",
+          "do_this": "Split the journey by who the customer is. Separate onboarding, sequencing, and segments, and put proactive cross-sell where it fits. Spend your service muscle on your highest-value customers and cut the journeys that cost more than they return.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "Departments have outgrown the general software everyone shared.",
+          "do_this": "Let each department run the specialized stack it needs, and stand up internal ticketing with response times so nothing gets dropped. Decentralize the tools, keep the data connected.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "You're still paying the rates you signed years ago, and cash is sitting in checking earning nothing.",
+          "constraint": "Scale made you sloppy with money. You're paying retail on contracts you never reshopped, cash sits idle, and at this size nobody's checking the spending closely enough to catch waste.",
+          "benchmark": "Healthy here is steady double-digit pretax profit, funded by equity you built rather than debt you took on. To read what the business is worth, take the last three years of pretax profit plus the equity built up inside it.",
+          "do_this": "Renegotiate everything. Run an expense cleanse, reshop every major vendor, and move idle cash to yield. Bring tax in-house with a specialist and stand up internal audits to catch waste. Fund growth with your own retained profit before you ever reach for debt, because your own money earns 40 to 70% back and makes you careful with it. You still read the P&L every month, with notes.",
+          "sources": [
+            {
+              "concept": "internal audits and reshopping vendors",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            },
+            {
+              "concept": "economic value and self-funding",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "Different recruiters hold different bars, so the people coming in are uneven and the culture pays for it.",
+          "do_this": "Standardize how you select. Structured interviews, a panel where each person owns a role, and a one-to-five score on both skill and values. Keep an owner fit-check on the final call so the bar holds across every team.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "Performance slips under the sheer volume of people, and complaints and compliance issues climb.",
+          "do_this": "Build the systems behind your people. Group onboarding, documented performance management, leadership and development training, and the right insurance for an employer this size. Keep reinforcing the values, because they're what hold a few hundred people together.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "Each part of the business has a specialist who knows it deeper than you",
+      "You've pruned products, markets, or features in the last year",
+      "Your best closers get your best leads",
+      "You've reshopped your vendors and your cash earns a return",
+      "You still read the P&L every month with your own notes"
+    ],
+    "needs_work": [
+      "You're still trying to keep your hands on everything",
+      "You keep adding products and markets without cutting any",
+      "Every rep gets the same leads off the same pile",
+      "You're paying rates you haven't looked at in years",
+      "Cash sits in checking doing nothing"
+    ]
+  },
+  "graduating": "You'll know you're ready when the business runs on specialists who go deeper than you can, you've pruned hard, and the money's tight and working. The next stage is about the big bet: where the whole company goes when the core can't grow much further.",
+  "cta": {
+    "headline": "Want the numbers behind a business this size?",
+    "body": "Subscribe to the newsletter. I break down the financial moves that protect a company at scale, in plain language, one idea at a time."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "The Essential Drucker",
+      "author": "Peter Drucker"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "Your best closer and your newest rep get handed the same leads off the same pile.",
+      "constraint": "Your premium-closing efficiency is dropping because the team's flat. Everyone gets the same leads and the same coaching, so your best people aren't aimed at your best deals and your weak spots stay hidden.",
+      "do_this": "Route the best leads to the best closers, and split the floor into specialists by product and by deal size. Track the numbers granular, by rep and by product, so a bad ratio points at one skill in one person you can coach. Coach that skill, then check next month whether it moved. Grow your next sales leaders off your own bench.",
+      "sources": [
+        {
+          "concept": "metrics-driven coaching",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "promote from within",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "You keep shipping features, and the more you ship the more people cancel.",
+      "constraint": "You said yes to too much, so the product sprawled. Overwhelm is the number-one reason customers leave, and you're piling on more of it.",
+      "do_this": "Prune to what you're best at. Survey your customers, cut the features almost nobody uses, and let go of the markets and lines you're only average in. Collins calls it the Hedgehog. Be the best in the world at one thing. The features you cut don't vanish. The strong ones come back as add-ons and cross-sells.",
+      "sources": [
+        {
+          "concept": "The Hedgehog Concept",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        },
+        {
+          "concept": "pruning and simplicity",
+          "book": "The Essential Drucker",
+          "author": "Peter Drucker"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "You're still paying the rates you signed years ago, and cash is sitting in checking earning nothing.",
+      "constraint": "Scale made you sloppy with money. You're paying retail on contracts you never reshopped, cash sits idle, and at this size nobody's checking the spending closely enough to catch waste.",
+      "benchmark": "Healthy here is steady double-digit pretax profit, funded by equity you built rather than debt you took on. To read what the business is worth, take the last three years of pretax profit plus the equity built up inside it.",
+      "do_this": "Renegotiate everything. Run an expense cleanse, reshop every major vendor, and move idle cash to yield. Bring tax in-house with a specialist and stand up internal audits to catch waste. Fund growth with your own retained profit before you ever reach for debt, because your own money earns 40 to 70% back and makes you careful with it. You still read the P&L every month, with notes.",
+      "sources": [
+        {
+          "concept": "internal audits and reshopping vendors",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        },
+        {
+          "concept": "economic value and self-funding",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Marketing",
+      "start_here": false,
+      "constraint": "Creative got broad to cover everything, so the leads come in lower quality and the brand blurs.",
+      "do_this": "Tighten the message back to a one-to-three-word association and say it a hundred ways. Put free value out front. The broader you got, the more the wrong people raised their hands.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Different customers need different journeys, and yours collide or land at the wrong time.",
+      "do_this": "Split the journey by who the customer is. Separate onboarding, sequencing, and segments, and put proactive cross-sell where it fits. Spend your service muscle on your highest-value customers and cut the journeys that cost more than they return.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "Departments have outgrown the general software everyone shared.",
+      "do_this": "Let each department run the specialized stack it needs, and stand up internal ticketing with response times so nothing gets dropped. Decentralize the tools, keep the data connected.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "Different recruiters hold different bars, so the people coming in are uneven and the culture pays for it.",
+      "do_this": "Standardize how you select. Structured interviews, a panel where each person owns a role, and a one-to-five score on both skill and values. Keep an owner fit-check on the final call so the bar holds across every team.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "Performance slips under the sheer volume of people, and complaints and compliance issues climb.",
+      "do_this": "Build the systems behind your people. Group onboarding, documented performance management, leadership and development training, and the right insurance for an employer this size. Keep reinforcing the values, because they're what hold a few hundred people together.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

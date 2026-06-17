@@ -1,0 +1,290 @@
+{
+  "title": "Business Maturity Model, Stage 7: Systems",
+  "description": "Canonical source for the Systems stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 7,
+  "name": "Systems",
+  "band": "late",
+  "tagline": "You've got scale now, and every part of the business is overwhelmed at once. It's all on fire, and you can't tell which one to put out first.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "50-99 people",
+    "revenue": "$30M-$75M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "50 to 99 people, three layers deep. You run leaders who run teams now.",
+    "constraint": "Everything is disorganized and every system is overwhelmed at the same time, so it all reads as one continuous fire.",
+    "graduate_by": "Triaging the chaos into systems. Fix one thing at a time, in the right order."
+  },
+  "big_picture": [
+    "Focus got you specific. The stages after it got you good at growth: a second thing your best customers could buy, leaders who own their numbers, a brand people trust before they meet you. You scaled. Now the business has fifty to ninety-nine people and a new kind of problem. Every part of it is straining at once. Sales, service, hiring, tech, finance, all overwhelmed the same week, and you can't tell which fire to fight first because they're all on fire.",
+    "The reflex here is to do more of everything at once, and that's the move that breaks companies this size. They die from too much hitting at the same time, swallowed whole. The longer you stay in the scramble, the more the business hard-wires the chaos into how it runs, and untangling it later costs far more than fixing it now.",
+    "Working harder won't fix this stage, because effort isn't the constraint. Order is. The businesses that break through stop reacting and start triaging. They pick the one thing in each part of the business that's breaking, fix it, then move to the next, in sequence. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one discipline: triage. Everything is overwhelmed, so you stop trying to fix it all at once and run the chaos through systems, one at a time, in the right order. The next pages run that discipline across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines, and eight parts power them. At Systems all eight are overwhelmed, but one part is the bottleneck on each engine right now. Those three are marked Start here. Fix them in order and the rest stops fighting you.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "One channel feeds your whole pipeline, and a bad month there scares everyone.",
+          "constraint": "All your leads come from one place. When that channel dips, the whole business feels it, because there's no backup.",
+          "do_this": "Fund a second acquisition channel before you need it. Pick one new way to reach your best-fit buyer, staff it, and let it build, because a second source compounds slowly and takes months to pay off. While it ramps, put your best customers' results in front of the next ones. People decide what's safe by watching people like them, so show the buyer proof that buyers like them chose you.",
+          "sources": [
+            {
+              "concept": "a second acquisition channel",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "social proof",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": false,
+          "constraint": "Leads come in and don't get worked the same way twice. Good ones leak out the bottom.",
+          "do_this": "Put a system around the follow-up. Schedule coverage so every lead gets touched on time, run a checklist so nobody skips a step, and track show rate by person. A lift in show rate beats a lift in close rate, because you can't close a meeting nobody took.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "Improvements crawl, and your best people are spread across five priorities at once.",
+          "constraint": "The product's falling behind and fixes take forever, because your best people are split across everything and finishing nothing.",
+          "do_this": "Aim your best people at one team with one measurable objective, and let the rest wait. Pick the change with the biggest payoff and finish it before you start the next. Then write down how the core work gets done so it doesn't live in a few people's heads. Capture the 20% of each process that drives 80% of the result, and get everyone running it the same way, so the business holds together no matter who's on the floor.",
+          "sources": [
+            {
+              "concept": "one problem, one team, one objective",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            },
+            {
+              "concept": "document core processes, followed by all",
+              "book": "Traction",
+              "author": "Gino Wickman"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Service is all firefighting. You only hear from customers when something's already wrong.",
+          "do_this": "Build a customer journey that runs ahead of the problem. Set triggers in the CRM around time, behavior, and key events so you reach out before they have to. Save the relationship and ask for the review first, then split the team so one side handles fires and one side handles the journey.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "Your data, logins, and files are scattered across tools and people. Nobody can find anything.",
+          "do_this": "Centralize it. Move to a hosted cloud platform so the business isn't one dead laptop away from a crisis, consolidate the hardware, and put a naming and filing system in place. It's a small cost now that pays off everywhere later.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "Your team spends your money, and you find out what it cost after it's gone.",
+          "constraint": "Spending is delegated now and you can't see it in time. Money goes out across the company faster than you can track where, because nobody set the rules.",
+          "benchmark": "Healthy here is still 10 to 15% pretax profit, with two months of operating expenses in cash and your reporting rhythm running every month without you chasing it.",
+          "do_this": "Put guardrails on the spend. Give every department a budget, hand out cards with limits tied to a clear rule for what needs approval, and hold marketing to its numbers. Run the spend review every quarter and your money on a rhythm: cash daily, a forecast and sales-to-labor weekly, your P&L monthly. At this size that's a full-time finance hire who owns the money, so your evenings come back.",
+          "sources": [
+            {
+              "concept": "budgets by department and spending guardrails",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            },
+            {
+              "concept": "the reporting rhythm",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "You're too slow to hire and you've got too many open roles. Generalists can't cover the work anymore.",
+          "do_this": "Build a pipeline for talent the way you build one for leads. Stand up an applicant tracking system so candidates stop falling through, and bring in specialists for the roles you can't fill fast. When you use an outside recruiter, hire on their placement track record in your industry.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "Employee information is scattered and you've got no data on your own team.",
+          "do_this": "Get an HR system in place, a single home for records, payroll, time, onboarding, and reviews. Then build the culture into how things run day to day, the decisions you reward and the behavior you promote.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "More than one channel feeds your pipeline",
+      "Your core work is written down and people run it the same way",
+      "Every department has a budget and spending has limits",
+      "Your finance reports land on time without you chasing them",
+      "Your team's records live in one system, not ten"
+    ],
+    "needs_work": [
+      "One bad month in one channel scares the whole company",
+      "How things get done still lives in a few people's heads",
+      "The team spends and you find out the cost afterward",
+      "Every problem lands as urgent and you can't rank the fires",
+      "You're still doing the finance work yourself at night"
+    ]
+  },
+  "graduating": "You'll know you're ready when the chaos has been sorted into systems that run without you in the middle of every one. Two channels feed your pipeline, your core work runs the same no matter who's on the floor, and you see spending before it happens. The next stage builds a leadership team that runs the whole machine while you work on the business.",
+  "cta": {
+    "headline": "Getting buried at this size is normal. You can dig your way out in order.",
+    "body": "I write a weekly note on the numbers and the moves that pull owners out of the scramble at this stage. Subscribe and I'll send you the next one."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "Traction",
+      "author": "Gino Wickman"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "One channel feeds your whole pipeline, and a bad month there scares everyone.",
+      "constraint": "All your leads come from one place. When that channel dips, the whole business feels it, because there's no backup.",
+      "do_this": "Fund a second acquisition channel before you need it. Pick one new way to reach your best-fit buyer, staff it, and let it build, because a second source compounds slowly and takes months to pay off. While it ramps, put your best customers' results in front of the next ones. People decide what's safe by watching people like them, so show the buyer proof that buyers like them chose you.",
+      "sources": [
+        {
+          "concept": "a second acquisition channel",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "social proof",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "Improvements crawl, and your best people are spread across five priorities at once.",
+      "constraint": "The product's falling behind and fixes take forever, because your best people are split across everything and finishing nothing.",
+      "do_this": "Aim your best people at one team with one measurable objective, and let the rest wait. Pick the change with the biggest payoff and finish it before you start the next. Then write down how the core work gets done so it doesn't live in a few people's heads. Capture the 20% of each process that drives 80% of the result, and get everyone running it the same way, so the business holds together no matter who's on the floor.",
+      "sources": [
+        {
+          "concept": "one problem, one team, one objective",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        },
+        {
+          "concept": "document core processes, followed by all",
+          "book": "Traction",
+          "author": "Gino Wickman"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "Your team spends your money, and you find out what it cost after it's gone.",
+      "constraint": "Spending is delegated now and you can't see it in time. Money goes out across the company faster than you can track where, because nobody set the rules.",
+      "benchmark": "Healthy here is still 10 to 15% pretax profit, with two months of operating expenses in cash and your reporting rhythm running every month without you chasing it.",
+      "do_this": "Put guardrails on the spend. Give every department a budget, hand out cards with limits tied to a clear rule for what needs approval, and hold marketing to its numbers. Run the spend review every quarter and your money on a rhythm: cash daily, a forecast and sales-to-labor weekly, your P&L monthly. At this size that's a full-time finance hire who owns the money, so your evenings come back.",
+      "sources": [
+        {
+          "concept": "budgets by department and spending guardrails",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        },
+        {
+          "concept": "the reporting rhythm",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Sales",
+      "start_here": false,
+      "constraint": "Leads come in and don't get worked the same way twice. Good ones leak out the bottom.",
+      "do_this": "Put a system around the follow-up. Schedule coverage so every lead gets touched on time, run a checklist so nobody skips a step, and track show rate by person. A lift in show rate beats a lift in close rate, because you can't close a meeting nobody took.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Service is all firefighting. You only hear from customers when something's already wrong.",
+      "do_this": "Build a customer journey that runs ahead of the problem. Set triggers in the CRM around time, behavior, and key events so you reach out before they have to. Save the relationship and ask for the review first, then split the team so one side handles fires and one side handles the journey.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "Your data, logins, and files are scattered across tools and people. Nobody can find anything.",
+      "do_this": "Centralize it. Move to a hosted cloud platform so the business isn't one dead laptop away from a crisis, consolidate the hardware, and put a naming and filing system in place. It's a small cost now that pays off everywhere later.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "You're too slow to hire and you've got too many open roles. Generalists can't cover the work anymore.",
+      "do_this": "Build a pipeline for talent the way you build one for leads. Stand up an applicant tracking system so candidates stop falling through, and bring in specialists for the roles you can't fill fast. When you use an outside recruiter, hire on their placement track record in your industry.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "Employee information is scattered and you've got no data on your own team.",
+      "do_this": "Get an HR system in place, a single home for records, payroll, time, onboarding, and reviews. Then build the culture into how things run day to day, the decisions you reward and the behavior you promote.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

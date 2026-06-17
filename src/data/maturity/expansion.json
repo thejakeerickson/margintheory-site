@@ -1,0 +1,308 @@
+{
+  "title": "Business Maturity Model, Stage 5: Expansion",
+  "description": "Canonical source for the Expansion stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 5,
+  "name": "Expansion",
+  "band": "cfo",
+  "tagline": "You niched down and it worked. Now your best customers have bought everything you sell, and growth means winning new ones faster than they cost.",
+  "cover_foot": "A read on where you are and what to fix next.",
+  "stats": {
+    "headcount": "10-19 people",
+    "revenue": "$3M-$10M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "10 to 19 people. You run managers.",
+    "constraint": "Your best customers love you and have nothing left to buy. So they drift, and winning new ones costs more than they're worth.",
+    "graduate_by": "Build a second offer for the customers you've earned. Sell them more before you go spend to replace them."
+  },
+  "big_picture": [
+    "Focus got you here. You picked who you're for, you stopped bending the offer for everyone, and the right-fit customers showed up. The business runs cleaner and the cash is steadier. Then a quieter problem creeps in. Your best customers have bought the one thing you do well, and once they have it, you've given them no reason to spend with you again. They drift. To keep growing you go win new ones. A right-fit lead is expensive now, and one sale per customer can't carry that cost.",
+    "This is the stage where you learn what a customer is worth to you over time, and whether that number covers what you pay to get one. When a customer buys once and leaves, the worth is thin and the cost looks impossible, so you cap your spending and growth stalls. When a customer buys again, and again, the worth climbs, and you can afford to go get more of them. The lever is a second thing worth buying.",
+    "Wait too long and you'll try to outrun churn with volume, pouring money into the top of the funnel to replace customers you could have kept. That treadmill gets faster and gets you nowhere. The businesses that break through go deeper before they go wider. They build something else their best customers want, they raise what each customer is worth, and only then do they open the spending up. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one number: what a customer is worth to you over their life, against what you pay to win one. Raise the first and the rest of your growth gets affordable. The next pages run that math across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Expansion, one part is breaking each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "A good lead costs more than your average sale, so you've quietly capped your ad spend.",
+          "constraint": "Your best leads got expensive. The price to win a right-fit customer crept up past what one sale brings in, so you stopped spending to grow.",
+          "do_this": "Two moves work together here. First, the second offer raises what a customer is worth, which raises what you can afford to pay to get one. Then put that bigger budget where it pays. Score your leads by where they came from and what they do, so spend chases the ones that close. And show the proof. Buyers facing a choice look at who else picked you, so put your best-fit customers' results in front of the next ones, in their words. A prospect moves when they see someone who looks like them win.",
+          "sources": [
+            {
+              "concept": "a higher lifetime value raises the CAC you can afford, and lead scoring",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "social proof",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": false,
+          "constraint": "Reps oversell to hit the number, then you eat the refunds and the bad reviews.",
+          "do_this": "Give the team sales aids that tell the truth about the problem you solve and the result you deliver. Then run weekly game tape on calls so each rep fixes one thing at a time. Track refunds and complaints by rep, because an oversold customer churns hard and trashes you on the way out.",
+          "sources": [
+            {
+              "concept": "sales aids and game tape",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "A happy customer asks what else you've got, and you don't have an answer.",
+          "constraint": "Your customers have bought the one thing you sell, and you've built nothing for them to buy next. So the best relationships you have go cold from neglect.",
+          "do_this": "Connect the people who keep customers to the people who build the offer, and build a second thing worth roughly five times your core. Sell it to the 20% who trust you and you can double revenue without a single new customer. You earned the right to serve these people. Now serve them more, and let the loop feed itself. A better second offer keeps customers longer, which makes the next one easier to sell.",
+          "sources": [
+            {
+              "concept": "the second offer and going deep before wide",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            },
+            {
+              "concept": "the flywheel",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Two people ask the same question and get two different answers.",
+          "do_this": "Write a service playbook. Sort the questions you get into a handful of buckets, give each a clean answer, and let your people fix small problems on the spot without asking permission. Then map the moments a customer is ready to buy more, and meet them there with the right thing at the right time.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "Your team's working off personal laptops and there's no shared view of the numbers.",
+          "do_this": "Put the company on hardware the company owns and controls, with a return process when people leave. Then stand up one dashboard everyone reads, so the numbers live in a system instead of in someone's spreadsheet.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "You've got the cash to grow, but nothing tells you how much of it to put back in.",
+          "constraint": "You're profitable enough to reinvest, but no forecast tells you how much. Spend too much and you starve the business. Too little and you stall.",
+          "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses in cash and nothing drawn on your line of credit before you take a dollar out.",
+          "do_this": "Run a rolling forecast. A budget is a license to spend. A forecast tells you where the year ends and what each move does to your cash. Watch gross profit per labor dollar, since at this size payroll is your biggest cost and your biggest lever. And take your money out in the right order. Set taxes aside, pay down debt, fund two months of cash, then reinvest or pay yourself from what's left. That order decides whether you can fund the second offer.",
+          "sources": [
+            {
+              "concept": "gross profit per labor dollar",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            },
+            {
+              "concept": "the four forces of cash flow and the core capital target",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            },
+            {
+              "concept": "forecast instead of budget",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "You need your first managers, and you keep promoting your best doers into roles they sink in.",
+          "do_this": "Promote on a trial. Give the person the job before the title and grade how they handle it on a red-yellow-green scale. Your best technician makes a poor manager more often than not. And pay your team to refer good people, because a referred hire stays far longer than one off a job board.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "You've had to let people go, and you've done it in ways that left you exposed.",
+          "do_this": "Write a termination process and follow it every time. Tie it to the same red-yellow-green you use to manage, so a firing is never a surprise to anyone. Document each step and close the loose ends, because at this size a sloppy exit costs you more than the person ever did.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "Your best customers have something new to buy from you",
+      "You know what a customer is worth to you over their life",
+      "You can afford to win a customer because they buy more than once",
+      "You run a rolling forecast that tells you where the year lands",
+      "Taxes are set aside and your line of credit hits zero"
+    ],
+    "needs_work": [
+      "Your best customers have bought everything you sell",
+      "A good lead costs more than one sale brings in",
+      "You have no forecast telling you how much to put back in",
+      "You promote your best doers and watch them struggle",
+      "Growth means buying new customers to replace the ones you lose"
+    ]
+  },
+  "graduating": "You'll know you're ready when the second offer is selling, each customer is worth more than they cost to win, and your forecast says you can afford to grow. The next stage runs all of it more efficiently. You hold two offers at once and decide from the numbers.",
+  "cta": {
+    "headline": "How big is this business supposed to get?",
+    "body": "Tell me the number you're after. I'll read what each customer is worth against what you pay to win one, and show you the one or two moves that get you there this year. Book a call and we'll run it together."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "A good lead costs more than your average sale, so you've quietly capped your ad spend.",
+      "constraint": "Your best leads got expensive. The price to win a right-fit customer crept up past what one sale brings in, so you stopped spending to grow.",
+      "do_this": "Two moves work together here. First, the second offer raises what a customer is worth, which raises what you can afford to pay to get one. Then put that bigger budget where it pays. Score your leads by where they came from and what they do, so spend chases the ones that close. And show the proof. Buyers facing a choice look at who else picked you, so put your best-fit customers' results in front of the next ones, in their words. A prospect moves when they see someone who looks like them win.",
+      "sources": [
+        {
+          "concept": "a higher lifetime value raises the CAC you can afford, and lead scoring",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "social proof",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "A happy customer asks what else you've got, and you don't have an answer.",
+      "constraint": "Your customers have bought the one thing you sell, and you've built nothing for them to buy next. So the best relationships you have go cold from neglect.",
+      "do_this": "Connect the people who keep customers to the people who build the offer, and build a second thing worth roughly five times your core. Sell it to the 20% who trust you and you can double revenue without a single new customer. You earned the right to serve these people. Now serve them more, and let the loop feed itself. A better second offer keeps customers longer, which makes the next one easier to sell.",
+      "sources": [
+        {
+          "concept": "the second offer and going deep before wide",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        },
+        {
+          "concept": "the flywheel",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "You've got the cash to grow, but nothing tells you how much of it to put back in.",
+      "constraint": "You're profitable enough to reinvest, but no forecast tells you how much. Spend too much and you starve the business. Too little and you stall.",
+      "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses in cash and nothing drawn on your line of credit before you take a dollar out.",
+      "do_this": "Run a rolling forecast. A budget is a license to spend. A forecast tells you where the year ends and what each move does to your cash. Watch gross profit per labor dollar, since at this size payroll is your biggest cost and your biggest lever. And take your money out in the right order. Set taxes aside, pay down debt, fund two months of cash, then reinvest or pay yourself from what's left. That order decides whether you can fund the second offer.",
+      "sources": [
+        {
+          "concept": "gross profit per labor dollar",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        },
+        {
+          "concept": "the four forces of cash flow and the core capital target",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        },
+        {
+          "concept": "forecast instead of budget",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Sales",
+      "start_here": false,
+      "constraint": "Reps oversell to hit the number, then you eat the refunds and the bad reviews.",
+      "do_this": "Give the team sales aids that tell the truth about the problem you solve and the result you deliver. Then run weekly game tape on calls so each rep fixes one thing at a time. Track refunds and complaints by rep, because an oversold customer churns hard and trashes you on the way out.",
+      "sources": [
+        {
+          "concept": "sales aids and game tape",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Two people ask the same question and get two different answers.",
+      "do_this": "Write a service playbook. Sort the questions you get into a handful of buckets, give each a clean answer, and let your people fix small problems on the spot without asking permission. Then map the moments a customer is ready to buy more, and meet them there with the right thing at the right time.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "Your team's working off personal laptops and there's no shared view of the numbers.",
+      "do_this": "Put the company on hardware the company owns and controls, with a return process when people leave. Then stand up one dashboard everyone reads, so the numbers live in a system instead of in someone's spreadsheet.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "You need your first managers, and you keep promoting your best doers into roles they sink in.",
+      "do_this": "Promote on a trial. Give the person the job before the title and grade how they handle it on a red-yellow-green scale. Your best technician makes a poor manager more often than not. And pay your team to refer good people, because a referred hire stays far longer than one off a job board.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "You've had to let people go, and you've done it in ways that left you exposed.",
+      "do_this": "Write a termination process and follow it every time. Tie it to the same red-yellow-green you use to manage, so a firing is never a surprise to anyone. Document each step and close the loose ends, because at this size a sloppy exit costs you more than the person ever did.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

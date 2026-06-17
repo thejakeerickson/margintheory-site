@@ -1,0 +1,301 @@
+{
+  "title": "Business Maturity Model, Stage 2: Traction",
+  "description": "Canonical source for the Traction stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 2,
+  "name": "Traction",
+  "band": "early",
+  "slug": "traction",
+  "tagline": "You're making sales. The problem is they come in fits and starts, and a slow week means you're back to hunting for the next one.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "You + vendors",
+    "revenue": "$100K to $500K"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "It's you, plus a freelancer or two when the work piles up. Nobody on payroll yet.",
+    "constraint": "Customers come in waves. Some weeks the phone won't stop, then it goes quiet and you're hunting again.",
+    "graduate_by": "Do the work that brings customers in every day, busy or slow."
+  },
+  "big_picture": [
+    "The first stages were about proving the thing works. You found a problem worth solving, made something people would pay for, and got the first dollars in the door. That part's behind you. People buy what you sell, and they come back. Now a different problem shows up. The sales are coming in, but they're streaky, and the whole business moves with them.",
+    "Here's the trap almost everyone falls into at this stage. You hustle when work is thin, land a few customers, then go heads-down delivering and stop reaching out. A few weeks later the pipeline's empty and you're scrambling again. The feast-or-famine cycle is the predictable result of starting and stopping the work that brings customers in.",
+    "Working in bursts won't get you out of this. The businesses that break through do the same handful of things every single day, whether they're slammed or slow, and they make each piece repeatable instead of reinventing it every time. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "This stage comes down to one habit: doing the work that brings customers in every day, and making it repeatable enough to hand off later. The next pages run that habit across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Traction, one part is breaking each engine right now. Those three are marked Start here. Fix them and the rest steadies.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "You only reach out when work gets slow, then go quiet the second it's busy.",
+          "constraint": "Your lead flow turns on and off with your week. You market hard when you're hungry, stop the day you're full, and the pipeline dries up right behind you.",
+          "do_this": "Pick a small number of moves that bring customers in, then do them every day no matter how busy you are. The number matters more than the cleverness. While you're at it, put your proof to work: show that other people like them buy from you and trust you, because a buyer who's unsure reads the crowd before they read your pitch. If a spot or a slot is genuinely limited, say so plainly. Never fake it. That gets found out and it costs you.",
+          "sources": [
+            {
+              "concept": "social proof",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            },
+            {
+              "concept": "honest scarcity",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "Two prospects get two different pitches because it's all in your head.",
+          "constraint": "Your closing is hit or miss. You wing each conversation, so you can't tell why one prospect buys and the next one walks.",
+          "do_this": "Write down one way you sell and run it every time. Map how your customer buys, build your steps to match it, and pin down the few things you need to learn before you know you can help them. Name each step so you could check it later. Once it's written, watch your numbers stage by stage and fix the one spot where you keep losing people, instead of changing everything at once.",
+          "sources": [
+            {
+              "concept": "the documented sales methodology",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            },
+            {
+              "concept": "coach one stage off the funnel",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Paying customers expect more than the free ones did, and a few are starting to complain.",
+          "do_this": "Have a simple way to handle an unhappy customer: hear them out, fix it fast, follow up. The ones you save become the proof that sells the next deal, so ask your happy customers for a few words you can show.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "You've got no budget for tools and everything lives in your head or a notebook.",
+          "do_this": "Use the free tier of everything. A simple site that captures a lead, a starter CRM so nobody falls through the cracks, a shared calendar. Nothing fancy yet, just somewhere the work lives besides your memory.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "Two customers buy the same thing and get two different versions of it.",
+          "constraint": "Paying customers want it done right and the same way twice, and right now the way it gets done is whatever you remember to do. It's all in your head, so it changes every time.",
+          "do_this": "Write down how you deliver, the core handful of steps, at a high level. Capture the 20% of the work that drives 80% of the result and stop there, no 500-page manual. Documenting it does two things: it makes the work come out the same every time, and it's the first step toward handing pieces of it to someone else so you stop being the only one who can do it.",
+          "sources": [
+            {
+              "concept": "document the core process (the 20/80 rule)",
+              "book": "Traction",
+              "author": "Gino Wickman"
+            }
+          ]
+        },
+        {
+          "name": "Customer service (delivery)",
+          "start_here": false,
+          "constraint": "You're the only one who knows how anything gets done.",
+          "do_this": "Turn the steps you just wrote into a short checklist. A checklist makes the work hard to botch and lets a freelancer pick up a piece without you walking them through it every time.",
+          "sources": []
+        },
+        {
+          "name": "Technology (ops)",
+          "start_here": false,
+          "constraint": "You're tempted to buy software to fix the mess.",
+          "do_this": "Don't pay for the fancy tool yet. A cheap off-the-shelf product almost always beats custom-built at this size. Pick the tech that fits how you work and bend it to your process.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": false,
+          "constraint": "You don't track the money or what you'll owe in taxes, so you run the business off yesterday's deposits.",
+          "do_this": "Spin up bookkeeping so you can see what comes in and goes out. Set money aside for quarterly taxes, and get a straight CPA to tell you how much. Run the business off the books, where the full picture lives.",
+          "sources": []
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "The work's getting heavy for part-timers and freelancers, but you can't carry a full payroll yet.",
+          "do_this": "Lean on freelancers for the overflow for now. Start writing down what each task takes, so when you can afford your first full-time hire, you know what you're hiring for.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "You're treating contractors like employees, which is a legal problem waiting to bite you.",
+          "do_this": "Keep the line clean. A contractor sets their own hours and uses their own tools. When someone starts looking like an employee, make them one the right way. Don't blur it to save paperwork.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "You do the same customer-getting work every day, busy or slow",
+      "You sell the same way each time and know your numbers stage by stage",
+      "Your delivery is written down where anyone could follow it",
+      "You've got happy customers willing to vouch for you",
+      "Your books are clean and tax money is set aside"
+    ],
+    "needs_work": [
+      "You only market when work gets thin",
+      "You couldn't say why one prospect bought and the next didn't",
+      "Every job gets done a little differently",
+      "You're the only person who knows how anything works",
+      "You run the business off yesterday's deposits"
+    ]
+  },
+  "graduating": "You'll know you're ready when the sales stop swinging. Steady customers come in every week, you've got a way of selling and delivering you could teach someone, and the load is heavy enough that you're ready to bring on your first full-time help. The next stage is about making your first hires and getting work off your own plate.",
+  "cta": {
+    "headline": "Want the next stage before you hit it?",
+    "body": "The one move that changes the most here is picking a few customer-getting actions and doing them every single day, busy or slow. I send a short weekly note on this kind of thing. Get on the list and I'll help you build the business behind the sales."
+  },
+  "built_on": [
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Traction",
+      "author": "Gino Wickman"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "You only reach out when work gets slow, then go quiet the second it's busy.",
+      "constraint": "Your lead flow turns on and off with your week. You market hard when you're hungry, stop the day you're full, and the pipeline dries up right behind you.",
+      "do_this": "Pick a small number of moves that bring customers in, then do them every day no matter how busy you are. The number matters more than the cleverness. While you're at it, put your proof to work: show that other people like them buy from you and trust you, because a buyer who's unsure reads the crowd before they read your pitch. If a spot or a slot is genuinely limited, say so plainly. Never fake it. That gets found out and it costs you.",
+      "sources": [
+        {
+          "concept": "social proof",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        },
+        {
+          "concept": "honest scarcity",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "Two prospects get two different pitches because it's all in your head.",
+      "constraint": "Your closing is hit or miss. You wing each conversation, so you can't tell why one prospect buys and the next one walks.",
+      "do_this": "Write down one way you sell and run it every time. Map how your customer buys, build your steps to match it, and pin down the few things you need to learn before you know you can help them. Name each step so you could check it later. Once it's written, watch your numbers stage by stage and fix the one spot where you keep losing people, instead of changing everything at once.",
+      "sources": [
+        {
+          "concept": "the documented sales methodology",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        },
+        {
+          "concept": "coach one stage off the funnel",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "Two customers buy the same thing and get two different versions of it.",
+      "constraint": "Paying customers want it done right and the same way twice, and right now the way it gets done is whatever you remember to do. It's all in your head, so it changes every time.",
+      "do_this": "Write down how you deliver, the core handful of steps, at a high level. Capture the 20% of the work that drives 80% of the result and stop there, no 500-page manual. Documenting it does two things: it makes the work come out the same every time, and it's the first step toward handing pieces of it to someone else so you stop being the only one who can do it.",
+      "sources": [
+        {
+          "concept": "document the core process (the 20/80 rule)",
+          "book": "Traction",
+          "author": "Gino Wickman"
+        }
+      ],
+      "function": "Operations"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Paying customers expect more than the free ones did, and a few are starting to complain.",
+      "do_this": "Have a simple way to handle an unhappy customer: hear them out, fix it fast, follow up. The ones you save become the proof that sells the next deal, so ask your happy customers for a few words you can show.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "You've got no budget for tools and everything lives in your head or a notebook.",
+      "do_this": "Use the free tier of everything. A simple site that captures a lead, a starter CRM so nobody falls through the cracks, a shared calendar. Nothing fancy yet, just somewhere the work lives besides your memory.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service (delivery)",
+      "start_here": false,
+      "constraint": "You're the only one who knows how anything gets done.",
+      "do_this": "Turn the steps you just wrote into a short checklist. A checklist makes the work hard to botch and lets a freelancer pick up a piece without you walking them through it every time.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology (ops)",
+      "start_here": false,
+      "constraint": "You're tempted to buy software to fix the mess.",
+      "do_this": "Don't pay for the fancy tool yet. A cheap off-the-shelf product almost always beats custom-built at this size. Pick the tech that fits how you work and bend it to your process.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": false,
+      "constraint": "You don't track the money or what you'll owe in taxes, so you run the business off yesterday's deposits.",
+      "do_this": "Spin up bookkeeping so you can see what comes in and goes out. Set money aside for quarterly taxes, and get a straight CPA to tell you how much. Run the business off the books, where the full picture lives.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "The work's getting heavy for part-timers and freelancers, but you can't carry a full payroll yet.",
+      "do_this": "Lean on freelancers for the overflow for now. Start writing down what each task takes, so when you can afford your first full-time hire, you know what you're hiring for.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "You're treating contractors like employees, which is a legal problem waiting to bite you.",
+      "do_this": "Keep the line clean. A contractor sets their own hours and uses their own tools. When someone starts looking like an employee, make them one the right way. Don't blur it to save paperwork.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

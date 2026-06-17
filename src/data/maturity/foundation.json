@@ -1,0 +1,246 @@
+{
+  "title": "Business Maturity Model, Stage 0: Foundation",
+  "description": "Canonical source for the Foundation stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 0,
+  "name": "Foundation",
+  "band": "early",
+  "tagline": "You don't have a business yet. You have an idea and the will to test it, and the only job right now is proof.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "Just you",
+    "revenue": "Pre-revenue"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "Just you. No customers yet, no money in, and a thing you believe people will want.",
+    "constraint": "Nothing is moving. You're guarding the idea instead of putting it in front of people.",
+    "graduate_by": "Getting people to try it for free, so you learn what they need."
+  },
+  "big_picture": [
+    "Every business starts here, with one person and an idea nobody has paid for. Most ideas die quietly at this stage because the owner kept polishing in private and never let a stranger touch the thing. You can plan for months and still know nothing. Put a version in someone's hands and watch what happens. That's how you learn what people want.",
+    "The trap at Foundation is treating the idea like it's precious. It's a hunch, and you need to test it fast and cheap before you've sunk a year and your savings into a thing nobody wants. Give it away. Do the work by hand, one person at a time, at your own cost. Every free user teaches you something a business plan never could.",
+    "You graduate this stage by trading polish for proof. The owners who break through stop guarding the idea and hand it out, and they let strangers reshape the thing before they ever charge a dollar. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one decision: stop protecting the idea and start handing it to strangers, for free, to learn what they need. The next pages run that decision across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Foundation you start with one part in each engine, and those three are marked Start here. Get them moving and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "You're sitting on the idea, waiting until you've got a version you're proud of.",
+          "constraint": "Nobody knows your thing exists, and telling them feels like begging for a favor.",
+          "do_this": "Tell people, starting with the ones who already know you. Reach out warm and lead with a gift. Offer to do the thing for free, no pitch attached. A favor comes before any ask, which is why give-first outreach gets a yes that a cold sales message never would. The fear of looking foolish is the only thing in your way, and it costs you nothing to drop it.",
+          "sources": [
+            {
+              "concept": "give-first / reciprocation",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "You're trying to close a sale before anyone has agreed to anything.",
+          "constraint": "You don't know how to sell yet, and at this stage you don't need to. You need people to say yes once.",
+          "do_this": "Don't sell. Get a small, free yes first. Let them try it for nothing, no money out of their pocket. Ask what their problem is and shut up. A tiny commitment now reshapes how someone sees themselves, so the person who lets you do it free is far more likely to become a paying customer later. Start with the easiest yes there is.",
+          "sources": [
+            {
+              "concept": "foot-in-the-door / small commitments",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "You want it perfect before a single person sees it.",
+          "constraint": "You have nothing to sell yet, and you're trying to build the polished version before you know what people need.",
+          "do_this": "Ship a rough version and do the work by hand, one person at a time, even at a loss. Aim to learn more than you earn for the first few months. Pick the one thing you could be the best in the world at, build for the customer you can serve better than anyone, and let everything else go. Be the best at one thing instead of decent at ten.",
+          "sources": [
+            {
+              "concept": "The Hedgehog Concept",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "You have no customers yet, so there's no one to keep happy.",
+          "do_this": "Treat your free users like they're paying you. Be fast, be available, take any job no matter how small. What you give them now buys reviews, referrals, and the people who stay once you start charging.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "You don't have the basic tools to communicate and deliver.",
+          "do_this": "Buy the few things the work needs and nothing more. A computer, internet, a phone, a decent mic, an email address. Tech at this stage only has to let you talk to people and deliver the thing.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": false,
+          "constraint": "Your personal money and your business money are the same pile, so you can't see what the business is doing.",
+          "do_this": "Open a business bank account and run every dollar through it. Fund it with a little starting cash and write off what you spend getting going. One account is the whole job right now. It makes the numbers readable once you start growing.",
+          "sources": []
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "You don't have the work capacity to pull this off yet.",
+          "do_this": "Hire yourself first. Build the stamina to do the work, which at this stage means early mornings and late nights for a stretch while you find your footing. The first employee you have to manage is you.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "Your personal assets are exposed to anything the business does.",
+          "do_this": "Form an entity, an LLC or an S-corp, so a problem in the business can't reach your house or your savings. A few hundred dollars through an attorney or an online service handles it. Do it before you take your first dollar.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "People are using your thing, even for free",
+      "You can name the one customer you serve best",
+      "You reach out warm without dreading it",
+      "You've got a business bank account",
+      "Your personal assets are walled off in an entity"
+    ],
+    "needs_work": [
+      "The idea is still only in your head",
+      "You're waiting until it's perfect to show anyone",
+      "You haven't put it in front of a single stranger",
+      "Your business money lives in your personal account",
+      "You're afraid telling people will look like begging"
+    ]
+  },
+  "graduating": "You'll know you're ready when people are using the thing and telling you what they'd pay to fix. You've got free users giving you honest feedback and a clear read on who you serve best. The next stage turns that proof into your first paid sale.",
+  "cta": {
+    "headline": "Where are you taking this business?",
+    "body": "Put a free version in front of ten people this week and listen. That's the fastest move you can make right now. Want the next stage sent to you? Get the guide, and I'll show you how to turn that proof into your first paid customer."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "You're sitting on the idea, waiting until you've got a version you're proud of.",
+      "constraint": "Nobody knows your thing exists, and telling them feels like begging for a favor.",
+      "do_this": "Tell people, starting with the ones who already know you. Reach out warm and lead with a gift. Offer to do the thing for free, no pitch attached. A favor comes before any ask, which is why give-first outreach gets a yes that a cold sales message never would. The fear of looking foolish is the only thing in your way, and it costs you nothing to drop it.",
+      "sources": [
+        {
+          "concept": "give-first / reciprocation",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "You're trying to close a sale before anyone has agreed to anything.",
+      "constraint": "You don't know how to sell yet, and at this stage you don't need to. You need people to say yes once.",
+      "do_this": "Don't sell. Get a small, free yes first. Let them try it for nothing, no money out of their pocket. Ask what their problem is and shut up. A tiny commitment now reshapes how someone sees themselves, so the person who lets you do it free is far more likely to become a paying customer later. Start with the easiest yes there is.",
+      "sources": [
+        {
+          "concept": "foot-in-the-door / small commitments",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "You want it perfect before a single person sees it.",
+      "constraint": "You have nothing to sell yet, and you're trying to build the polished version before you know what people need.",
+      "do_this": "Ship a rough version and do the work by hand, one person at a time, even at a loss. Aim to learn more than you earn for the first few months. Pick the one thing you could be the best in the world at, build for the customer you can serve better than anyone, and let everything else go. Be the best at one thing instead of decent at ten.",
+      "sources": [
+        {
+          "concept": "The Hedgehog Concept",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        }
+      ],
+      "function": "Operations"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "You have no customers yet, so there's no one to keep happy.",
+      "do_this": "Treat your free users like they're paying you. Be fast, be available, take any job no matter how small. What you give them now buys reviews, referrals, and the people who stay once you start charging.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "You don't have the basic tools to communicate and deliver.",
+      "do_this": "Buy the few things the work needs and nothing more. A computer, internet, a phone, a decent mic, an email address. Tech at this stage only has to let you talk to people and deliver the thing.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": false,
+      "constraint": "Your personal money and your business money are the same pile, so you can't see what the business is doing.",
+      "do_this": "Open a business bank account and run every dollar through it. Fund it with a little starting cash and write off what you spend getting going. One account is the whole job right now. It makes the numbers readable once you start growing.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "You don't have the work capacity to pull this off yet.",
+      "do_this": "Hire yourself first. Build the stamina to do the work, which at this stage means early mornings and late nights for a stretch while you find your footing. The first employee you have to manage is you.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "Your personal assets are exposed to anything the business does.",
+      "do_this": "Form an entity, an LLC or an S-corp, so a problem in the business can't reach your house or your savings. A few hundred dollars through an attorney or an online service handles it. Do it before you take your first dollar.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

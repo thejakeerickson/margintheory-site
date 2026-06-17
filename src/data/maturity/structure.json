@@ -1,0 +1,252 @@
+{
+  "title": "Business Maturity Model, Stage 3: Structure",
+  "description": "Canonical source for the Structure stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 3,
+  "name": "Structure",
+  "band": "early",
+  "tagline": "Sales are steady and the work keeps coming. The problem is all of it still runs through you, and you're out of hours.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "2 to 4 people",
+    "revenue": "$500K to $1M"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "2 to 4 people. You're still doing the work and running everything else on top of it.",
+    "constraint": "The work has outgrown your hours. You're the bottleneck on every part of the business.",
+    "graduate_by": "Get the business out of your head. Document how the work gets done, then hire and train your first full-time people to it."
+  },
+  "big_picture": [
+    "The earlier stages were about proving it. Make the first sale, then make sales happen on purpose so customers come in steady instead of by luck. You did it. Now you've got steady demand and a couple of people helping, and a new problem shows up. The whole business still lives in your head. Every decision, every quote, every fix routes back to you, and you're working more hours than the business can pay you for.",
+    "This is the stage where most owners stall out. Only about a quarter of businesses ever hire anyone past the founder, and this is the wall that stops the rest. You can't sell more without doing more, and you can't do more because there's only one of you. Working faster buys you a few weeks. Then you're back to capped.",
+    "You break through this stage by building structure. Write down how the work gets done, hire people to it, and put the basic money plumbing in place so paying people and getting paid stops being a scramble. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one move: get the business out of your head and onto paper and other people. The next pages run that move across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Structure, one part is breaking each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": false,
+          "constraint": "Your warm network is used up, and the new leads are colder and slower to buy.",
+          "do_this": "Build something that brings leads in while you sleep. Pick one channel, email or content, and run it on a schedule you can keep. The early sales came from people who already knew you. Those run out. A steady channel you run on a schedule replaces them.",
+          "sources": []
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "You spend half your week on calls that were never going to buy.",
+          "constraint": "You're saying yes to every lead, so you burn hours chasing people who were never going to close while the good ones wait.",
+          "do_this": "Set a few qualifying questions before anyone gets your time: budget, timeline, whether they're the decider. Ask them up front and let the wrong-fit leads screen themselves out. Roberge built his whole sales engine by qualifying hard before the pitch, because every hour on a bad lead is an hour the good ones spend waiting.",
+          "sources": [
+            {
+              "concept": "qualify before you pitch",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "When you're out for a day, the work either stops or gets done wrong.",
+          "constraint": "Nothing's written down, so every job depends on you being there. Your people can't run the work without asking you, and quality swings with who's doing it.",
+          "do_this": "Write down how the core work gets done. Not a 500-page manual, just the few steps that drive most of the result, written for the person who has to follow them. Wickman calls these your core processes. Document the 20% that produces 80% of the outcome. Once it's on paper, someone else can run it and it comes out the same every time.",
+          "sources": [
+            {
+              "concept": "document your core processes (20/80)",
+              "book": "Traction",
+              "author": "Gino Wickman"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "New customers land confused, and onboarding happens differently every time.",
+          "do_this": "Build one consistent way to bring a new customer on, from signed to up-and-running. Same steps, same order, every time. A customer who gets lost in the first month quietly leaves before you fix it.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "You're paying for tools nobody uses and tracking the work in your head.",
+          "do_this": "Cut the software you don't touch and keep the few you do. Then stand up one simple place to track the sales pipeline so you can see what's coming in and what's stuck. Nothing fancy, just one source of truth instead of your memory.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "You pay yourself whatever's left after everyone else, and some weeks that's nothing.",
+          "constraint": "The money's run informally. People get paid when you remember, bills and invoices slip, and you have no read on whether the business makes money once your own pay is counted.",
+          "benchmark": "Healthy here is a market wage for your own job booked as an expense, with the business still turning a profit on top of it.",
+          "do_this": "Get the plumbing in. You need bookkeeping, a payroll provider, and a process for sending invoices and chasing what's owed. Then pay yourself what your job would cost to hire out, and see what's left. Crabtree's point is that a tiny owner's salary makes a broken business look fine, so book the market wage and read the truth. From there, build a simple forecast that looks a few months ahead so cash stops surprising you.",
+          "sources": [
+            {
+              "concept": "pay yourself a market wage, then read true profit",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "You need help, but the applicants are weak and it takes forever to find anyone.",
+          "do_this": "Write the job posting like an ad that sells the role. Lead with what makes it worth wanting, be specific about who it's for, and you'll pull better people. Then screen hard. Most resumes won't make the cut, and that's fine.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "You're paying people informally, and nothing about how things work here is written down.",
+          "do_this": "Get a payroll provider running so taxes and withholding are handled, especially if you're across state lines. Then write down the basics of how the place works so your first hires aren't left to invent it. Whatever structure you set now, they'll learn the job inside of it.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "Your core work is written down where anyone can follow it",
+      "You qualify leads before you spend time on them",
+      "Bookkeeping and a payroll provider are running",
+      "You pay yourself a market wage every month",
+      "You've made your first hire and they can run the work"
+    ],
+    "needs_work": [
+      "The business stops cold when you take a day off",
+      "You chase every lead, fit or not",
+      "People still get paid whenever you get to it",
+      "You don't know if you made money last month",
+      "Every job in the place runs back through you"
+    ]
+  },
+  "graduating": "You'll know you're ready when the work no longer lives in your head. It's written down, your first hires run it without you, and paying people and getting paid runs on a system. The next stage is about picking who you're for and letting the rest go.",
+  "cta": {
+    "headline": "Want the next move in your inbox?",
+    "body": "Subscribe to the newsletter for the few numbers and moves that get a business out of the founder's-head stage. One useful thing a week, nothing else."
+  },
+  "built_on": [
+    {
+      "book": "Traction",
+      "author": "Gino Wickman"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "You spend half your week on calls that were never going to buy.",
+      "constraint": "You're saying yes to every lead, so you burn hours chasing people who were never going to close while the good ones wait.",
+      "do_this": "Set a few qualifying questions before anyone gets your time: budget, timeline, whether they're the decider. Ask them up front and let the wrong-fit leads screen themselves out. Roberge built his whole sales engine by qualifying hard before the pitch, because every hour on a bad lead is an hour the good ones spend waiting.",
+      "sources": [
+        {
+          "concept": "qualify before you pitch",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "When you're out for a day, the work either stops or gets done wrong.",
+      "constraint": "Nothing's written down, so every job depends on you being there. Your people can't run the work without asking you, and quality swings with who's doing it.",
+      "do_this": "Write down how the core work gets done. Not a 500-page manual, just the few steps that drive most of the result, written for the person who has to follow them. Wickman calls these your core processes. Document the 20% that produces 80% of the outcome. Once it's on paper, someone else can run it and it comes out the same every time.",
+      "sources": [
+        {
+          "concept": "document your core processes (20/80)",
+          "book": "Traction",
+          "author": "Gino Wickman"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "You pay yourself whatever's left after everyone else, and some weeks that's nothing.",
+      "constraint": "The money's run informally. People get paid when you remember, bills and invoices slip, and you have no read on whether the business makes money once your own pay is counted.",
+      "benchmark": "Healthy here is a market wage for your own job booked as an expense, with the business still turning a profit on top of it.",
+      "do_this": "Get the plumbing in. You need bookkeeping, a payroll provider, and a process for sending invoices and chasing what's owed. Then pay yourself what your job would cost to hire out, and see what's left. Crabtree's point is that a tiny owner's salary makes a broken business look fine, so book the market wage and read the truth. From there, build a simple forecast that looks a few months ahead so cash stops surprising you.",
+      "sources": [
+        {
+          "concept": "pay yourself a market wage, then read true profit",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Marketing",
+      "start_here": false,
+      "constraint": "Your warm network is used up, and the new leads are colder and slower to buy.",
+      "do_this": "Build something that brings leads in while you sleep. Pick one channel, email or content, and run it on a schedule you can keep. The early sales came from people who already knew you. Those run out. A steady channel you run on a schedule replaces them.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "New customers land confused, and onboarding happens differently every time.",
+      "do_this": "Build one consistent way to bring a new customer on, from signed to up-and-running. Same steps, same order, every time. A customer who gets lost in the first month quietly leaves before you fix it.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "You're paying for tools nobody uses and tracking the work in your head.",
+      "do_this": "Cut the software you don't touch and keep the few you do. Then stand up one simple place to track the sales pipeline so you can see what's coming in and what's stuck. Nothing fancy, just one source of truth instead of your memory.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "You need help, but the applicants are weak and it takes forever to find anyone.",
+      "do_this": "Write the job posting like an ad that sells the role. Lead with what makes it worth wanting, be specific about who it's for, and you'll pull better people. Then screen hard. Most resumes won't make the cut, and that's fine.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "You're paying people informally, and nothing about how things work here is written down.",
+      "do_this": "Get a payroll provider running so taxes and withholding are handled, especially if you're across state lines. Then write down the basics of how the place works so your first hires aren't left to invent it. Whatever structure you set now, they'll learn the job inside of it.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

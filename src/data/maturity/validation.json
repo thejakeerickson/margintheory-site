@@ -1,0 +1,250 @@
+{
+  "title": "Business Maturity Model, Stage 1: Validation",
+  "description": "Canonical source for the Validation stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 1,
+  "name": "Validation",
+  "band": "early",
+  "tagline": "You've got something to sell. Now you have to prove a stranger will pay for it.",
+  "cover_foot": "A read on where you are, where you're stuck, and what to fix next.",
+  "stats": {
+    "headcount": "Just you",
+    "revenue": "Under $100K"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "Just you. You do every job in the business, and a stranger hasn't paid you yet.",
+    "constraint": "The thing you sell isn't proven. Nobody's handed you money for it on purpose.",
+    "graduate_by": "Your first paid sale. One person who isn't a friend pays full freight."
+  },
+  "big_picture": [
+    "You have an idea you believe in and maybe a few people who've tried it for free. That's a start, and it isn't a business yet. A business is something a stranger pays for because it solves their problem better than the alternatives. Until that happens, you have a hobby with potential. This stage is about closing that distance, getting from a thing you can do to a thing someone will buy.",
+    "The trap here is polishing. You keep tuning the product, redoing the logo, rewriting the page, because shipping it means someone might say no. The market never sees any of it. The only test that counts is whether someone pays, and the longer you wait to run that test, the longer you go on assuming instead of knowing. Ship something good enough to sell and put a price in front of a buyer.",
+    "Everything at this stage points at one outcome: the first paid sale. Get specific about who you serve and the one problem you solve, lead with proof instead of claims, and sell by helping rather than pushing. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one move: put a price in front of a stranger and get a yes. The next pages run that move across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Validation, one part is breaking each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": true,
+          "tell": "You tell people how good it is, and they smile and say nothing.",
+          "constraint": "Nobody knows you have something to sell, and nobody has a reason to believe it works. You're a new name making a claim.",
+          "do_this": "Stop selling the promise and start showing the proof. Get ten people to use it, even free, and collect what they say about the result. A stranger weighing a new thing trusts other people's experience over your pitch, and the more of them who say it worked, the safer it feels to buy. Ten honest testimonials open more doors than the best ad you could write.",
+          "sources": [
+            {
+              "concept": "social proof",
+              "book": "Influence",
+              "author": "Robert Cialdini"
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "start_here": true,
+          "tell": "You go for the close, they go quiet, and you never hear back.",
+          "constraint": "You don't know how to turn a conversation into a sale yet, so you either push too hard or never make the ask.",
+          "do_this": "Sell by helping. Ask what problem they're trying to solve, show how your thing solves it, and make the ask plain. The buyer has all the information now and won't be strong-armed. Ask good questions, respect the answer, and you'll close more than the person who pushes. Use the results from your free users as the proof that closes it.",
+          "sources": [
+            {
+              "concept": "the empowered buyer rewards the helpful over the aggressive",
+              "book": "The Sales Acceleration Formula",
+              "author": "Mark Roberge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "You keep adding features instead of asking anyone to buy.",
+          "constraint": "The thing isn't ready in your head, so you keep building. It's probably ready enough to sell, and you haven't tested that.",
+          "do_this": "Pick the one problem you solve best and ship the version that solves it, even if it's rough. Resist the pull to be decent at five things. Be good enough at the one thing a buyer will pay for, get it in front of them, and let their money tell you if you're right. Being capable at something is not the same as being the best at it, and only a paying customer settles which one you've got.",
+          "sources": [
+            {
+              "concept": "the Hedgehog Concept",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "Your free users try it once and don't come back, and you don't know why.",
+          "do_this": "Talk to every one of them. Ask what they expected, what they got, and where it fell short. The early user who drifts away is telling you what to fix before a paying customer hits the same wall.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "You're stitching the work together by hand with no tools.",
+          "do_this": "Find the free software that runs the basics and start there. A way to talk to people, a way to track the work, a place to keep your files. Don't pay for anything until the work demands it.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": false,
+          "constraint": "You have no clean way to take someone's money.",
+          "do_this": "Set up two ways to get paid before you need them. Cash and a card processor like Stripe. Run one live payment through and watch it land, so the first time a buyer says yes you're not fumbling for how to collect.",
+          "sources": []
+        },
+        {
+          "name": "Hiring",
+          "start_here": false,
+          "constraint": "There's a skill or a task you can't do yourself, and it's stalling you.",
+          "do_this": "Fill the one gap with a freelancer instead of a hire. Upwork or Fiverr for the piece you can't do. You're not building a team yet, you're buying back the hours blocking your first sale.",
+          "sources": []
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "You hand work to a freelancer and get back something you can't use.",
+          "do_this": "Write a one-page agreement before any handoff: who does what, by when, for how much, and what counts as done. The vendor who underdelivers usually never got told what good looked like.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "You've shipped a version someone can buy",
+      "You can name the one problem you solve",
+      "You've got ten people who'll vouch for the result",
+      "You can take a payment the minute someone says yes",
+      "You ask what people need before you pitch"
+    ],
+    "needs_work": [
+      "You're still polishing instead of selling",
+      "You lead with claims and have no proof to back them",
+      "You've never been paid by someone who isn't a friend",
+      "You'd scramble to collect if someone wanted to pay today",
+      "You push the close and watch people go quiet"
+    ]
+  },
+  "graduating": "You'll know you're ready when a stranger pays you full price for the thing, and then another one does. Two strangers paying full freight is the market telling you it wants what you've got. The next stage is about making those sales happen on purpose instead of by luck.",
+  "cta": {
+    "headline": "Want the next move sent to you?",
+    "body": "Get ten people to use it free and collect what they say about the result. Walk into your first cold conversation with that proof and you walk out with your first paid sale."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "Influence",
+      "author": "Robert Cialdini"
+    },
+    {
+      "book": "The Sales Acceleration Formula",
+      "author": "Mark Roberge"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Marketing",
+      "start_here": true,
+      "tell": "You tell people how good it is, and they smile and say nothing.",
+      "constraint": "Nobody knows you have something to sell, and nobody has a reason to believe it works. You're a new name making a claim.",
+      "do_this": "Stop selling the promise and start showing the proof. Get ten people to use it, even free, and collect what they say about the result. A stranger weighing a new thing trusts other people's experience over your pitch, and the more of them who say it worked, the safer it feels to buy. Ten honest testimonials open more doors than the best ad you could write.",
+      "sources": [
+        {
+          "concept": "social proof",
+          "book": "Influence",
+          "author": "Robert Cialdini"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Sales",
+      "start_here": true,
+      "tell": "You go for the close, they go quiet, and you never hear back.",
+      "constraint": "You don't know how to turn a conversation into a sale yet, so you either push too hard or never make the ask.",
+      "do_this": "Sell by helping. Ask what problem they're trying to solve, show how your thing solves it, and make the ask plain. The buyer has all the information now and won't be strong-armed. Ask good questions, respect the answer, and you'll close more than the person who pushes. Use the results from your free users as the proof that closes it.",
+      "sources": [
+        {
+          "concept": "the empowered buyer rewards the helpful over the aggressive",
+          "book": "The Sales Acceleration Formula",
+          "author": "Mark Roberge"
+        }
+      ],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "You keep adding features instead of asking anyone to buy.",
+      "constraint": "The thing isn't ready in your head, so you keep building. It's probably ready enough to sell, and you haven't tested that.",
+      "do_this": "Pick the one problem you solve best and ship the version that solves it, even if it's rough. Resist the pull to be decent at five things. Be good enough at the one thing a buyer will pay for, get it in front of them, and let their money tell you if you're right. Being capable at something is not the same as being the best at it, and only a paying customer settles which one you've got.",
+      "sources": [
+        {
+          "concept": "the Hedgehog Concept",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        }
+      ],
+      "function": "Operations"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "Your free users try it once and don't come back, and you don't know why.",
+      "do_this": "Talk to every one of them. Ask what they expected, what they got, and where it fell short. The early user who drifts away is telling you what to fix before a paying customer hits the same wall.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "You're stitching the work together by hand with no tools.",
+      "do_this": "Find the free software that runs the basics and start there. A way to talk to people, a way to track the work, a place to keep your files. Don't pay for anything until the work demands it.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": false,
+      "constraint": "You have no clean way to take someone's money.",
+      "do_this": "Set up two ways to get paid before you need them. Cash and a card processor like Stripe. Run one live payment through and watch it land, so the first time a buyer says yes you're not fumbling for how to collect.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Hiring",
+      "start_here": false,
+      "constraint": "There's a skill or a task you can't do yourself, and it's stalling you.",
+      "do_this": "Fill the one gap with a freelancer instead of a hire. Upwork or Fiverr for the piece you can't do. You're not building a team yet, you're buying back the hours blocking your first sale.",
+      "sources": [],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "You hand work to a freelancer and get back something you can't use.",
+      "do_this": "Write a one-page agreement before any handoff: who does what, by when, for how much, and what counts as done. The vendor who underdelivers usually never got told what good looked like.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}

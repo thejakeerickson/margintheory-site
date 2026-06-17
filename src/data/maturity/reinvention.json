@@ -1,0 +1,276 @@
+{
+  "title": "Business Maturity Model, Stage 9: Reinvention",
+  "description": "Canonical source for the Reinvention stage of The Business Maturity Model. Structured content (snapshot, big picture, the 8 departments grouped under 3 functions, the Start-Here three, success criteria, CTA, sources). Renders to the web diagnostic and the branded PDF. Living source, update over time.",
+  "category": [
+    "operations"
+  ],
+  "type": "Reference",
+  "status": "Active",
+  "last_updated": "2026-06-16",
+  "stage": 9,
+  "name": "Reinvention",
+  "band": "late",
+  "tagline": "Your core product made you. Now it's flat, and squeezing it harder does damage. The next chapter is a bet you place before this one runs out.",
+  "cover_foot": "Where you are, where you're stuck, what to fix.",
+  "stats": {
+    "headcount": "250-500 people",
+    "revenue": "$150M+"
+  },
+  "map_line": "you are here",
+  "snapshot": {
+    "who": "250 to 500 people. You're chairman now. Five layers run below you, and the company gets built whether you're in the room or not.",
+    "constraint": "The product that built this can't grow much further. Push on it and you damage it.",
+    "graduate_by": "Placing the big bet. Buy or build the next rising star, and get the books clean enough to fund it with outside money."
+  },
+  "big_picture": [
+    "Every earlier stage was about climbing one mountain. You found the customer, niched down, built the second product, then installed the systems and split into divisions. You did all of it, and the core business is a machine now. It throws off cash whether you show up or not. The trouble is that the machine has stopped growing. The market it owns is the market it owns, and there isn't much more of it to take.",
+    "The reflex at this stage is to push harder on the thing that worked. Squeeze another point of margin, run another price test, ship another feature. At every stage before, working the core was the answer. Here it turns on you. The core is a cash cow, and changing a cash cow damages it. The growth has to come from somewhere new, and finding it is a different job than running what you've got.",
+    "The companies that last place a bet on the next rising star while the current one still pays for it, and they get the books clean enough that outside money will back the bet. Build what's next before defending what you built becomes the whole game. Here's what that looks like across every part of your business."
+  ],
+  "thesis": "The stage comes down to one bet: where the next chapter of growth comes from, and whether your books are clean enough to fund it. The next pages run that bet across all three engines of your business.",
+  "overview_intro": "Every business runs on three engines. Eight parts sit inside them. At Reinvention, one part is breaking each engine right now. Those three are marked Start here. Get them right and the rest follows.",
+  "functions": [
+    {
+      "name": "Sales & Marketing",
+      "departments": [
+        {
+          "name": "Marketing",
+          "start_here": false,
+          "constraint": "You're big enough to be a target now. Attribution gets murky and regulators pay attention.",
+          "do_this": "Spend on the brand. At this size the payoff on brand spend runs more than a year out, so judge it on blended return across the whole business over time. Give far more than you ask for. And stand up a documented process to keep your claims clean, because you're the one they come after now.",
+          "sources": []
+        },
+        {
+          "name": "Sales",
+          "start_here": false,
+          "constraint": "You've got too many products and too many kinds of leads for one type of seller to handle.",
+          "do_this": "Split your sellers up by what they sell, the kind of lead, or the territory. Send each lead to the closer who's best at that one thing. A new product doesn't sell the same way the old one did, and one team can't be great at both.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "departments": [
+        {
+          "name": "Product & service",
+          "start_here": true,
+          "tell": "Every plan to grow runs through the same product that's already flat.",
+          "constraint": "The core product is a cash cow that's run out of room. Change it to chase growth and you damage the thing that pays for everything, but standing still means slow decline.",
+          "do_this": "Stop trying to wring growth out of the cash cow. Go find the next rising star instead, either buy it or build it. Aim the new thing at one job, start it small enough to fix, and point it at a customer who needs it today. Make the bet inside what you can be the best at. The biggest bets that pay off rest on what you already understand.",
+          "sources": [
+            {
+              "concept": "buy or build the next thing",
+              "book": "Good to Great",
+              "author": "Jim Collins"
+            },
+            {
+              "concept": "the rules of innovation",
+              "book": "The Essential Drucker",
+              "author": "Peter Drucker"
+            }
+          ]
+        },
+        {
+          "name": "Customer service",
+          "start_here": false,
+          "constraint": "A new offer brings new support load, and the old team buckles under it.",
+          "do_this": "Route support to reps who specialize, tagged and segmented in the CRM. Build a career ladder so a good rep can climb instead of leave. The cost to keep a customer for life is worth knowing and worth protecting.",
+          "sources": []
+        },
+        {
+          "name": "Technology",
+          "start_here": false,
+          "constraint": "The old stack can't carry this, and every division wants its own thing.",
+          "do_this": "Let each division run the stack it needs, with one person who owns it. Look hard at a single system to tie the company together. Put service-level promises on your IT team and keep developers in-house. The patchwork that got you here won't hold a company this size.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "name": "Finance & Admin",
+      "departments": [
+        {
+          "name": "Finance",
+          "start_here": true,
+          "tell": "You want to fund the next bet, and your books won't survive a buyer's questions.",
+          "constraint": "Your books aren't clean enough for outside money. To fund the next bet with debt or a partner, someone is going to open the hood, and what's in there now won't pass.",
+          "benchmark": "A buyer rarely pays below your last three years of pretax profit plus the equity sitting in the business. Strip cash out and load it with debt and that number drops, so get debt-free and keep the capital in.",
+          "do_this": "Run the company sale-ready every day, whether a sale is on the table or far off. Get a quality-of-earnings done and bring in a third party to audit the books. Clean house and revisit your legal structure. Your cash is cheap and your stock is expensive, so fund the bet with debt as a timed bridge before you give up ownership. The number a buyer pays can't beat what your after-tax cash flow will support, so the cleaner and more profitable the books, the more the next bet is worth and the cheaper the money to fund it.",
+          "sources": [
+            {
+              "concept": "economic value and the three sources of capital",
+              "book": "Simple Numbers",
+              "author": "Greg Crabtree"
+            }
+          ]
+        },
+        {
+          "name": "Hiring",
+          "start_here": true,
+          "tell": "The person who could run the next bet won't take a call from anyone but you.",
+          "constraint": "The talent who can launch a new business answers to you and no one else. You need a rainmaker, and a job posting won't land one.",
+          "do_this": "Become the head recruiter yourself. Before you chase anyone, write the scorecard: what the new role has to produce, the three to eight results that decide whether it worked, ranked. A sharp scorecard screens the pool for you. Then court the person like the hire they are, over months. Sell the fit, sell the family on the move, sell the freedom to run it, and stay in their ear all the way to the first day. One right rainmaker can be worth ten ordinary hires.",
+          "sources": [
+            {
+              "concept": "the scorecard",
+              "book": "Who",
+              "author": "Geoff Smart"
+            },
+            {
+              "concept": "selling the hire",
+              "book": "Who",
+              "author": "Geoff Smart"
+            }
+          ]
+        },
+        {
+          "name": "Your people",
+          "start_here": false,
+          "constraint": "Turnover's climbing and you can't say who you'll need in two years.",
+          "do_this": "Plan the org a year or two out. Map who's solid, who's at risk, and who's leaving, and get clear on who owns what so nothing falls between two people. At this size the people plan is its own full-time job.",
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "success": {
+    "on_track": [
+      "You've named the next rising star and decided buy or build",
+      "Your books would survive a buyer opening the hood",
+      "You're funding the bet without giving away ownership",
+      "You personally own recruiting the rainmaker who'll run the next bet",
+      "The core runs without you in any room"
+    ],
+    "needs_work": [
+      "Your only growth plan is to push harder on the core",
+      "Outside money would walk after one look at the books",
+      "You'd hand over stock to fund the next move",
+      "The talent who could run the bet won't return a call",
+      "The company still can't make a big decision without you in the room"
+    ]
+  },
+  "graduating": "You'll know you're ready when the bet is placed and paying: a second engine you bought or built that's pulling its own weight, books clean enough to fund it without selling the company, and a rainmaker running it who you recruited yourself. You run a portfolio of businesses now, and the job becomes allocating money across it.",
+  "cta": {
+    "headline": "Where are you taking this next?",
+    "body": "Get the 15 Numbers guide and read it against your own books. If they wouldn't survive a buyer's questions yet, clean them up before you place any bet."
+  },
+  "built_on": [
+    {
+      "book": "Good to Great",
+      "author": "Jim Collins"
+    },
+    {
+      "book": "The Essential Drucker",
+      "author": "Peter Drucker"
+    },
+    {
+      "book": "Simple Numbers",
+      "author": "Greg Crabtree"
+    },
+    {
+      "book": "Who",
+      "author": "Geoff Smart"
+    }
+  ],
+  "_start_here": [
+    {
+      "name": "Product & service",
+      "start_here": true,
+      "tell": "Every plan to grow runs through the same product that's already flat.",
+      "constraint": "The core product is a cash cow that's run out of room. Change it to chase growth and you damage the thing that pays for everything, but standing still means slow decline.",
+      "do_this": "Stop trying to wring growth out of the cash cow. Go find the next rising star instead, either buy it or build it. Aim the new thing at one job, start it small enough to fix, and point it at a customer who needs it today. Make the bet inside what you can be the best at. The biggest bets that pay off rest on what you already understand.",
+      "sources": [
+        {
+          "concept": "buy or build the next thing",
+          "book": "Good to Great",
+          "author": "Jim Collins"
+        },
+        {
+          "concept": "the rules of innovation",
+          "book": "The Essential Drucker",
+          "author": "Peter Drucker"
+        }
+      ],
+      "function": "Operations"
+    },
+    {
+      "name": "Finance",
+      "start_here": true,
+      "tell": "You want to fund the next bet, and your books won't survive a buyer's questions.",
+      "constraint": "Your books aren't clean enough for outside money. To fund the next bet with debt or a partner, someone is going to open the hood, and what's in there now won't pass.",
+      "benchmark": "A buyer rarely pays below your last three years of pretax profit plus the equity sitting in the business. Strip cash out and load it with debt and that number drops, so get debt-free and keep the capital in.",
+      "do_this": "Run the company sale-ready every day, whether a sale is on the table or far off. Get a quality-of-earnings done and bring in a third party to audit the books. Clean house and revisit your legal structure. Your cash is cheap and your stock is expensive, so fund the bet with debt as a timed bridge before you give up ownership. The number a buyer pays can't beat what your after-tax cash flow will support, so the cleaner and more profitable the books, the more the next bet is worth and the cheaper the money to fund it.",
+      "sources": [
+        {
+          "concept": "economic value and the three sources of capital",
+          "book": "Simple Numbers",
+          "author": "Greg Crabtree"
+        }
+      ],
+      "function": "Finance & Admin"
+    },
+    {
+      "name": "Hiring",
+      "start_here": true,
+      "tell": "The person who could run the next bet won't take a call from anyone but you.",
+      "constraint": "The talent who can launch a new business answers to you and no one else. You need a rainmaker, and a job posting won't land one.",
+      "do_this": "Become the head recruiter yourself. Before you chase anyone, write the scorecard: what the new role has to produce, the three to eight results that decide whether it worked, ranked. A sharp scorecard screens the pool for you. Then court the person like the hire they are, over months. Sell the fit, sell the family on the move, sell the freedom to run it, and stay in their ear all the way to the first day. One right rainmaker can be worth ten ordinary hires.",
+      "sources": [
+        {
+          "concept": "the scorecard",
+          "book": "Who",
+          "author": "Geoff Smart"
+        },
+        {
+          "concept": "selling the hire",
+          "book": "Who",
+          "author": "Geoff Smart"
+        }
+      ],
+      "function": "Finance & Admin"
+    }
+  ],
+  "_rest": [
+    {
+      "name": "Marketing",
+      "start_here": false,
+      "constraint": "You're big enough to be a target now. Attribution gets murky and regulators pay attention.",
+      "do_this": "Spend on the brand. At this size the payoff on brand spend runs more than a year out, so judge it on blended return across the whole business over time. Give far more than you ask for. And stand up a documented process to keep your claims clean, because you're the one they come after now.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Sales",
+      "start_here": false,
+      "constraint": "You've got too many products and too many kinds of leads for one type of seller to handle.",
+      "do_this": "Split your sellers up by what they sell, the kind of lead, or the territory. Send each lead to the closer who's best at that one thing. A new product doesn't sell the same way the old one did, and one team can't be great at both.",
+      "sources": [],
+      "function": "Sales & Marketing"
+    },
+    {
+      "name": "Customer service",
+      "start_here": false,
+      "constraint": "A new offer brings new support load, and the old team buckles under it.",
+      "do_this": "Route support to reps who specialize, tagged and segmented in the CRM. Build a career ladder so a good rep can climb instead of leave. The cost to keep a customer for life is worth knowing and worth protecting.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Technology",
+      "start_here": false,
+      "constraint": "The old stack can't carry this, and every division wants its own thing.",
+      "do_this": "Let each division run the stack it needs, with one person who owns it. Look hard at a single system to tie the company together. Put service-level promises on your IT team and keep developers in-house. The patchwork that got you here won't hold a company this size.",
+      "sources": [],
+      "function": "Operations"
+    },
+    {
+      "name": "Your people",
+      "start_here": false,
+      "constraint": "Turnover's climbing and you can't say who you'll need in two years.",
+      "do_this": "Plan the org a year or two out. Map who's solid, who's at risk, and who's leaving, and get clear on who owns what so nothing falls between two people. At this size the people plan is its own full-time job.",
+      "sources": [],
+      "function": "Finance & Admin"
+    }
+  ]
+}
