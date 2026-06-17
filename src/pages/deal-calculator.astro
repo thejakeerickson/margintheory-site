@@ -680,4 +680,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     scoreTriggers();
   </script>
+
+  <script>
+    // ----- pre-fill from URL (the Deal Sheet "Screen this deal" deep-link) -----
+    const qp = new URLSearchParams(window.location.search);
+    if ([...qp.keys()].length > 0) {
+      const setField = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== null && val !== '') {
+          el.value = val;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      };
+      setField('i-name', qp.get('name'));
+      setField('i-price', qp.get('price'));
+      setField('i-sde', qp.get('sde'));
+
+      if (qp.get('role') === 'manager') {
+        const mgr = document.querySelector('[data-role="manager"]');
+        if (mgr) mgr.click();
+      } else {
+        setField('i-operator', qp.get('op'));
+      }
+
+      const tap = (group, idx) => {
+        const b = document.querySelectorAll('[data-group="' + group + '"] [data-trig]')[idx];
+        if (b && b.dataset.on !== '1') b.click();
+      };
+      const MAP = {
+        sows: { stale: 0, old: 1, weak: 2, simple: 3 },
+        brrt: { recurring: 0, recession: 1, raise: 2, tech: 3 },
+        kill: { restaurant: 0, retail: 1, consulting: 2, personalbrand: 3, credential: 4, concentration: 5, fba: 6, drycleaner: 7 },
+      };
+      Object.keys(MAP).forEach((group) => {
+        Object.keys(MAP[group]).forEach((k) => {
+          if (qp.get(k) === '1') tap(group, MAP[group][k]);
+        });
+      });
+    }
+  </script>
 </BaseLayout>
