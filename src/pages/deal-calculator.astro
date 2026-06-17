@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout
   title="Deal Calculator | Margin Theory"
-  description="Quick acquisition cash flow check, built on Codie Sanchez's deal math. Enter price, SDE, and operator pay and see whether it's a business or a job."
+  description="Quick acquisition cash flow check. Enter price, SDE, and operator pay and see whether it's a business or a job."
 >
   <section>
     <div class="max-w-5xl mx-auto px-6 pt-10 md:pt-14 pb-20">
@@ -131,7 +131,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <input id="i-operator" type="text" inputmode="numeric" placeholder="0"
                   class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
               </div>
-              <p class="text-xs text-white/45 mt-1.5">What you'd pay someone to run it instead of you. Codie's rule: pay the operator first. Leave at 0 only if you'll run it yourself.</p>
+              <p class="text-xs text-white/45 mt-1.5">What you'd pay someone to run it instead of you. The rule: pay the operator first. Leave at 0 only if you'll run it yourself.</p>
             </div>
 
             <div>
@@ -141,7 +141,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <input id="i-reinvest" type="text" inputmode="numeric" placeholder="0"
                   class="w-full pl-8 pr-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40" />
               </div>
-              <p class="text-xs text-white/45 mt-1.5">Money back into the business each year (equipment, marketing, software). Codie's third tier. Leave at 0 to skip.</p>
+              <p class="text-xs text-white/45 mt-1.5">Money back into the business each year (equipment, marketing, software). The third tier. Leave at 0 to skip.</p>
             </div>
 
             <details class="border-t border-white/10 pt-4 group" open>
@@ -221,12 +221,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <div><span style="color:#3271D2;font-weight:bold;">Payback period:</span> <span style="color:#ededed;" id="r-payback">&mdash;</span></div>
             </div>
 
-            <!-- Verdict (Codie scorecard) -->
+            <!-- Verdict (deal-box scorecard) -->
             <div style="border-top:1px solid #2e2e2e;margin-top:14px;padding-top:14px;">
               <span id="r-verdict" style="display:inline-block;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;padding:5px 12px;border-radius:3px;color:#9a9a9a;">&mdash;</span>
               <div id="r-verdict-note" style="margin-top:8px;font-size:12.5px;color:#9a9a9a;line-height:1.5;">Enter price and SDE to see the verdict.</div>
               <div style="margin-top:12px;font-size:12.5px;line-height:1.95;">
-                <div><span id="chk-mult" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Multiple in Codie's 2-5x range</span></div>
+                <div><span id="chk-mult" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Multiple in the 2-5x range</span></div>
                 <div><span id="chk-sde" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">SDE clears your $270K deal-box line</span></div>
                 <div><span id="chk-job" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Covers an operator (a business, not a job)</span></div>
                 <div><span id="chk-floor" style="font-weight:bold;color:#666666;">&middot;</span> <span style="color:#b0b0b0;">Cash flow clears your $90K floor</span></div>
@@ -234,9 +234,66 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
 
             <div style="border-top:1px solid #2e2e2e;margin-top:16px;padding-top:12px;font-size:11.5px;color:#7e7e7e;line-height:1.7;font-style:italic;">
-              Codie's four tiers: the cash covers the loan, an operator, reinvestment, then you. Two gut checks before you sign: will it pay for itself, and what happens if it does not. Payback is the cash to close divided by yearly cash flow, how fast your money comes back.
+              The four tiers: the cash covers the loan, an operator, reinvestment, then you. Two gut checks before you sign: will it pay for itself, and what happens if it does not. Payback is the cash to close divided by yearly cash flow, how fast your money comes back.
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ===== The Deal Screen (business-quality screen) ===== -->
+      <div class="mt-12 border border-white/15 bg-white/[0.02] p-6 md:p-8 rounded-sm">
+        <div class="text-xs font-bold tracking-[0.15em] uppercase text-brand-blue mb-2">The Deal Screen</div>
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-2">Is it the right kind of business?</h2>
+        <p class="text-sm md:text-base text-white/70 leading-relaxed max-w-2xl mb-6">
+          The math above tells you whether a deal pays. This tells you whether it is the kind of business worth owning in the first place.
+          Tap what is true. A real deal is green on both, the numbers and the business.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-7">
+          <!-- SOWS -->
+          <div>
+            <div class="text-sm font-semibold text-white/85 mb-1">Boring in the good way <span class="text-white/40 font-normal">(SOWS)</span></div>
+            <p class="text-xs text-white/45 mb-3">Stale, old, weak competition, simple. The neglect is your upside.</p>
+            <div class="flex flex-wrap gap-2" data-group="sows">
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Stale (behind on tech &amp; marketing)</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Old (5+ years, repeat customers)</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Weak competitors nearby</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Simple (an 8-year-old gets it)</button>
+            </div>
+          </div>
+          <!-- BRRT -->
+          <div>
+            <div class="text-sm font-semibold text-white/85 mb-1">Upside is real <span class="text-white/40 font-normal">(BRRT)</span></div>
+            <p class="text-xs text-white/45 mb-3">Cash flow, recession-resistant, room to raise prices, tech to add.</p>
+            <div class="flex flex-wrap gap-2" data-group="brrt">
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Recurring cash flow (not cash-suck)</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Recession-resistant (a need, not a want)</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Room to raise prices</button>
+              <button type="button" data-trig class="trig-btn px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Tech you can add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deal-breakers -->
+        <div class="mt-7">
+          <div class="text-sm font-semibold text-white/85 mb-1">Deal-breakers <span class="text-white/40 font-normal">(any one and you walk)</span></div>
+          <p class="text-xs text-white/45 mb-3">The seven deadly businesses plus your can't-stands. High failure rate, lopsided risk, or it does not transfer.</p>
+          <div class="flex flex-wrap gap-2" data-group="kill">
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Restaurant, bar, or hotel</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Retail storefront (no float)</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Consulting / project shop</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Personal brand or owner is the face</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Credential-gated (owner is the licensed producer)</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">One customer over 25% of revenue</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Amazon FBA / platform-dependent</button>
+            <button type="button" data-trig class="trig-btn trig-kill px-3 py-2 text-xs font-semibold rounded-sm border text-left transition">Dry cleaner</button>
+          </div>
+        </div>
+
+        <!-- Trigger verdict -->
+        <div class="mt-7 pt-5 border-t border-white/10 flex items-center gap-4 flex-wrap">
+          <span id="trig-verdict" style="display:inline-block;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;padding:6px 14px;border-radius:3px;color:#9a9a9a;background:rgba(255,255,255,0.04);">Tap what is true</span>
+          <span id="trig-note" class="text-sm text-white/55 leading-snug">Eight quality signals, minus any deal-breaker.</span>
         </div>
       </div>
     </div>
@@ -329,7 +386,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       })
     );
 
-    // ----- financing type toggle (SBA bank loan vs Codie's seller financing) -----
+    // ----- financing type toggle (SBA bank loan vs seller financing) -----
     let fin: Fin = 'sba';
     const finBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.fin-btn'));
     const FIN_PRESETS: Record<Fin, { down: string; rate: string; term: string; closing: string }> = {
@@ -341,7 +398,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       paintToggle(finBtns, 'fin', fin);
       $('fin-hint').textContent =
         fin === 'seller'
-          ? "Codie's Profit Payback Method: the seller carries the note and the business's profits pay them back. Baseline 10-50% down, 3-10 years, rate often beats the bank, closes fast."
+          ? "The Profit Payback Method: the seller carries the note and the business's profits pay them back. Baseline 10-50% down, 3-10 years, rate often beats the bank, closes fast."
           : 'SBA 7(a) baseline: 10% down, ~11%, 10 years, 3% closing. Most common, but slowest to close (~90 days).';
     }
 
@@ -449,7 +506,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const reinvest = isNaN(reinvestRaw) ? 0 : reinvestRaw;
       $('r-reinvest').textContent = isNaN(reinvestRaw) ? '$0/yr' : usd(reinvest) + '/yr';
 
-      // cash flow + cash on cash + payback (Codie's four tiers)
+      // cash flow + cash on cash + payback (the four tiers)
       const cfEl = $('r-cashflow');
       const cocEl = $('r-coc');
       const paybackEl = $('r-payback');
@@ -549,5 +606,78 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     paintBasis();
     paintRole();
     recompute();
+  </script>
+
+  <script>
+    // ----- The Deal Screen: qualitative business-quality screen -----
+    const TGREEN = '#5cc98a';
+    const TRED = '#e8736b';
+    const TGOLD = '#F4A93C';
+    const TBLUE = '#3271D2';
+
+    const trigBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-trig]'));
+
+    function paintTrig(btn: HTMLButtonElement, on: boolean) {
+      const kill = btn.classList.contains('trig-kill');
+      if (on) {
+        btn.style.backgroundColor = kill ? 'rgba(232,115,107,0.16)' : 'rgba(50,113,210,0.18)';
+        btn.style.borderColor = kill ? TRED : TBLUE;
+        btn.style.color = '#ffffff';
+      } else {
+        btn.style.backgroundColor = 'transparent';
+        btn.style.borderColor = 'rgba(255,255,255,0.2)';
+        btn.style.color = 'rgba(255,255,255,0.7)';
+      }
+    }
+
+    function scoreTriggers() {
+      const onGood = document.querySelectorAll('[data-group="sows"] [data-on="1"], [data-group="brrt"] [data-on="1"]').length;
+      const onKill = document.querySelectorAll('[data-group="kill"] [data-on="1"]').length;
+      const vEl = document.getElementById('trig-verdict') as HTMLElement;
+      const nEl = document.getElementById('trig-note') as HTMLElement;
+
+      if (onKill > 0) {
+        vEl.textContent = 'Walk away';
+        vEl.style.color = TRED;
+        vEl.style.background = 'rgba(232,115,107,0.14)';
+        nEl.textContent = onKill + (onKill === 1 ? ' deal-breaker is' : ' deal-breakers are') + " on the deadly list. The numbers do not matter.";
+        return;
+      }
+
+      let label: string, color: string, note: string;
+      if (onGood >= 7) {
+        label = 'Boring gold';
+        color = TGREEN;
+        note = 'Hits ' + onGood + ' of 8 signals and no deal-breakers. The kind of business worth owning.';
+      } else if (onGood >= 4) {
+        label = 'Workable, dig in';
+        color = TGOLD;
+        note = onGood + ' of 8 signals. Real, but find the gaps before you commit.';
+      } else if (onGood >= 1) {
+        label = 'Weak business';
+        color = TRED;
+        note = 'Only ' + onGood + ' of 8 signals. Boring-good is where the money is. This is thin.';
+      } else {
+        label = 'Tap what is true';
+        color = '#9a9a9a';
+        note = 'Eight quality signals, minus any deal-breaker.';
+      }
+      vEl.textContent = label;
+      vEl.style.color = color;
+      vEl.style.background = 'rgba(255,255,255,0.04)';
+      nEl.textContent = note;
+    }
+
+    trigBtns.forEach((b) => {
+      paintTrig(b, false);
+      b.addEventListener('click', () => {
+        const on = b.dataset.on === '1';
+        b.dataset.on = on ? '0' : '1';
+        paintTrig(b, !on);
+        scoreTriggers();
+      });
+    });
+
+    scoreTriggers();
   </script>
 </BaseLayout>
