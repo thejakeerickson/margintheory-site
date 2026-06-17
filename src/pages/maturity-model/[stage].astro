@@ -114,20 +114,24 @@ const desc = data ? `Your business is at the ${data.name} stage. ${data.tagline}
         <section class="max-w-3xl mx-auto px-6 py-10 border-t border-charcoal/10">
           <h2 class="font-bold text-2xl text-charcoal mb-2">Across your business.</h2>
           <p class="text-charcoal/55 mb-7 max-w-2xl">{data.overview_intro}</p>
-          {data.functions.map((fn) => (
-            <div class="mb-7">
-              <div class="text-xs font-semibold tracking-[0.14em] uppercase text-brand-blue border-b border-charcoal/15 pb-2 mb-1">{fn.name}</div>
-              {fn.departments.map((d) => (
-                <div class={`py-3 ${d.start_here ? 'border-l-[3px] border-brand-blue bg-brand-blue/[0.06] -mx-3 px-3 rounded-r-sm' : 'border-b border-charcoal/10'}`}>
-                  <div class="flex items-center gap-3 flex-wrap">
-                    <span class={`font-semibold ${d.start_here ? 'text-brand-blue' : 'text-charcoal'}`}>{d.name}</span>
-                    {d.start_here && <span class="text-[9px] font-bold tracking-[0.1em] uppercase bg-brand-blue text-white px-1.5 py-0.5 rounded">Start here</span>}
-                  </div>
-                  <div class="text-sm text-charcoal/65 mt-1">{d.constraint}{(d.sources ?? []).map((s) => <span class="text-charcoal/35 italic"> &middot; {s.concept} ({s.book})</span>)}</div>
+          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-7">
+            {data.functions.map((fn) => (
+              <div>
+                <div class="text-[11px] font-semibold tracking-[0.13em] uppercase text-brand-blue border-b border-charcoal/15 pb-2 mb-3">{fn.name}</div>
+                <div class="flex flex-col gap-3">
+                  {fn.departments.map((d) => (
+                    <div class={`rounded-sm p-3.5 ${d.start_here ? 'bg-brand-blue/[0.07] border border-brand-blue/30' : 'bg-white border border-charcoal/10'}`}>
+                      <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                        <span class={`font-bold text-[15px] leading-tight ${d.start_here ? 'text-brand-blue' : 'text-charcoal'}`}>{d.name}</span>
+                        {d.start_here && <span class="text-[8px] font-bold tracking-[0.1em] uppercase bg-brand-blue text-white px-1.5 py-0.5 rounded">Start here</span>}
+                      </div>
+                      <div class="text-[13px] text-charcoal/65 leading-snug">{d.start_here ? d.tell : d.constraint}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </section>
 
         <!-- START HERE -->
