@@ -98,7 +98,7 @@
           "tell": "One slow-paying customer changes your whole month.",
           "constraint": "Cash is lumpy. Some months are flush, some are tight, and one big bill can knock you sideways, because nobody's looking more than a few weeks out.",
           "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash.",
-          "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever. I built the 15 Profit and Cash Flow Drivers Worksheet for businesses at this stage. Run your numbers in it and you'll see in an afternoon which drivers are working against you.",
+          "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever.",
           "sources": [
             {
               "concept": "Gross profit per labor dollar",
@@ -159,8 +159,8 @@
   },
   "graduating": "You'll know you're ready when you've niched down and it's working: better-fit customers, steadier cash, a team that runs without you in every call. The next stage is about giving those good customers something else to buy.",
   "cta": {
-    "headline": "Is the focus paying off?",
-    "body": "You're deciding who to serve and what to cut. Book a call and I'll show you whether your numbers back the bet, and which customers and jobs make you the most money."
+    "headline": "You picked your lane. Let's see if the numbers back it.",
+    "body": "You're deciding who to serve and what to cut. Book a call and I'll show you whether your numbers back the bet, and which customers and jobs carry the best margin."
   },
   "built_on": [
     {
@@ -219,7 +219,7 @@
       "tell": "One slow-paying customer changes your whole month.",
       "constraint": "Cash is lumpy. Some months are flush, some are tight, and one big bill can knock you sideways, because nobody's looking more than a few weeks out.",
       "benchmark": "Healthy here is 10 to 15% pretax profit, with two months of operating expenses sitting in cash.",
-      "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever. I built the 15 Profit and Cash Flow Drivers Worksheet for businesses at this stage. Run your numbers in it and you'll see in an afternoon which drivers are working against you.",
+      "do_this": "Stand up a P&L and a cash flow forecast so you can see the money coming and going weeks ahead. The number that runs this stage is gross profit per labor dollar, what each dollar of payroll earns back. At five to nine people, payroll is your biggest cost and your biggest lever.",
       "sources": [
         {
           "concept": "Gross profit per labor dollar",
