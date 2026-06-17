@@ -20,6 +20,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
       </div>
 
+      <div class="mb-8 border border-white/15 bg-white/[0.02] p-5 md:p-6 rounded-sm">
+        <label for="i-paste" class="block text-sm font-semibold text-white/80 mb-1.5">Paste a listing <span class="text-white/40 font-normal">(optional)</span></label>
+        <p class="text-xs text-white/45 mb-3">Drop in the listing text from BizBuySell or a broker. It pulls the price, SDE, years, and owner role, and pre-taps the screen checks it can confirm. Review and finish below.</p>
+        <textarea id="i-paste" rows="4" placeholder="Paste the business description, asking price, cash flow, years in business, owner involvement..." class="w-full px-4 py-3 bg-white text-charcoal text-sm leading-relaxed rounded-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-blue placeholder:text-charcoal/40"></textarea>
+        <div class="flex items-center gap-3 mt-3 flex-wrap">
+          <button type="button" id="paste-read" class="px-4 py-2.5 text-sm font-semibold rounded-sm border border-brand-blue text-brand-blue hover:bg-white/5 transition">Read it</button>
+          <span id="paste-summary" class="text-xs text-white/55"></span>
+        </div>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
         <!-- INPUTS -->
         <div class="border border-white/15 bg-white/[0.02] p-6 md:p-7 rounded-sm">
@@ -716,6 +726,90 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Object.keys(MAP[group]).forEach((k) => {
           if (qp.get(k) === '1') tap(group, MAP[group][k]);
         });
+      });
+    }
+  </script>
+
+  <script>
+    // ----- paste a listing: heuristic parse then pre-fill -----
+    const TRIG = {
+      stale: { g: 'sows', i: 0 }, old: { g: 'sows', i: 1 }, weak: { g: 'sows', i: 2 }, simple: { g: 'sows', i: 3 },
+      recurring: { g: 'brrt', i: 0 }, recession: { g: 'brrt', i: 1 }, raise: { g: 'brrt', i: 2 }, tech: { g: 'brrt', i: 3 },
+      restaurant: { g: 'kill', i: 0 }, retail: { g: 'kill', i: 1 }, consulting: { g: 'kill', i: 2 }, personalbrand: { g: 'kill', i: 3 }, credential: { g: 'kill', i: 4 }, concentration: { g: 'kill', i: 5 }, fba: { g: 'kill', i: 6 }, drycleaner: { g: 'kill', i: 7 },
+    };
+    const KILL_KW = {
+      restaurant: /restaurant|\bbar\b|\bpub\b|tavern|\bcafe\b|bistro|eatery|diner|\bgrill\b|brewery|winery|\bhotel\b|biergarten|food truck|pizza|pizzeria/i,
+      retail: /\bretail\b|boutique|storefront|gift shop|apparel/i,
+      consulting: /consult(?:ing|ant|ancy)|project-based|creative agency|marketing agency/i,
+      personalbrand: /personal brand|influencer|\bcoach(?:ing)?\b|content creator/i,
+      credential: /\bmedical\b|\bdental\b|dentist|\bclinic\b|physician|chiropract|physical therapy|acupunctur|law firm|attorney|\bcpa\b|accounting firm|surveying|surveyor|optometr|veterinar|pharmacy|hormone|wellness clinic|med(?:ical)? spa/i,
+      fba: /\bfba\b|amazon (?:seller|store|business)|fulfilled by amazon/i,
+      drycleaner: /dry clean/i,
+    };
+    const GREEN_KW = {
+      recession: /plumb|hvac|heating|cooling|electric|auto repair|mechanic|\bwaste\b|junk removal|environmental|pest control|laundromat|laundry|car wash|\bpool\b|water treatment|storage|maintenance|janitor|cleaning|locksmith|funeral|home care|senior care|elder care|assisted living|child ?care|day ?care|bookkeep/i,
+      simple: /laundromat|laundry|car wash|vending|storage|\broutes?\b|\blawn\b|landscap|mowing|pool service|cleaning|janitor|parking lot|striping/i,
+      recurring: /\broutes?\b|subscription|membership|recurring|\bcontract(?:s|ed)?\b|retainer|monthly (?:fee|billing|revenue)|mailbox|repeat customers|laundromat|storage|pest control|pool service|hoa management|managed services|service agreement/i,
+    };
+
+    const setF = (id, val) => { const el = document.getElementById(id); if (el) { el.value = (val == null ? '' : String(val)); el.dispatchEvent(new Event('input', { bubbles: true })); } };
+    const tapName = (name) => { const t = TRIG[name]; if (!t) return; const b = document.querySelectorAll('[data-group="' + t.g + '"] [data-trig]')[t.i]; if (b && b.dataset.on !== '1') b.click(); };
+    const untapAll = () => { document.querySelectorAll('[data-trig]').forEach((b) => { if (b.dataset.on === '1') b.click(); }); };
+    const money = (re, text) => { const m = text.match(re); if (!m) return null; const n = parseInt(m[1].replace(/[^0-9]/g, ''), 10); return isNaN(n) ? null : n; };
+
+    function readListing(raw) {
+      const text = raw.replace(/\s+/g, ' ').trim();
+      const low = text.toLowerCase();
+      const got = { taps: [], read: [] };
+
+      const price = money(/asking price[^$0-9]{0,14}\$?\s*([0-9][0-9,]{3,})/i, text) || money(/\bprice[^$0-9]{0,14}\$?\s*([0-9][0-9,]{3,})/i, text);
+      const sde = money(/(?:cash flow|sde|seller'?s? discretionary earnings|ebitda)[^$0-9]{0,18}\$?\s*([0-9][0-9,]{3,})/i, text);
+      if (price) { got.price = price; got.read.push('price $' + price.toLocaleString('en-US')); }
+      if (sde) { got.sde = sde; got.read.push('SDE $' + sde.toLocaleString('en-US')); }
+
+      let age = null;
+      const since = low.match(/(?:established|since|founded|operating since|in business since)[^0-9]{0,8}((?:19|20)\d{2})/i);
+      if (since) age = (new Date()).getFullYear() - parseInt(since[1], 10);
+      const yrs = low.match(/(\d{1,3})\+?\s*years?(?:\s*(?:in business|of operation|operating|established|of operations))?/i);
+      if (age == null && yrs) age = parseInt(yrs[1], 10);
+      const oldQualifies = (age != null && age >= 5);
+
+      const fullAbsentee = /\babsentee\b/i.test(low) && !/semi[- ]?absentee/i.test(low);
+      const managerRun = /manager in place|management in place|\bgm in place\b|fully managed|runs without (?:the )?owner|operator in place/i.test(low);
+      if (fullAbsentee || managerRun) { got.role = 'manager'; got.read.push('manager in place'); }
+      else { got.op = 100000; }
+
+      let kill = null;
+      for (const k in KILL_KW) { if (KILL_KW[k].test(low)) { kill = k; break; } }
+      if (kill) { got.taps.push(kill); got.read.push('deal-breaker: ' + kill); }
+      else { if (oldQualifies) got.taps.push('old'); for (const g in GREEN_KW) { if (GREEN_KW[g].test(low)) got.taps.push(g); } }
+
+      const firstLine = raw.split('\n').map((s) => s.trim()).filter(Boolean)[0];
+      if (firstLine && firstLine.length <= 90 && !/^\$/.test(firstLine) && !/^\d/.test(firstLine)) got.name = firstLine;
+
+      return got;
+    }
+
+    const pasteBtn = document.getElementById('paste-read');
+    if (pasteBtn) {
+      pasteBtn.addEventListener('click', () => {
+        const raw = (document.getElementById('i-paste').value || '').trim();
+        const sumEl = document.getElementById('paste-summary');
+        if (!raw) { if (sumEl) sumEl.textContent = 'Paste a listing first.'; return; }
+        untapAll();
+        const owner = document.querySelector('[data-role="owner"]'); if (owner) owner.click();
+        const g = readListing(raw);
+        setF('i-name', g.name || '');
+        setF('i-price', g.price || '');
+        setF('i-sde', g.sde || '');
+        if (g.role === 'manager') { const m = document.querySelector('[data-role="manager"]'); if (m) m.click(); }
+        else { setF('i-operator', g.op || ''); }
+        Array.from(new Set(g.taps)).forEach((n) => tapName(n));
+        const checks = g.taps.filter((n) => TRIG[n] && TRIG[n].g !== 'kill').length;
+        if (sumEl) {
+          if (!g.read.length && !checks) sumEl.textContent = 'Could not find a price or SDE in that text. Fill the fields below by hand.';
+          else sumEl.textContent = 'Read ' + (g.read.length ? g.read.join(', ') : 'no numbers') + (checks ? (', ' + checks + ' check' + (checks === 1 ? '' : 's') + ' tapped') : '') + '. Review and finish below.';
+        }
       });
     }
   </script>
