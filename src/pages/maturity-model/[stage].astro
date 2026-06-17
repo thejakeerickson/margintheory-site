@@ -138,25 +138,26 @@ const desc = data ? `Your business is at the ${data.name} stage. ${data.tagline}
         <section class="max-w-3xl mx-auto px-6 py-10 border-t border-charcoal/10">
           <h2 class="font-bold text-2xl text-charcoal mb-2">Start here.</h2>
           <p class="text-charcoal/55 mb-8 max-w-2xl">The one part breaking each engine. Get these right and the rest of the stage gets easier.</p>
-          {startHere.map((d) => (
-            <div class="mb-9">
-              <div class="flex items-baseline gap-3 mb-1 flex-wrap">
-                <span class="font-bold text-xl text-charcoal">{d.name}</span>
+          {startHere.map((d, i) => (
+            <div class={`py-7 ${i > 0 ? 'border-t border-charcoal/12' : ''}`}>
+              <div class="flex items-baseline gap-3 flex-wrap mb-2.5">
+                <span class="text-[2.5rem] font-extrabold leading-none tracking-tight text-brand-blue">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-lg font-bold text-charcoal">{d.name}</span>
                 <span class="text-[10px] font-semibold tracking-[0.12em] uppercase text-mid-gray">{d.function}</span>
               </div>
-              <div class="italic text-charcoal/55 text-lg mb-4">{d.tell}</div>
-              <div class="text-[10px] font-semibold tracking-[0.12em] uppercase text-mid-gray mb-1">The constraint</div>
-              <p class="text-charcoal/80 leading-relaxed mb-4 max-w-2xl">{d.constraint}</p>
+              <p class="text-xl md:text-2xl font-bold leading-tight tracking-tight text-charcoal mb-4 max-w-[32ch]">{d.tell}</p>
+              <div class="text-[10px] font-semibold tracking-[0.12em] uppercase text-mid-gray mb-1">The problem</div>
+              <p class="text-[15px] text-charcoal/65 leading-relaxed mb-4 max-w-2xl">{d.constraint}</p>
               {d.benchmark && (
-                <div class="border border-charcoal/10 border-l-[3px] border-l-brand-blue bg-brand-blue/[0.04] px-4 py-3 mb-4 max-w-2xl">
+                <div class="border border-charcoal/10 bg-white px-4 py-3 mb-4 max-w-2xl rounded-sm">
                   <div class="text-[10px] font-semibold tracking-[0.13em] uppercase text-brand-blue mb-1">Benchmark</div>
-                  <p class="text-charcoal/80 leading-relaxed text-[15px]">{d.benchmark}</p>
+                  <p class="text-charcoal/80 leading-snug text-[14px]">{d.benchmark}</p>
                 </div>
               )}
-              <div class="text-[10px] font-semibold tracking-[0.12em] uppercase text-brand-blue mb-1">Do this</div>
-              <p class="text-charcoal/85 leading-relaxed mb-4 max-w-2xl">{d.do_this}</p>
+              <div class="text-[10px] font-semibold tracking-[0.12em] uppercase text-brand-blue mb-1.5">Do this</div>
+              <p class="text-[15px] text-charcoal/85 leading-relaxed bg-brand-blue/[0.05] border-l-[3px] border-brand-blue px-4 py-3 max-w-2xl rounded-r-sm">{d.do_this}</p>
               {(d.sources ?? []).map((s) => (
-                <div class="inline-flex items-baseline gap-2 bg-brand-blue/[0.08] border-l-2 border-brand-blue px-3 py-1.5 mr-2 mb-2 rounded-r-sm">
+                <div class="inline-flex items-baseline gap-2 bg-brand-blue/[0.08] border-l-2 border-brand-blue px-3 py-1.5 mt-3 mr-2 rounded-r-sm">
                   <span class="text-[9px] font-bold tracking-[0.12em] uppercase text-brand-blue">Source</span>
                   <span class="text-xs text-charcoal/70"><b class="text-charcoal font-semibold">{s.concept}</b> &middot; <i>{s.book}</i>, {s.author}</span>
                 </div>
@@ -169,22 +170,21 @@ const desc = data ? `Your business is at the ${data.name} stage. ${data.tagline}
         <section class="max-w-3xl mx-auto px-6 py-10 border-t border-charcoal/10">
           <h2 class="font-bold text-2xl text-charcoal mb-2">The rest of your business.</h2>
           <p class="text-charcoal/55 mb-7 max-w-2xl">Not the three to start with, but they're in play at this stage. Here's the move on each, for when you're ready.</p>
-          {data.functions.map((fn) => {
-            const r = fn.departments.filter((d) => !d.start_here);
-            return r.length ? (
-              <div class="mb-6">
-                <div class="text-xs font-semibold tracking-[0.14em] uppercase text-brand-blue/80 mb-3">{fn.name}</div>
-                {r.map((d) => (
-                  <div class="mb-5">
-                    <div class="font-semibold text-charcoal">{d.name}</div>
-                    <div class="italic text-charcoal/55 text-[15px] mb-1">{d.constraint}</div>
-                    {d.do_this && <p class="text-charcoal/75 text-sm leading-relaxed max-w-2xl">{d.do_this}</p>}
-                    {(d.sources ?? []).map((s) => <span class="text-xs text-charcoal/40 italic mr-2">{s.concept} &middot; {s.book}.</span>)}
+          <div class="grid sm:grid-cols-2 gap-x-8 gap-y-6">
+            {data.functions.flatMap((fn) =>
+              fn.departments.filter((d) => !d.start_here).map((d) => (
+                <div class="border-t border-charcoal/10 pt-3">
+                  <div class="flex items-baseline gap-2 flex-wrap mb-1">
+                    <span class="font-bold text-[15px] text-charcoal">{d.name}</span>
+                    <span class="text-[9px] font-semibold tracking-[0.1em] uppercase text-mid-gray">{fn.name}</span>
                   </div>
-                ))}
-              </div>
-            ) : null;
-          })}
+                  <div class="italic text-charcoal/55 text-[13px] mb-1">{d.constraint}</div>
+                  {d.do_this && <p class="text-charcoal/75 text-[13px] leading-relaxed">{d.do_this}</p>}
+                  {(d.sources ?? []).map((s) => <div class="text-[11px] text-charcoal/40 italic mt-1">{s.concept} &middot; {s.book}</div>)}
+                </div>
+              ))
+            )}
+          </div>
         </section>
 
         <!-- CTA + BUILT ON -->
