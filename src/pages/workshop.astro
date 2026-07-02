@@ -1,0 +1,292 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const SITE_URL = 'https://margintheory.co';
+
+/**
+ * COHORT CONFIG — the only block that changes per workshop.
+ * The own-a-machine-workshop skill updates these values each cohort.
+ * date: null puts the page in waitlist mode (register to get the date first).
+ */
+const COHORT = {
+  date: null as string | null, // e.g. 'Thursday, July 24'
+  time: '',                    // e.g. '12:00 PM Central'
+  seats: null as number | null, // e.g. 25
+  closeDate: '',               // e.g. 'Tuesday, July 22'
+};
+
+const isLive = Boolean(COHORT.date);
+
+const pageSchema = {
+  '@type': 'WebPage',
+  '@id': `${SITE_URL}/workshop#webpage`,
+  name: 'Own a Machine, Not a Job — Free Workshop',
+  description:
+    'A free 45-minute workshop for business owners on the 16 parts of a business that drive revenue, profit, and cash flow.',
+};
+---
+<BaseLayout
+  title="Own a Machine, Not a Job. Free workshop. | Margin Theory"
+  description="A free 45-minute workshop for business owners. The 16 parts of your business that drive revenue, profit, and cash flow, and how to get them working so the business pays you."
+  extraSchemas={[pageSchema]}
+  noNav={true}
+  conversionPage={true}
+  minimalFooter={true}
+>
+  <div class="max-w-3xl mx-auto px-6 pt-8">
+    <a href="/" class="font-bold text-lg tracking-tight text-white">
+      Margin Theory
+    </a>
+  </div>
+
+  <!-- HERO + FORM -->
+  <section>
+    <div class="max-w-2xl mx-auto px-6 pt-12 pb-16 md:pt-20">
+      <p class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase text-center mb-4">
+        Free live workshop
+      </p>
+      <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-center mb-5 text-white leading-[1.15]">
+        Own a Machine. <span class="italic text-brand-blue">Not a Job.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-white/85 text-center mb-6 leading-relaxed">
+        A free 45-minute workshop for business owners. The 16 parts of your business that drive revenue, profit, and cash flow, and how to get them working so the business pays you instead of owning you.
+      </p>
+
+      {isLive ? (
+        <p class="text-center text-white mb-10 text-base md:text-lg">
+          <span class="font-bold">{COHORT.date}</span>
+          {COHORT.time && <span> at <span class="font-bold">{COHORT.time}</span></span>}
+          <span class="text-white/60"> · Live on Zoom</span>
+          {COHORT.seats && <span class="text-white/60"> · Capped at {COHORT.seats} owners</span>}
+          {COHORT.closeDate && (
+            <span class="block text-sm text-white/60 mt-2">
+              Registration closes {COHORT.closeDate} or when the seats fill.
+            </span>
+          )}
+        </p>
+      ) : (
+        <p class="text-center text-white/70 mb-10 text-base">
+          The next session is being scheduled. Register and you'll get the date before anyone else.
+        </p>
+      )}
+
+      <div id="ws-form-card" class="border border-white/15 bg-white/[0.02] p-6 md:p-8">
+        <form id="ws-form" class="space-y-3" novalidate>
+          <input
+            id="ws-name"
+            type="text"
+            name="first_name"
+            autocomplete="given-name"
+            required
+            placeholder="First name"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:border-brand-blue placeholder:text-charcoal/40"
+          />
+          <input
+            id="ws-email"
+            type="email"
+            name="email"
+            inputmode="email"
+            autocomplete="email"
+            required
+            placeholder="you@yourcompany.com"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:border-brand-blue placeholder:text-charcoal/40"
+          />
+          <input
+            id="ws-phone"
+            type="tel"
+            name="phone"
+            inputmode="tel"
+            autocomplete="tel"
+            placeholder="Mobile (optional, for a text reminder)"
+            class="w-full px-4 py-3 bg-white text-charcoal text-base rounded-sm border border-transparent focus:outline-none focus:border-brand-blue placeholder:text-charcoal/40"
+          />
+          <button
+            id="ws-submit"
+            type="submit"
+            class="w-full inline-flex items-center justify-center px-6 py-4 bg-brand-blue text-white text-lg font-bold rounded-sm hover:opacity-90 transition shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isLive ? 'Save my seat' : 'Get the date first'}
+          </button>
+          <p id="ws-error" class="text-sm text-red-300 hidden" role="alert"></p>
+          <p class="text-xs text-white/50 text-center pt-2">
+            You'll also get Profit Tactics, the Margin Theory newsletter. Unsubscribe anytime.
+          </p>
+        </form>
+      </div>
+
+      <!-- Success state -->
+      <div id="ws-success" class="hidden border border-brand-blue/40 bg-brand-blue/[0.08] p-6 md:p-8">
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-3">
+          {isLive ? "You're in." : "You're on the list."}
+        </h2>
+        <p class="text-white/85 text-base leading-relaxed">
+          {isLive
+            ? 'Check your inbox for the confirmation. Your join link and a calendar invite are in it.'
+            : "You'll get the date and your join link the moment the next session locks. Watch your inbox."}
+        </p>
+        <p class="text-xs text-white/50 pt-4">
+          If the email lands in promotions, drag it to primary so you don't miss the reminders.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE COVER -->
+  <section class="border-t border-white/10">
+    <div class="max-w-2xl mx-auto px-6 py-14">
+      <h2 class="text-2xl md:text-3xl font-semibold text-white mb-8 tracking-tight">
+        What we cover in 45 minutes
+      </h2>
+      <div class="space-y-6">
+        <div class="flex gap-4">
+          <span class="text-brand-blue font-bold text-lg leading-7">01</span>
+          <div>
+            <h3 class="text-white font-semibold text-lg mb-1">Why businesses fail</h3>
+            <p class="text-white/70 leading-relaxed">
+              Half of businesses fail by year five, and the reason is money. We'll look at the three sources of it and the only one that builds a business worth owning.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-brand-blue font-bold text-lg leading-7">02</span>
+          <div>
+            <h3 class="text-white font-semibold text-lg mb-1">Machine vs. job</h3>
+            <p class="text-white/70 leading-relaxed">
+              The difference between a business that runs as a money-making machine and a stressful, low-paying job you happen to own.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-brand-blue font-bold text-lg leading-7">03</span>
+          <div>
+            <h3 class="text-white font-semibold text-lg mb-1">The 16 parts of your business</h3>
+            <p class="text-white/70 leading-relaxed">
+              The 16 parts that drive revenue, profit, and cash flow. Where the hidden money sits, and what happens when you improve two or three parts at once.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-l-2 border-brand-blue bg-white/[0.03] p-5 mt-10">
+        <p class="text-white/85 leading-relaxed">
+          One of my clients lost $22,000 on $1.4 million in sales last year. This year he's on track to clear $74,000 in profit. The workshop walks through how that turnaround happened.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU LEAVE WITH -->
+  <section class="border-t border-white/10">
+    <div class="max-w-2xl mx-auto px-6 py-14">
+      <h2 class="text-2xl md:text-3xl font-semibold text-white mb-6 tracking-tight">
+        What you leave with
+      </h2>
+      <ul class="space-y-3 text-white/80 leading-relaxed">
+        <li class="flex gap-3"><span class="text-brand-blue font-bold">→</span> The 16-Parts guide. Every part defined in plain English, with the formulas.</li>
+        <li class="flex gap-3"><span class="text-brand-blue font-bold">→</span> A way to put a dollar number on the biggest problem in your business.</li>
+        <li class="flex gap-3"><span class="text-brand-blue font-bold">→</span> The recording, if you can't make it live. Register anyway.</li>
+      </ul>
+      <p class="text-white/60 text-sm mt-8">
+        45 minutes plus live Q&amp;A · On Zoom · Free · Recorded
+      </p>
+    </div>
+  </section>
+
+  <!-- HOST -->
+  <section class="border-t border-white/10">
+    <div class="max-w-2xl mx-auto px-6 py-14">
+      <div class="flex items-start gap-5">
+        <img
+          src="/Jake.png"
+          alt="Jake Erickson"
+          class="w-20 h-20 rounded-full object-cover border border-white/15"
+          loading="lazy"
+        />
+        <div>
+          <h2 class="text-xl font-semibold text-white mb-2">Your host</h2>
+          <p class="text-white/75 leading-relaxed">
+            I'm Jake Erickson, an accountant and business owner. I run Margin Theory, a fractional CFO practice for owner-operator businesses doing $1M to $20M. My work is turning businesses into money-making machines, and this workshop is the framework I use to do it.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a
+          href="#ws-form-card"
+          class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white text-lg font-bold rounded-sm hover:opacity-90 transition shadow-lg"
+        >
+          {isLive ? 'Save my seat' : 'Get the date first'}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('ws-form') as HTMLFormElement;
+    const nameInput = document.getElementById('ws-name') as HTMLInputElement;
+    const emailInput = document.getElementById('ws-email') as HTMLInputElement;
+    const phoneInput = document.getElementById('ws-phone') as HTMLInputElement;
+    const submit = document.getElementById('ws-submit') as HTMLButtonElement;
+    const error = document.getElementById('ws-error') as HTMLParagraphElement;
+    const card = document.getElementById('ws-form-card') as HTMLDivElement;
+    const success = document.getElementById('ws-success') as HTMLDivElement;
+
+    const submitLabel = submit?.textContent || 'Save my seat';
+
+    function showError(msg: string) {
+      error.textContent = msg;
+      error.classList.remove('hidden');
+    }
+    function clearError() {
+      error.textContent = '';
+      error.classList.add('hidden');
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      const first_name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!first_name) {
+        showError('Please enter your first name.');
+        nameInput.focus();
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('Please enter a valid email address.');
+        emailInput.focus();
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Saving...';
+
+      try {
+        const res = await fetch('/api/workshop-register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, first_name, phone }),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          showError(data?.error || 'Something went wrong. Try again or email jake@margintheory.co.');
+          submit.disabled = false;
+          submit.textContent = submitLabel;
+          return;
+        }
+
+        card.classList.add('hidden');
+        success.classList.remove('hidden');
+        success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        showError('Network error. Check your connection and try again.');
+        submit.disabled = false;
+        submit.textContent = submitLabel;
+      }
+    });
+  </script>
+</BaseLayout>
