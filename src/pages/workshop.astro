@@ -9,10 +9,10 @@ const SITE_URL = 'https://margintheory.co';
  * date: null puts the page in waitlist mode (register to get the date first).
  */
 const COHORT = {
-  date: null as string | null, // e.g. 'Thursday, July 24'
-  time: '',                    // e.g. '12:00 PM Central'
-  seats: null as number | null, // e.g. 25
-  closeDate: '',               // e.g. 'Tuesday, July 22'
+  date: 'Thursday, August 13' as string | null, // e.g. 'Thursday, July 24'
+  time: '11:00 AM Central',    // e.g. '12:00 PM Central'
+  seats: 10 as number | null,  // e.g. 25
+  closeDate: 'Tuesday, August 11', // e.g. 'Tuesday, July 22'
 };
 
 const isLive = Boolean(COHORT.date);
@@ -56,8 +56,8 @@ const pageSchema = {
         <p class="text-center text-white mb-10 text-base md:text-lg">
           <span class="font-bold">{COHORT.date}</span>
           {COHORT.time && <span> at <span class="font-bold">{COHORT.time}</span></span>}
-          <span class="text-white/60"> · Live on Zoom</span>
-          {COHORT.seats && <span class="text-white/60"> · Capped at {COHORT.seats} owners</span>}
+          <span class="text-white/60"> | Live on Zoom</span>
+          {COHORT.seats && <span class="text-white/60"> | Capped at {COHORT.seats} owners</span>}
           {COHORT.closeDate && (
             <span class="block text-sm text-white/60 mt-2">
               Registration closes {COHORT.closeDate} or when the seats fill.
@@ -187,7 +187,7 @@ const pageSchema = {
         <li class="flex gap-3"><span class="text-brand-blue font-bold">→</span> The recording, if you can't make it live. Register anyway.</li>
       </ul>
       <p class="text-white/60 text-sm mt-8">
-        45 minutes plus live Q&amp;A · On Zoom · Free · Recorded
+        45 minutes plus live Q&amp;A | On Zoom | Free | Recorded
       </p>
     </div>
   </section>
