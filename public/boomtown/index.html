@@ -134,6 +134,35 @@ body{
 .opt .t{font-weight:700} .opt .d{font-size:11px;color:var(--tx2);margin-top:2px}
 .opt .amt{font-variant-numeric:tabular-nums;font-weight:750;white-space:nowrap}
 .win{text-align:center} .win h2{font-size:30px;margin:10px 0}
+.modal.wide{max-width:920px}
+.panes{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+@media(max-width:840px){.panes{grid-template-columns:1fr}}
+.stmt{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px}
+.stmt h4{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);
+  font-weight:800;margin:12px 0 5px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.stmt h4:first-child{margin-top:0}
+.stmt .ln{display:flex;justify-content:space-between;font-size:12px;padding:1.5px 0}
+.stmt .ln span:last-child{font-variant-numeric:tabular-nums;font-weight:650}
+.stmt .ln.mut span{color:var(--tx2)}
+.bigcash{display:flex;justify-content:space-between;align-items:baseline;
+  margin:12px 0 6px;padding-top:10px;border-top:1px solid var(--line)}
+.bigcash b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.bigcash i{font-size:30px;font-weight:850;font-style:normal;font-variant-numeric:tabular-nums}
+.esc{margin:10px 0 4px}
+.esc .bar{height:9px;border-radius:5px;background:#2A2A26;overflow:hidden;margin:5px 0 3px}
+.esc .bar i{display:block;height:100%;background:var(--good);border-radius:5px;transition:width .4s}
+.esc .cap{display:flex;justify-content:space-between;font-size:10px;color:var(--tx2)}
+.chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:4px}
+.char{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px;
+  cursor:pointer;text-align:left;color:var(--tx);font-family:inherit;width:100%}
+.char:hover{border-color:var(--warn)}
+.char .cn{font-weight:800;font-size:14px}
+.char .cm{font-size:11px;color:var(--tx2);margin:3px 0 7px;font-variant-numeric:tabular-nums}
+.char .ca{font-size:11px;font-weight:750;color:var(--warn)}
+.char .cw{font-size:10px;color:var(--tx3);margin-top:4px;line-height:1.35}
+.abil{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.abil i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  background:#3A3320;color:var(--warn);border-radius:4px;padding:2px 6px}
 .badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
   padding:2px 6px;border-radius:4px;background:#2A2A26;color:var(--tx2)}
 .badge.ess{background:#123B2E;color:var(--good)}
@@ -162,12 +191,10 @@ body{
   1.25x coverage. Racing there on debt you cannot service does not count.</p>
   <div class="setuplbl">Players</div>
   <div class="pick" id="pick"></div>
-  <div class="setuplbl">Goal</div>
-  <div class="pick goals" id="goalpick"></div>
   <div class="setuplbl">Mode</div>
   <div class="pick goals" id="modepick"></div>
   <button class="btn" onclick="startGame()">Start Game</button>
-  <p style="margin-top:18px;font-size:11px;color:var(--tx3)" id="modehint">Everyone plays. Pass the laptop when the highlighted player changes.</p>
+  <p style="margin-top:18px;font-size:11px;color:var(--tx3)">Pick 1 player to play alone. Pick 2+ with Pass &amp; Play to share one screen.</p>
 </div>
 
 <!-- ============ GAME ============ -->
@@ -277,6 +304,34 @@ const BIZ = {
   ]
 };
 
+/* ---------------- SMALL DEALS ----------------
+   Cashflow's best structural idea and the one I left out. At every Opportunity you
+   choose Small or Big. Small deals are the on-ramp: a few thousand down, modest
+   income, and the only thing you can actually afford while the job still owns you.
+   They are honest numbers too. Nobody pays $2,500 for quality of earnings on a
+   vending route, so there is no lie to uncover and no diligence to run.
+   They also do not claim a board space, so the square stays open for a real deal. */
+const SMALL_PROP = [
+  {n:"Single Condo Unit",       price:23000, noi:305, ess:true},
+  {n:"Six Storage Units",       price:14000, noi:205, ess:true},
+  {n:"Billboard Easement",      price: 9000, noi:128, ess:false},
+  {n:"Parking Row, 6 Spaces",   price:16000, noi:232, ess:true},
+  {n:"Half a Duplex",           price:26000, noi:342, ess:true},
+  {n:"Small Seller Note",       price:11000, noi:168, ess:true},
+  {n:"Garage Bay, Leased Out",  price:12500, noi:181, ess:true},
+  {n:"Lot Behind the Shops",    price: 8000, noi:104, ess:false}
+];
+const SMALL_BIZ = [
+  {n:"Vending Route, 8 Machines", sde:420, ess:true},
+  {n:"Three ATM Placements",      sde:310, ess:true},
+  {n:"Laundry Card Machines",     sde:380, ess:true},
+  {n:"One Food Cart",             sde:560, ess:false},
+  {n:"Equipment Leased Out",      sde:340, ess:true},
+  {n:"Mobile Detailing Van",      sde:490, ess:false},
+  {n:"Two Claw Machines",         sde:180, ess:false},
+  {n:"Firewood & Ice Stand",      sde:260, ess:false}
+];
+
 /* Off-market wildcard deals. Cheaper than listed, but the numbers are rougher. */
 const OFFMARKET = [
   {n:"Owner Called Back",   d:"ot", kind:"biz",  disc:.82},
@@ -289,25 +344,49 @@ const OFFMARKET = [
   {n:"Partner Buyout Gone Bad",d:"dt",kind:"prop",disc:.86}
 ];
 
+/* Doodads are a SHARE of what you earn, never a flat number. A $5,600 furnace is
+   an inconvenience to a Doctor and the end of the game for a Janitor, and a game
+   where the dice decide that is not teaching anything. `m` is a multiple of your
+   monthly income, so the sting lands the same at every income level. */
 const DOODADS = [
-  {t:"New truck you didn't need",  c:4200},
-  {t:"Kitchen remodel overrun",    c:6800},
-  {t:"Vacation on the credit card",c:3100},
-  {t:"Kid's braces",               c:2400},
-  {t:"HVAC died at the house",     c:5600},
-  {t:"Boat. You bought a boat.",   c:9500},
-  {t:"Vet bill",                   c:1800},
-  {t:"Wedding you're in",          c:2900}
+  {t:"Cracked your phone screen. Again.",           m:0.22},
+  {t:"Two new tires, and the alignment",             m:0.55},
+  {t:"Dentist, and the insurance didn't cover it",   m:0.60},
+  {t:"School trip you weren't going to say no to",   m:0.30},
+  {t:"Water heater let go overnight",                m:0.95},
+  {t:"Speeding ticket plus the class",               m:0.28},
+  {t:"Vet bill",                                     m:0.45},
+  {t:"You're in the wedding. Suit, flight, gift.",   m:0.75},
+  {t:"Laptop died mid-sentence",                     m:0.50},
+  {t:"A weekend you couldn't talk yourself out of",  m:0.85},
+  {t:"Furnace, in February",                         m:1.20},
+  {t:"Deductible after a parking-lot fender bender", m:0.70},
+  {t:"Impulse buy you already regret",               m:0.40},
+  {t:"Brakes, rotors, and a diagnostic fee",         m:0.65}
 ];
 
 const LIFE = [
-  {t:"New baby",           a:1, r:4, c:3000, d:"Congratulations. One attention slot is gone for 4 turns."},
-  {t:"Parent needs care",  a:1, r:3, c:2000, d:"You're driving to appointments. One slot gone for 3 turns."},
-  {t:"Back surgery",       a:1, r:3, c:4500, d:"Six weeks off your feet. One slot gone for 3 turns."},
-  {t:"Moving house",       a:1, r:2, c:5000, d:"Two turns of your attention, gone."},
-  {t:"Second kid",         a:1, r:4, c:3500, d:"Another slot gone for 4 turns."},
-  {t:"Jury duty + flu",    a:1, r:2, c:600,  d:"Bad month. One slot gone for 2 turns."}
+  {t:"New baby",          a:1, r:4, m:1.30, kid:true,
+   d:"Congratulations. One attention slot gone for 4 turns, and a permanent new expense."},
+  {t:"Parent needs care", a:1, r:3, m:0.90,
+   d:"You're driving to appointments. One slot gone for 3 turns."},
+  {t:"Back surgery",      a:1, r:3, m:1.60,
+   d:"Six weeks off your feet. One slot gone for 3 turns."},
+  {t:"Moving house",      a:1, r:2, m:1.10,
+   d:"Two turns of your attention, gone."},
+  {t:"Second kid",        a:1, r:4, m:1.40, kid:true,
+   d:"Another slot gone for 4 turns, and another permanent expense."},
+  {t:"Jury duty and the flu, same month", a:1, r:2, m:0.25,
+   d:"Bad month. One slot gone for 2 turns."}
 ];
+
+/* What a hit costs: a share of everything coming in, so it lands the same whether
+   you clear $520 a month or $13,200. */
+function hitCost(p, mult){
+  const m = income(p);
+  const base = Math.max(1200, (p.escaped?0:m.salary) + Math.max(0,m.passive) + (m.hustle||0));
+  return Math.round(base * mult);
+}
 
 /* ---------- MARKET REGIMES ----------
    Exactly one is active at all times and it is always visible on the board.
@@ -389,22 +468,55 @@ const CORNERS = {
    expenses scale with income. High salary is not the same thing as free cash.
    Starting cash = one month's cash flow + savings. That is ALL you get, which is
    why the first deal is genuinely out of reach and the bank looks tempting. */
+/* The worse the paycheck, the better the edge you start with. The Janitor clears
+   $520 a month and walks in with Deal Flow. The Doctor clears $3,550 and walks in
+   with a raise he does not need. Pick your poison. */
 const PROFESSIONS = [
-  {n:"Janitor",          sal:1600, tax:280,  home:330,  car:60,  cc:60,  ret:50, oth:300,  sav:560,  ch:70},
-  {n:"Truck Driver",     sal:2500, tax:460,  home:400,  car:80,  cc:60,  ret:50, oth:570,  sav:700,  ch:140},
-  {n:"Police Officer",   sal:3000, tax:580,  home:700,  car:100, cc:60,  ret:50, oth:680,  sav:520,  ch:180},
-  {n:"Nurse",            sal:3100, tax:600,  home:630,  car:110, cc:80,  ret:50, oth:700,  sav:720,  ch:200},
-  {n:"Teacher",          sal:3300, tax:630,  home:700,  car:120, cc:90,  ret:50, oth:760,  sav:400,  ch:180},
-  {n:"Mechanic",         sal:2600, tax:490,  home:450,  car:90,  cc:70,  ret:50, oth:600,  sav:660,  ch:150},
-  {n:"Business Manager", sal:4600, tax:910,  home:700,  car:300, cc:270, ret:50, oth:1200, sav:400,  ch:240},
-  {n:"Engineer",         sal:4900, tax:1050, home:1330, car:380, cc:270, ret:50, oth:1090, sav:400,  ch:280},
-  {n:"Airline Pilot",    sal:9500, tax:2350, home:1330, car:550, cc:280, ret:50, oth:2210, sav:400,  ch:480},
-  {n:"Lawyer",           sal:7500, tax:1830, home:1900, car:380, cc:270, ret:50, oth:2100, sav:400,  ch:380},
-  {n:"Doctor",           sal:13200,tax:3420, home:1900, car:750, cc:380, ret:50, oth:2880, sav:400,  ch:640}
+  {n:"Janitor",          sal:1600, tax:280,  home:330,  car:60,  cc:60,  ret:50, oth:300,  sav:560,  ch:70,
+   abil:"dealflow", why:"You talk to everyone in every building on your route. You hear about things first."},
+  {n:"Truck Driver",     sal:2500, tax:460,  home:400,  car:80,  cc:60,  ret:50, oth:570,  sav:700,  ch:140,
+   abil:"dealflow", why:"You drive past four hundred small businesses a week and you notice which ones are tired."},
+  {n:"Mechanic",         sal:2600, tax:490,  home:450,  car:90,  cc:70,  ret:50, oth:600,  sav:660,  ch:150,
+   abil:"bench",    why:"You have worked with every operator in town. You know which ones actually show up."},
+  {n:"Police Officer",   sal:3000, tax:580,  home:700,  car:100, cc:60,  ret:50, oth:680,  sav:520,  ch:180,
+   abil:"qoe",      why:"You have spent a career listening to people explain numbers that do not add up."},
+  {n:"Nurse",            sal:3100, tax:600,  home:630,  car:110, cc:80,  ret:50, oth:700,  sav:720,  ch:200,
+   abil:"bench",    why:"You run a floor in chaos every shift. Staffing a business does not scare you."},
+  {n:"Teacher",          sal:3300, tax:630,  home:700,  car:120, cc:90,  ret:50, oth:760,  sav:400,  ch:180,
+   abil:"hustle",   why:"Summers off, and you have been tutoring on the side since your second year."},
+  {n:"Business Manager", sal:4600, tax:910,  home:700,  car:300, cc:270, ret:50, oth:1200, sav:400,  ch:240,
+   abil:"banker",   why:"You have sat across from your commercial banker twice a year for a decade."},
+  {n:"Engineer",         sal:4900, tax:1050, home:1330, car:380, cc:270, ret:50, oth:1090, sav:400,  ch:280,
+   abil:"qoe",      why:"You check the math. It is the only thing you have ever really trusted."},
+  {n:"Lawyer",           sal:7500, tax:1830, home:1900, car:380, cc:270, ret:50, oth:2100, sav:400,  ch:380,
+   abil:"banker",   why:"You read the loan documents nobody else reads, and the bank knows it."},
+  {n:"Airline Pilot",    sal:9500, tax:2350, home:1330, car:550, cc:280, ret:50, oth:2210, sav:400,  ch:480,
+   abil:"hustle",   why:"Long layovers in cities where you have already found something to do with them."},
+  {n:"Doctor",           sal:13200,tax:3420, home:1900, car:750, cc:380, ret:50, oth:2880, sav:400,  ch:640,
+   abil:"raise",    why:"You can always pick up another shift. That is the trap, and it is the only tool you brought."}
 ];
+/* ---------------- ABILITIES ----------------
+   Bought once, kept forever. This is the fix for quality of earnings: charging
+   $2,500 per deal was a toll, not a decision. Owning the skill is a decision.
+   Ranked by how much they compound. Deal Flow is the strongest thing on this list
+   because more at-bats beats every other edge, and Raise at Work is deliberately
+   the weakest: it feels great, and it does absolutely nothing the moment you
+   escape the Rat Race. Buying it teaches you that by costing you. */
+const ABILITIES = {
+  dealflow:{n:"Deal Flow",            cost:35000, d:"See two deals at every Opportunity and take the better one."},
+  qoe:     {n:"Quality of Earnings",  cost:25000, d:"Verified earnings shown on every business, free, forever."},
+  bench:   {n:"Operator Bench",       cost:20000, d:"You know good managers. They cost 22% of SDE instead of 32%."},
+  banker:  {n:"Banker Relationship",  cost:15000, d:"Bank loans cost 6% a month instead of 10%."},
+  hustle:  {n:"Side Hustle",          cost:12000, d:"Adds $900 a month, whether or not you still have a job."},
+  raise:   {n:"Raise at Work",        cost: 8000, d:"Salary up 25%. Worth nothing once you're out of the Rat Race."}
+};
+function has(p,k){ return p.abilities && p.abilities.indexOf(k)>=0; }
+function mgrShare(p){ return has(p,"bench") ? 0.22 : MGR_SHARE; }
+function bankRate(p){ return has(p,"banker") ? 0.06 : 0.10; }
+
 function jobExpenses(p){
   const j=p.prof;
-  return j.tax+j.home+j.car+j.cc+j.ret+j.oth + (p.kids||0)*j.ch + (p.bankLoan||0)*0.10;
+  return j.tax+j.home+j.car+j.cc+j.ret+j.oth + (p.kids||0)*j.ch + (p.bankLoan||0)*bankRate(p);
 }
 
 const COLORS   = ["#3B82F6","#E0705A","#5DCAA5","#E8B54A"];
@@ -413,11 +525,11 @@ const SEATNAMES= ["Player 1","Player 2","Player 3","Player 4"];
 let mode = "pass";   // "pass" = everyone human, share the laptop. "bots" = you vs AI.
 
 /* The net-worth goal IS the length dial. Pick the target, pick the game. */
-const GOALS = [
-  {k:"quick",    n:"Quick",    worth: 1500000, mins:"20-30 min"},
-  {k:"standard", n:"Standard", worth: 6000000, mins:"30-45 min"},
-  {k:"long",     n:"Long",     worth:20000000, mins:"45-70 min"}
-];
+/* One goal. A 20-minute version of this is not a shorter game, it is a worse one. */
+/* $6M, chosen by simulation not by taste. 10/10 games finish, median 198 rounds
+   (~35 min at 3 players), and the winner ends up holding ~26 assets across both
+   classes. $10M was tried and destabilises: the top tier spirals on a recession. */
+const GOALS = [{k:"full", n:"Full", worth:6000000, mins:"30-40 min"}];
 
 /* Deal scale rises with your net worth. You start buying laundromats and end up
    buying platforms. Same board, same decks, the numbers grow with you. */
@@ -437,8 +549,8 @@ function worth(p){
 }
 
 let G = null;
-let nPlayers = 3;
-let goal = GOALS[1];
+let nPlayers = 1;
+let goal = GOALS[0];
 
 /* ---------------- SKYLINE ----------------
    Drawn, not photographed: a few kB, crisp at any size, and it never dates.
@@ -503,10 +615,10 @@ function paintCity(){
 /* ---------------- SETUP ---------------- */
 (function(){
   const p = document.getElementById("pick");
-  [2,3,4].forEach(n=>{
+  [1,2,3,4].forEach(n=>{
     const b=document.createElement("button");
     b.textContent = n;
-    b.className = n===3?"on":"";
+    b.className = n===1?"on":"";
     b.onclick=()=>{nPlayers=n;[...p.children].forEach(c=>c.className="");b.className="on";};
     p.appendChild(b);
   });
@@ -519,17 +631,10 @@ function paintCity(){
     b.onclick=()=>{mode=k;[...mp.children].forEach(c=>c.className="");b.className="on";};
     mp.appendChild(b);
   });
-  const gp = document.getElementById("goalpick");
-  GOALS.forEach((G_,i)=>{
-    const b=document.createElement("button");
-    b.innerHTML = `${G_.n}<small>${F(G_.worth)} · ${G_.mins}</small>`;
-    b.className = i===1?"on":"";
-    b.onclick=()=>{goal=G_;[...gp.children].forEach(c=>c.className="");b.className="on";};
-    gp.appendChild(b);
-  });
+
 })();
 
-function startGame(){
+function beginPlay(){
   G = {
     turn:0, pos:0, players:[], log:[],
     decks:{}, offm:shuffle(OFFMARKET), dood:shuffle(DOODADS),
@@ -539,13 +644,13 @@ function startGame(){
     G.decks["prop_"+d] = shuffle(PROPS[d]);
     G.decks["biz_"+d]  = shuffle(BIZ[d]);
   }
-  const profDeck = shuffle(PROFESSIONS);
+  const profDeck = shuffle(PROFESSIONS.filter(x=>charChoices.indexOf(x)<0));
   for(let i=0;i<nPlayers;i++){
     const isBot = (mode==="bots") && i>0;
-    const prof  = profDeck.length ? profDeck.shift() : pick(PROFESSIONS);
+    const prof  = charChoices[i] || (profDeck.length ? profDeck.shift() : pick(PROFESSIONS));
     const pl = {
       i, name:(mode==="bots"?BOTNAMES[i]:SEATNAMES[i]), color:COLORS[i], bot:isBot,
-      prof, kids:0, bankLoan:0, escaped:false,
+      prof, kids:0, bankLoan:0, escaped:false, abilities:[prof.abil], shares:{},
       cash:0, pos:0, assets:[], attention:2, busy:[], skip:0, laps:0
     };
     // Cashflow's rule exactly: you start with one month of cash flow plus your savings.
@@ -561,6 +666,44 @@ function startGame(){
   renderBoard(); renderPlayers();
   nextTurn();
 }
+
+/* ---------------- CHARACTER SELECT ----------------
+   Pick your life. The trade is deliberate: the worse the job, the better the edge
+   you already have. A Janitor on $520 a month who hears about every deal first is
+   a completely different game from a Doctor on $3,550 who only knows how to work
+   more shifts. Both can win. They do not win the same way. */
+let charChoices = [];
+function humansCount(){ return mode==="bots" ? 1 : nPlayers; }
+
+function startGame(){
+  document.getElementById("setup").classList.add("hide");
+  charChoices = [];
+  pickChar(0);
+}
+
+function pickChar(i){
+  if(i >= humansCount()){ closeModal(); return beginPlay(); }
+  const taken = charChoices.map(c=>c.n);
+  const who = humansCount()>1 ? `${SEATNAMES[i]}, pick` : "Pick";
+  open(`
+    <div class="kick">Character ${i+1} of ${humansCount()}</div>
+    <h2>${who} your life</h2>
+    <div class="dist">The worse the paycheck, the better the edge you start with.
+    Monthly figure is what you clear after every expense.</div>
+    <div class="chars">
+      ${PROFESSIONS.map((j,k)=>{
+        const mcf = j.sal-(j.tax+j.home+j.car+j.cc+j.ret+j.oth);
+        const a = ABILITIES[j.abil];
+        const out = taken.indexOf(j.n)>=0;
+        return `<button class="char" onclick="chooseChar(${i},${k})" ${out?"disabled style='opacity:.3'":""}>
+          <div class="cn">${j.n}</div>
+          <div class="cm">${F(j.sal)}/mo salary · clears <b style="color:var(--tx)">${F(mcf)}</b> · ${F(mcf+j.sav)} to start</div>
+          <div class="ca">${a.n}</div>
+          <div class="cw">${j.why}</div>
+        </button>`;}).join("")}
+    </div>`, true);
+}
+function chooseChar(i,k){ charChoices.push(PROFESSIONS[k]); pickChar(i+1); }
 
 /* ---------------- MATH (the game does all of it) ---------------- */
 function income(p){
@@ -591,10 +734,11 @@ function income(p){
   const passive = noi - ds;                      // what the assets pay you, net of debt
   // In the Rat Race you have a job and a job's expenses. Escaping trades a salary
   // for freedom: the paycheck stops and so do the commute, the suits and the tax.
-  const salary  = p.escaped ? 0 : p.prof.sal;
-  const expense = p.escaped ? R.living : jobExpenses(p);
-  const fcf = passive + salary - expense;
-  return {noi, covNoi, ds, cov, fcf, passive, salary, expense, mgrCost, living:R.living,
+  const salary  = p.escaped ? 0 : Math.round(p.prof.sal * (has(p,"raise")?1.25:1));
+  const hustle  = has(p,"hustle") ? 900 : 0;
+  const expense = p.escaped ? R.living + (p.bankLoan||0)*bankRate(p) : jobExpenses(p);
+  const fcf = passive + salary + hustle - expense;
+  return {noi, covNoi, ds, cov, fcf, passive, salary, hustle, expense, mgrCost, living:R.living,
           unmanned:Math.max(0,biz.length-slots)};
 }
 function covColor(c){ return c>=1.5?"var(--good)":c>=1.25?"var(--warn)":"var(--bad)"; }
@@ -695,7 +839,7 @@ function renderPlayers(){
           : `<span class="k">${p.prof.n} salary</span><span class="v">${F(m.salary)}</span>`}
         <span class="k">Passive income</span><span class="v ${m.passive>0?'g':''}">${F(m.passive)}</span>
         <span class="k">${p.escaped?"Living":"Expenses"}</span><span class="v b">-${F(m.expense).slice(1)}</span>
-        ${p.bankLoan?`<span class="k">Bank loan ${F(p.bankLoan)}</span><span class="v b">-${F(p.bankLoan*0.10).slice(1)}</span>`:""}
+        ${p.bankLoan?`<span class="k">Bank loan ${F(p.bankLoan)}</span><span class="v b">-${F(p.bankLoan*bankRate(p)).slice(1)}</span>`:""}
         <span class="k">Free cash flow</span><span class="v ${m.fcf>0?'g':m.fcf<0?'b':''}">${F(m.fcf)}</span>
         <span class="k">Coverage</span><span class="v" style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"—"}</span>
       </div>
@@ -777,6 +921,14 @@ function doRoll(p){
 
 function endTurn(){
   closeModal();
+  // Cashflow shows this at the end of every turn, and it is where the real
+  // decisions live: pay the bank down, lever up, or buy yourself an edge.
+  {
+    const cur = G.players[G.turn % G.players.length];
+    if(cur && !cur.bot && !G.over && !G._fin){ G._fin = true; return finishPanel(cur); }
+    G._fin = false;
+    if(cur) cur._boughtThisTurn = false;
+  }
   // tick timers
   const p = G.players[G.turn % G.players.length];
   p.busy = p.busy.filter(t=>--t.r > 0);
@@ -791,7 +943,23 @@ function payday(p, passing){
   const s = m.fcf>=0 ? `collects <span class="gd">${F(m.fcf)}</span>` : `pays out <span class="bd">${F(-m.fcf)}</span>`;
   say(`<b>${p.name}</b> ${passing?"passes":"lands on"} PAYDAY and ${s}.`);
   flashCell(p.pos, m.fcf>=0 ? "pop-good" : "pop-bad");
-  if(p.cash < 0) forceSell(p);
+  // Cashflow's bankruptcy test, and it only ever fires here: negative cash flow at
+  // a Pay Check with nothing on hand to cover it.
+  if(p.cash < 0){
+    if(m.fcf >= 0) coverShortfall(p);
+    else forceSell(p);
+  }
+}
+
+/* "You may borrow from the Bank to pay Doodad bills." Cashflow's rule verbatim.
+   A surprise bill should put you in debt, not end your game. Bankruptcy is only
+   ever decided at PAYDAY, when your cash flow is negative and you cannot cover it. */
+function coverShortfall(p){
+  if(p.cash >= 0) return;
+  const need = Math.ceil(-p.cash/1000)*1000;
+  p.bankLoan = (p.bankLoan||0) + need;
+  p.cash += need;
+  say(`<b>${p.name}</b> has to put ${F(need)} on the bank. That is ${F(need*bankRate(p))}/mo now.`, "");
 }
 
 function flashCell(i, cls){
@@ -825,6 +993,26 @@ const BIZ_MULT = { ot:2.15, hw:2.45, st:2.35, dt:2.95 };
    at 3.0x with the manager charged, it lands DSCR at ~1.5x, which is the
    deal box's coverage floor. Solve it backwards and the manager is 32.5% of SDE. */
 const MGR_SHARE = 0.32;
+
+/* Small deals do NOT scale with your tier. A vending route is a vending route
+   whether you are worth $5,000 or $5,000,000. That is the point of them: they get
+   you off the ground early and become irrelevant on purpose. Letting them scale
+   made them a permanent loophole that beat every real deal on the board. */
+function makeSmall(kind, scale=1){
+  scale = 1;
+  const key = "small_"+kind;
+  if(!G.decks[key] || !G.decks[key].length)
+    G.decks[key] = shuffle(kind==="prop"?SMALL_PROP:SMALL_BIZ);
+  const b = G.decks[key].shift();
+  const price = Math.round((kind==="biz" ? b.sde*12*2.0 : b.price) * scale * G.regime.priceMod);
+  const down  = Math.round(price * 0.15);
+  const loan  = price - down;
+  const ds    = Math.round(loan * (kind==="biz" ? 0.0147 : 0.0052));
+  const noi   = Math.round((kind==="biz" ? b.sde : b.noi*1.14) * scale);
+  return { n:b.n, type:kind, dist:"small", space:-1, price, down, loan, ds,
+           ess:b.ess, mgr:kind==="biz"?Math.round(noi*MGR_SHARE):0,
+           noi, claimed:noi, factor:1, small:true };
+}
 
 function makeDeal(kind, dist, spaceIdx, discount=1, scale=1){
   const key = kind+"_"+dist;
@@ -870,9 +1058,29 @@ function drawDeal(p, sp, discount=1, kicker=null){
     if(owner===p){ say(`<b>${p.name}</b> lands on their own asset.`); return endTurn(); }
     return offerFlow(p, owner, owner.assets.find(a=>a.space===p.pos));
   }
-  const deal = makeDeal(sp.k, sp.d, p.pos, discount, tierOf(p).scale);
-  deal.kicker = kicker;
-  p.bot ? botDecide(p, deal) : showDeal(p, deal, false);
+  const scale = p.escaped ? tierOf(p).scale : 1;
+  const big   = makeDeal(sp.k, sp.d, p.pos, discount, scale);
+  big.kicker = kicker;
+
+  // Small deals are the Rat Race's on-ramp and nothing else. Once you are out you
+  // stop being offered them, because a person closing $8M platform deals does not
+  // stop for a vending route. It is also the fix for an exploit: without this, a
+  // thousand tiny cash-on-cash winners beat every real deal on the board.
+  const SMALL_CAP = 6;
+  const smallsHeld = p.assets.filter(a=>a.small).length;
+  const canSmall = !p.escaped && smallsHeld < SMALL_CAP;
+  const small = canSmall ? makeSmall(sp.k, 1) : null;
+
+  if(p.bot){
+    if(!small) return botDecide(p, big);
+    return botDecide(p, p.cash >= big.down + 4000 ? big : small);
+  }
+  if(!small) return showDeal(p, big, false);
+  if(has(p,"dealflow")){
+    const big2 = makeDeal(sp.k, sp.d, p.pos, discount, scale);
+    return chooseFour(p, [small, makeSmall(sp.k,1)], [big,big2], sp);
+  }
+  chooseSize(p, small, big, sp);
 }
 
 function drawOffMarket(p){
@@ -882,6 +1090,50 @@ function drawOffMarket(p){
   deal.kicker = card.n;
   say(`<b>${p.name}</b> finds an off-market deal: <span class="hl">${card.n}</span>.`);
   p.bot ? botDecide(p, deal) : showDeal(p, deal, false);
+}
+
+/* The statement Cashflow puts on the left of every deal. Same shape, same order,
+   and cash printed large, because the only question you are really asking is
+   "can I afford this" and it should never take more than a glance. */
+function statementHTML(p){
+  const m = income(p), j = p.prof;
+  const exp = p.escaped
+    ? [["Living",m.living]].concat(p.bankLoan?[["Bank loan payment",p.bankLoan*bankRate(p)]]:[])
+    : [["Taxes",j.tax],["Home mortgage",j.home],["Car loan",j.car],["Credit card",j.cc],
+       ["Retail",j.ret],["Other",j.oth]]
+       .concat(p.kids?[["Children ("+p.kids+")",p.kids*j.ch]]:[])
+       .concat(p.bankLoan?[["Bank loan payment",p.bankLoan*bankRate(p)]]:[]);
+  const pct = Math.max(0, Math.min(100, (m.passive / Math.max(1,jobExpenses(p))) * 100));
+  return `<div class="stmt">
+    <h4>Income</h4>
+    ${p.escaped?"":`<div class="ln"><span>${j.n} salary</span><span>${F(m.salary)}</span></div>`}
+    ${m.hustle?`<div class="ln"><span>Side hustle</span><span>${F(m.hustle)}</span></div>`:""}
+    ${p.assets.filter(a=>a.noi).map(a=>
+      `<div class="ln mut"><span>${a.n}</span><span>${F(Math.round(a.noi-a.ds))}</span></div>`).join("")
+      || `<div class="ln mut"><span>Real estate / business</span><span>$0</span></div>`}
+
+    <h4>Expenses</h4>
+    ${exp.map(([k,v])=>`<div class="ln mut"><span>${k}</span><span>-${F(v).slice(1)}</span></div>`).join("")}
+
+    <div class="bigcash"><b>Cash</b><i>${F(p.cash)}</i></div>
+    <div class="ln"><span>Passive income</span><span class="${m.passive>0?'':''}">${F(m.passive)}</span></div>
+    <div class="ln"><span>Payday</span><span style="color:${m.fcf>=0?'var(--good)':'var(--bad)'}">${F(m.fcf)}</span></div>
+
+    ${p.escaped ? `<div class="esc"><div class="cap"><span style="color:var(--good)">Out of the Rat Race</span>
+      <span>${tierOf(p).n}</span></div></div>`
+    : `<div class="esc">
+        <div class="cap"><span>Passive income</span><span>Escape at ${F(jobExpenses(p))}</span></div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        <div class="cap"><span>${F(m.passive)}</span><span>${Math.round(pct)}%</span></div>
+      </div>`}
+
+    <h4>Net worth</h4>
+    <div class="ln"><span>Assets minus debt</span><span>${F(worth(p))}</span></div>
+    <div class="ln mut"><span>Goal</span><span>${F(goal.worth)}</span></div>
+
+    ${p.abilities.length?`<h4>Abilities</h4><div class="abil">${
+      p.abilities.map(k=>`<i>${ABILITIES[k].n}</i>`).join("")}</div>`:""}
+  </div>`;
 }
 
 /* ---------------- THE OFFER ----------------
@@ -963,87 +1215,123 @@ function makeOffer(i){
   endTurn();
 }
 
-/* ---------------- DEAL MODAL ---------------- */
-function showDeal(p, d, verified){
-  const shown = verified ? d.noi : d.claimed;
-  const isBiz = d.type==="biz";
-  const cash = p.cash;
-  const m = income(p);
-  // Coverage always charges a market manager, even on a business you'd run yourself.
-  const projCovNoi = m.covNoi + shown - (isBiz ? d.mgr : 0);
-  const projCov = (m.ds + d.ds) ? projCovNoi/(m.ds+d.ds) : 99;
-  const cov = d.ds ? (shown - (isBiz?d.mgr:0))/d.ds : 99;
-  const blocked = projCov < minCov();
-
-  open(`
-    <div class="kick">${d.kicker ? d.kicker : (isBiz?"Business for sale":"Property for sale")}</div>
-    <h2>${d.n}</h2>
-    <div class="dist">${DISTRICTS[d.dist].name} · ${DISTRICTS[d.dist].blurb}
-      ${d.ess?'<span class="badge ess" style="margin-left:6px">Essential</span>':'<span class="badge dis" style="margin-left:6px">Discretionary</span>'}
-      ${d.re?'<span class="badge" style="margin-left:4px">Includes real estate</span>':''}
+/* Small or Big. Cashflow's choice, and it only feels like a choice when you're broke. */
+function chooseSize(p, small, big, sp){
+  const kind = sp.k==="biz" ? "business" : "property";
+  const sNet = small.noi - small.ds, bNet = big.claimed - big.ds;
+  window._pair = {p, small, big};
+  open(`<div class="panes"><div>${statementHTML(p)}</div><div>
+    <div class="kick">${DISTRICTS[sp.d].name} · ${kind}</div>
+    <h2>Small deal or big deal?</h2>
+    <div class="dist">You may look at one. Choose before you see the name.</div>
+    <div class="acts">
+      <button class="opt" onclick="takeSize('small')" style="align-items:flex-start">
+        <span><span class="t">Small Deal</span>
+        <span class="d">${F(small.down)} down · about ${F(sNet)}/mo · no diligence needed</span></span>
+        <span class="amt">${p.cash>=small.down?"":"can't afford"}</span></button>
+      <button class="opt" onclick="takeSize('big')" style="align-items:flex-start">
+        <span><span class="t">Big Deal</span>
+        <span class="d">${F(big.down)} down · claims about ${F(bNet)}/mo · the seller's number is unverified</span></span>
+        <span class="amt">${p.cash>=big.down?"":"can't afford"}</span></button>
+      <button class="opt" onclick="endTurn()"><span><span class="t">Look at neither</span>
+        <span class="d">Passing costs nothing.</span></span><span class="amt">—</span></button>
     </div>
-
-    <div class="deal">
-      <div class="rows">
-        <span class="k">Asking price</span><span class="v">${F(d.price)}</span>
-        <span class="k">Down payment</span><span class="v">${F(d.down)}</span>
-        <span class="k">Loan</span><span class="v">${F(d.loan)}</span>
-        <div class="hr" style="grid-column:1/3"></div>
-        <span class="k">${isBiz ? (verified?"Verified SDE":"Claimed SDE") : "Net operating income"}</span>
-        <span class="v ${verified&&d.factor<.7?'b':''}">${F(shown)}/mo</span>
-        <span class="k">Debt service</span><span class="v b">-${F(d.ds).slice(1)}/mo</span>
-        ${isBiz?`<span class="k">Manager if unattended</span><span class="v">-${F(d.mgr).slice(1)}/mo</span>`:""}
-        <div class="hr" style="grid-column:1/3"></div>
-        <span class="k">Coverage on this deal</span>
-        <span class="v" style="color:${covColor(cov)}">${cov.toFixed(2)}x</span>
-        <span class="k">Your coverage after</span>
-        <span class="v" style="color:${covColor(projCov)}">${projCov.toFixed(2)}x</span>
+    <div class="note" style="margin-top:12px">Small deals are how you get off the ground.
+    Big deals are how you get out. You can hold six small ones, and they stop being
+    offered the day you leave the Rat Race.</div></div></div>`, true);
+}
+/* Deal Flow. Two of each, take the best one. More at-bats is the whole edge. */
+function chooseFour(p, smalls, bigs, sp){
+  window._four = {p, smalls, bigs};
+  const row = (d,i,kind)=>{
+    const net = (d.claimed||d.noi) - d.ds;
+    return `<button class="opt" onclick="takeFour('${kind}',${i})" style="align-items:flex-start">
+      <span><span class="t">${kind==="s"?"Small":"Big"} · ${F(d.down)} down</span>
+      <span class="d">about ${F(net)}/mo${d.type==="biz"&&!has(p,"qoe")?" claimed":""}</span></span>
+      <span class="amt">${p.cash>=d.down?"":"can't afford"}</span></button>`;
+  };
+  open(`<div class="panes">
+    <div>${statementHTML(p)}</div>
+    <div>
+      <div class="kick">Deal Flow · ${DISTRICTS[sp.d].name}</div>
+      <h2>Four on the table</h2>
+      <div class="dist">Your network turned up two of each. Take one.</div>
+      <div class="acts">
+        ${smalls.map((d,i)=>row(d,i,"s")).join("")}
+        ${bigs.map((d,i)=>row(d,i,"b")).join("")}
+        <button class="opt" onclick="endTurn()"><span><span class="t">None of them</span>
+          <span class="d">Costs nothing.</span></span><span class="amt">—</span></button>
       </div>
     </div>
-
-    ${isBiz && !verified ? `<div class="note warn">That SDE is the seller's number. It has not been verified. Quality of earnings costs ${F(2500)} and shows you the real one.</div>`
-      : isBiz && verified ? `<div class="note ${d.factor<.7?'warn':''}">Verified. The real number is <b>${Math.round(d.factor*100)}%</b> of what was claimed.${d.factor<.7?" This listing was badly overstated.":""}</div>`
-      : `<div class="note">Property NOI is verifiable from the rent roll. No diligence needed.</div>`}
-
-    ${blocked?`<div class="note warn">Your coverage would fall to ${projCov.toFixed(2)}x. The bank needs ${minCov().toFixed(2)}x. You can still pay all cash.</div>`:""}
-
-    <div class="acts">
-      ${isBiz && !verified ? `
-      <button class="opt" onclick="runQoE()" ${cash<2500?"disabled":""}>
-        <span><span class="t">Run quality of earnings</span><span class="d">See the verified number before you decide</span></span>
-        <span class="amt">-${F(2500).slice(1)}</span>
-      </button>`:""}
-      <button class="opt" onclick="buy('loan')" ${cash<d.down||blocked?"disabled":""}>
-        <span><span class="t">Buy with a loan</span><span class="d">${F(d.down)} down, ${F(d.ds)}/mo debt service</span></span>
-        <span class="amt">-${F(d.down).slice(1)}</span>
-      </button>
-      ${cash < d.down && cash + 50000 >= d.down ? (()=>{
-        const need = Math.ceil((d.down - cash)/1000)*1000;
-        return `<button class="opt" onclick="borrowAndBuy(${need})">
-          <span><span class="t">Borrow ${F(need)} from the bank, then buy</span>
-          <span class="d">10% a month, forever. Costs you ${F(need*0.10)}/mo until you repay it.</span></span>
-          <span class="amt">-${F(need*0.10).slice(1)}/mo</span></button>`;})() : ""}
-      <button class="opt" onclick="buy('cash')" ${cash<d.price?"disabled":""}>
-        <span><span class="t">Pay all cash</span><span class="d">No debt service. Coverage untouched.</span></span>
-        <span class="amt">-${F(d.price).slice(1)}</span>
-      </button>
-      <button class="opt" onclick="pass()">
-        <span><span class="t">Pass</span><span class="d">No called strikes. Passing costs nothing.</span></span>
-        <span class="amt">—</span>
-      </button>
-    </div>
-  `);
-  window._deal = {p, d, verified};
+  </div>`, true);
+}
+function takeFour(kind,i){
+  const {p,smalls,bigs}=window._four;
+  const d = kind==="s" ? smalls[i] : bigs[i];
+  showDeal(p, d, kind==="s");
 }
 
-/* The bank will always lend you the gap, at a price that should scare you.
-   Cashflow's rule verbatim: $1,000 units, 10% per month, $100/mo per $1,000. */
-function borrowAndBuy(amount){
-  const {p} = window._deal;
-  p.bankLoan = (p.bankLoan||0) + amount;
-  p.cash += amount;
-  say(`<b>${p.name}</b> borrows ${F(amount)} from the bank. That is ${F(amount*0.10)} a month, every month.`, "");
-  buy('loan');
+function takeSize(which){
+  const {p, small, big} = window._pair;
+  showDeal(p, which==="small" ? small : big, which==="small");
+}
+
+/* ---------------- DEAL MODAL ---------------- */
+function showDeal(p, d, verified){
+  const isBiz = d.type==="biz";
+  const free  = has(p,"qoe");
+  const known = (verified || free || !isBiz) ? d.noi : d.claimed;
+  const shown = (verified || free) ? d.noi : d.claimed;
+  const net   = shown - d.ds;
+  const cash  = p.cash;
+  window._deal = {p, d, verified: verified || free};
+
+  open(`<div class="panes">
+    <div>${statementHTML(p)}</div>
+    <div>
+      <div class="kick">${d.kicker ? d.kicker : (d.small?"Small deal":"Big deal")} · ${isBiz?"Business":"Property"}</div>
+      <h2>${d.n}</h2>
+      <div class="dist">${d.small?"Small":DISTRICTS[d.dist].name}
+        ${d.ess?'<span class="badge ess" style="margin-left:6px">Essential</span>'
+               :'<span class="badge dis" style="margin-left:6px">Discretionary</span>'}</div>
+
+      <div class="deal"><div class="rows">
+        <span class="k">Cost</span><span class="v">${F(d.price)}</span>
+        <span class="k">Down payment</span><span class="v">${F(d.down)}</span>
+        <span class="k">Cash flow</span><span class="v ${net>=0?'g':'b'}">${F(net)}/mo</span>
+        ${isBiz?`<span class="k">Manager if you step back</span><span class="v">-${F(d.mgr).slice(1)}/mo</span>`:""}
+      </div></div>
+
+      ${isBiz && !verified && !free
+        ? `<div class="note warn">That is the seller's number, unverified.</div>`
+        : isBiz && free
+        ? `<div class="note" style="color:var(--warn)">Quality of Earnings: verified free. Real earnings are <b>${Math.round(d.factor*100)}%</b> of the claim.</div>`
+        : isBiz
+        ? `<div class="note ${d.factor<.7?'warn':''}">Verified at <b>${Math.round(d.factor*100)}%</b> of claimed.${d.factor<.7?" That listing was cooked.":""}</div>`
+        : `<div class="note">Rent roll is verifiable. No diligence needed.</div>`}
+
+      <div class="acts">
+        ${isBiz && !verified && !free ? `
+        <button class="opt" onclick="runQoE()" ${cash<2500?"disabled":""}>
+          <span><span class="t">Run quality of earnings</span><span class="d">See the real number first</span></span>
+          <span class="amt">-${F(2500).slice(1)}</span></button>`:""}
+        <button class="opt" onclick="buy('loan')" ${cash<d.down?"disabled":""}>
+          <span><span class="t">Buy</span><span class="d">${F(d.down)} down, ${F(d.ds)}/mo debt</span></span>
+          <span class="amt">-${F(d.down).slice(1)}</span></button>
+        ${cash < d.down && cash + 50000 >= d.down ? (()=>{
+          const need = Math.ceil((d.down - cash)/1000)*1000;
+          return `<button class="opt" onclick="borrowAndBuy(${need})">
+            <span><span class="t">Borrow ${F(need)}, then buy</span>
+            <span class="d">${Math.round(bankRate(p)*100)}% a month until you repay it</span></span>
+            <span class="amt">-${F(need*bankRate(p)).slice(1)}/mo</span></button>`;})() : ""}
+        <button class="opt" onclick="buy('cash')" ${cash<d.price?"disabled":""}>
+          <span><span class="t">Pay all cash</span><span class="d">No debt at all</span></span>
+          <span class="amt">-${F(d.price).slice(1)}</span></button>
+        <button class="opt" onclick="pass()"><span><span class="t">Pass</span>
+          <span class="d">Costs nothing.</span></span><span class="amt">—</span></button>
+      </div>
+    </div>
+  </div>`, true);
 }
 
 function runQoE(){
@@ -1061,9 +1349,10 @@ function pass(){
 }
 function buy(how){
   const {p,d} = window._deal;
+  if(d.type==="biz" && has(p,"bench")) d.mgr = Math.round(d.mgr * (0.22/0.32));
   if(how==="cash"){ p.cash -= d.price; d.ds = 0; d.loan = 0; }
   else { p.cash -= d.down; }
-  if(d.space>=0) d.space = p.pos; else d.space = -1-p.assets.length;
+  d.space = (d.small || d.space < 0) ? -1-p.assets.length : p.pos;
   p.assets.push(d);
   const m = income(p);
   say(`<b>${p.name}</b> buys <span class="hl">${d.n}</span> ${how==="cash"?"for cash":"with a loan"}. Coverage now <span style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"no debt"}</span>.`, "gd");
@@ -1101,6 +1390,13 @@ function botDecide(p, d){
   } else {
     say(`<b>${p.name}</b> passes on ${d.n}.`);
   }
+  // A bot that is flush buys the best edge it can afford.
+  const want = Object.keys(ABILITIES).filter(k=>!has(p,k) && p.cash > ABILITIES[k].cost*3);
+  if(want.length){
+    const k = want.sort((a,b)=>ABILITIES[b].cost-ABILITIES[a].cost)[0];
+    p.cash -= ABILITIES[k].cost; p.abilities.push(k);
+    say(`<b>${p.name}</b> buys ${ABILITIES[k].n}.`);
+  }
   renderBoard(); renderPlayers();
   setTimeout(endTurn, 520);
 }
@@ -1128,7 +1424,7 @@ function taxDay(p){
     <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>
   `);
   say(`<b>${p.name}</b> hits TAX DAY and pays ${F(tax)}${reNoi?`. Real estate income of ${F(reNoi*12)} goes untaxed.`:"."}`);
-  if(p.cash<0) forceSell(p);
+  coverShortfall(p);
   renderPlayers();
   if(p.bot) setTimeout(endTurn, 1100);
 }
@@ -1173,14 +1469,15 @@ function closingDay(p){
 function doodad(p){
   const c = G.dood.length ? G.dood.shift() : pick(DOODADS);
   G.dood.push(c);
-  p.cash -= c.c;
-  say(`<b>${p.name}</b> — Doodad: ${c.t}. <span class="bd">-${F(c.c).slice(1)}</span>`);
-  if(p.cash<0) forceSell(p);
+  const cost = hitCost(p, c.m); c._last = cost;
+  p.cash -= cost;
+  say(`<b>${p.name}</b> — Doodad: ${c.t}. <span class="bd">-${F(cost).slice(1)}</span>`);
+  coverShortfall(p);
   renderPlayers();
   if(!p.bot){
     open(`<div class="kick">Doodad</div><h2>${c.t}</h2>
       <div class="note" style="font-size:13px">Mandatory, not optional. That is what makes it a doodad.</div>
-      <div class="deal"><div class="rows"><span class="k">Cost</span><span class="v b">-${F(c.c).slice(1)}</span></div></div>
+      <div class="deal"><div class="rows"><span class="k">Cost</span><span class="v b">-${F(c._last).slice(1)}</span></div></div>
       <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>`);
   } else setTimeout(endTurn, 650);
 }
@@ -1188,17 +1485,19 @@ function doodad(p){
 function lifeEvent(p){
   const c = G.life.length ? G.life.shift() : pick(LIFE);
   G.life.push(c);
-  p.cash -= c.c;
+  const cost = hitCost(p, c.m); c._last = cost;
+  p.cash -= cost;
+  if(c.kid && p.kids < 3) p.kids++;
   p.busy.push({r:c.r, t:c.t});
-  say(`<b>${p.name}</b> — Life: ${c.t}. Loses an attention slot for ${c.r} turns and pays ${F(c.c)}.`, "");
-  if(p.cash<0) forceSell(p);
+  say(`<b>${p.name}</b> — Life: ${c.t}. Loses an attention slot for ${c.r} turns and pays ${F(cost)}.`, "");
+  coverShortfall(p);
   renderPlayers();
   if(!p.bot){
     const m = income(p);
     open(`<div class="kick">Life</div><h2>${c.t}</h2>
       <div class="note" style="font-size:13px">${c.d}</div>
       <div class="deal"><div class="rows">
-        <span class="k">Cost</span><span class="v b">-${F(c.c).slice(1)}</span>
+        <span class="k">Cost</span><span class="v b">-${F(c._last).slice(1)}</span>
         <span class="k">Attention slots left</span><span class="v">${Math.max(0,p.attention-p.busy.length)} of ${p.attention}</span>
         ${m.unmanned?`<span class="k">Businesses now on a manager</span><span class="v w">${m.unmanned}</span>`:""}
       </div></div>
@@ -1323,9 +1622,81 @@ function checkWin(){
   }
 }
 
+/* ---------------- FINISH YOUR TURN ---------------- */
+function finishPanel(p){
+  const m = income(p);
+  const canRepay = p.bankLoan>0 && p.cash>=1000;
+  open(`<div class="panes">
+    <div>${statementHTML(p)}</div>
+    <div>
+      <div class="kick">End of turn</div>
+      <h2>Anything before you pass?</h2>
+      <div class="dist">Pay the bank down, borrow against your future, or buy yourself an edge.</div>
+      <div class="acts">
+        <button class="opt" onclick="repay()" ${canRepay?"":"disabled"}>
+          <span><span class="t">Repay $1,000 to the bank</span>
+          <span class="d">${p.bankLoan?`Owe ${F(p.bankLoan)} · costs ${F(p.bankLoan*bankRate(p))}/mo`:"Nothing owed"}</span></span>
+          <span class="amt">+${F(1000*bankRate(p)).slice(1)}/mo</span></button>
+        <button class="opt" onclick="borrowOnly()">
+          <span><span class="t">Borrow $1,000</span>
+          <span class="d">${Math.round(bankRate(p)*100)}% a month until you repay it</span></span>
+          <span class="amt">-${F(1000*bankRate(p)).slice(1)}/mo</span></button>
+        <button class="opt" onclick="shop()">
+          <span><span class="t">Buy an ability</span>
+          <span class="d">${p.abilities.length} owned · permanent</span></span>
+          <span class="amt">›</span></button>
+        <button class="btn" style="margin-top:6px" onclick="reallyEnd()">End turn</button>
+      </div>
+    </div>
+  </div>`, true);
+}
+function repay(){ const p=G.players[G.turn%G.players.length];
+  const amt=Math.min(1000,p.bankLoan); p.bankLoan-=amt; p.cash-=amt;
+  say(`<b>${p.name}</b> repays ${F(amt)} to the bank.`); renderPlayers(); finishPanel(p); }
+function borrowOnly(){ const p=G.players[G.turn%G.players.length];
+  p.bankLoan+=1000; p.cash+=1000;
+  say(`<b>${p.name}</b> borrows ${F(1000)}.`); renderPlayers(); finishPanel(p); }
+function reallyEnd(){ closeModal(); endTurn(); }
+
+function shop(){
+  const p = G.players[G.turn%G.players.length];
+  const keys = Object.keys(ABILITIES).filter(k=>!has(p,k));
+  open(`<div class="panes">
+    <div>${statementHTML(p)}</div>
+    <div>
+      <div class="kick">Abilities · bought once, kept forever</div>
+      <h2>Invest in yourself</h2>
+      <div class="dist">Cash spent here buys no cash flow. It buys a better version of every
+      turn you take after it.</div>
+      <div class="acts">
+        ${p._boughtThisTurn ? `<div class="note warn">One ability a turn.</div>` : ""}
+        ${keys.length ? keys.map(k=>{const a=ABILITIES[k];
+          return `<button class="opt" onclick="buyAbility('${k}')" ${(p.cash<a.cost||p._boughtThisTurn)?"disabled":""}>
+            <span><span class="t">${a.n}</span><span class="d">${a.d}</span></span>
+            <span class="amt">-${F(a.cost).slice(1)}</span></button>`;}).join("")
+          : `<div class="note">You own every ability there is.</div>`}
+        <button class="opt" onclick="finishPanel(G.players[G.turn%G.players.length])">
+          <span><span class="t">Back</span><span class="d">Buy nothing.</span></span><span class="amt">‹</span></button>
+      </div>
+    </div>
+  </div>`, true);
+}
+function buyAbility(k){
+  const p = G.players[G.turn%G.players.length];
+  const a = ABILITIES[k];
+  if(p.cash < a.cost || p._boughtThisTurn) return;
+  p._boughtThisTurn = true;
+  p.cash -= a.cost; p.abilities.push(k);
+  if(k==="bench") p.assets.forEach(x=>{ if(x.type==="biz") x.mgr=Math.round(x.mgr*(0.22/0.32)); });
+  say(`<b>${p.name}</b> buys <span class="hl">${a.n}</span> for ${F(a.cost)}.`, "gd");
+  renderPlayers(); finishPanel(p);
+}
+
 /* ---------------- MODAL ---------------- */
-function open(html){
-  document.getElementById("modal").innerHTML = html;
+function open(html, wide){
+  const m=document.getElementById("modal");
+  m.className = "modal" + (wide?" wide":"");
+  m.innerHTML = html;
   document.getElementById("mask").classList.add("on");
 }
 function closeModal(){ document.getElementById("mask").classList.remove("on"); }
