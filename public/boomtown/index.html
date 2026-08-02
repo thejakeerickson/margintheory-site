@@ -982,9 +982,17 @@ function payday(p, passing){
 function coverShortfall(p){
   if(p.cash >= 0) return;
   const need = Math.ceil(-p.cash/1000)*1000;
-  p.bankLoan = (p.bankLoan||0) + need;
-  p.cash += need;
-  say(`<b>${p.name}</b> has to put ${F(need)} on the bank. That is ${F(need*bankRate(p))}/mo now.`, "");
+  // The bank applies the same test in an emergency as it does on a deal. Letting
+  // a surprise bill borrow past what you can service was creating a spiral you
+  // could never climb out of: the payment outlived every asset you sold.
+  if(need <= borrowCap(p)){
+    p.bankLoan = (p.bankLoan||0) + need;
+    p.cash += need;
+    say(`<b>${p.name}</b> puts ${F(need)} on the bank. That is ${F(need*bankRate(p))}/mo now.`, "");
+  } else {
+    say(`<b>${p.name}</b> can't borrow their way out of this one.`, "");
+    forceSell(p);
+  }
 }
 
 function flashCell(i, cls){
@@ -1745,16 +1753,49 @@ function sellIt(){
 
 /* ---------------- DISTRESS ---------------- */
 function forceSell(p){
-  while(p.cash < 0 && p.assets.length){
+  let sold = 0;
+
+  // Paper goes first. It pays you nothing to hold, so it is the cheapest thing
+  // to lose, and it is liquid.
+  if(p.shares){
+    Object.keys(p.shares).forEach(k=>{
+      const h = p.shares[k];
+      if(p.cash < 0 && h.n > 0){
+        const mid = Math.round((h.lo+h.hi)/2);
+        p.cash += h.n * mid;
+        say(`<b>${p.name}</b> dumps ${h.n} ${k} at $${mid} to cover.`, "");
+        h.n = 0;
+      }
+    });
+  }
+
+  // Then the weakest asset, and every dollar that comes in goes at the bank loan
+  // first. Repaying the loan is the ONLY thing that lowers the monthly bleed;
+  // selling an asset without clearing the debt just leaves you smaller and still
+  // underwater, which is exactly how a real forced sale goes wrong.
+  let guard = 0;
+  while((p.cash < 0 || income(p).fcf < 0) && (p.assets.length || (p.bankLoan>0 && p.cash>=1000))){
+    if(++guard > 40) break;
+    if(p.bankLoan > 0 && p.cash >= 1000){
+      const amt = Math.min(p.bankLoan, Math.floor(p.cash/1000)*1000);
+      p.bankLoan -= amt; p.cash -= amt;
+      say(`<b>${p.name}</b> forced to hand ${F(amt)} back to the bank.`, "");
+      continue;
+    }
+    if(!p.assets.length) break;
     const a = p.assets.reduce((w,x)=> (x.noi-x.ds) < (w.noi-w.ds) ? x : w);
     const proceeds = Math.round(a.down * 0.5);
     p.cash += proceeds;
     p.assets = p.assets.filter(x=>x!==a);
-    say(`<b>${p.name}</b> is short on cash and dumps <span class="bd">${a.n}</span> for half the down payment (${F(proceeds)}).`, "");
+    sold++;
+    say(`<b>${p.name}</b> is short and dumps <span class="bd">${a.n}</span> for half the down payment (${F(proceeds)}).`, "");
   }
-  if(p.cash < 0){
-    say(`<b>${p.name}</b> is wiped out. The personal guarantee took everything.`, "bd");
-    p.cash = 0; p.skip = 3;
+
+  if(p.cash < 0 || income(p).fcf < 0){
+    say(`<b>${p.name}</b> is wiped out and sits out three turns. The guarantee took everything.`, "bd");
+    p.cash = Math.max(0, p.cash);
+    p.bankLoan = 0;              // the debt is discharged with them
+    p.skip = 3;
   }
   renderBoard(); renderPlayers();
 }
