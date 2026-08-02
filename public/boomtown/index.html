@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boomtown</title>
+<style>
+:root{
+  --bg:#12120F; --panel:#1B1B17; --panel2:#232320; --line:#33332E;
+  --tx:#F1EFE8; --tx2:#A8A69C; --tx3:#6E6C65;
+  --dt:#2F6FB8; --st:#6C9B3A; --ot:#B8862F; --hw:#5F5E5A;
+  --good:#5DCAA5; --bad:#E0705A; --warn:#E8B54A;
+  --r:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--tx);
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+  min-height:100vh; padding:14px;
+}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;max-width:1500px;margin:0 auto}
+@media(max-width:1100px){.app{grid-template-columns:1fr}}
+
+/* ---------- BOARD ---------- */
+.boardwrap{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;
+  display:flex;align-items:flex-start;justify-content:center}
+.board{
+  display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);
+  gap:2px;aspect-ratio:1;
+  width:min(100%, calc(100vh - 56px));
+}
+.sp{
+  border-radius:4px;padding:4px 3px;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--panel2);border:1px solid var(--line);min-width:0;
+  transition:box-shadow .15s,transform .15s;
+}
+.sp .lbl{font-size:8px;font-weight:750;letter-spacing:.05em;text-transform:uppercase;line-height:1.1;opacity:.95}
+.sp .sub{font-size:7px;opacity:.6;line-height:1.1;font-weight:600}
+.sp.dt{background:rgba(22,51,79,.94);border-color:#3D82C9;color:#D3E6FA}
+.sp.st{background:rgba(44,63,22,.94);border-color:#7BAB44;color:#DDECC6}
+.sp.ot{background:rgba(74,54,15,.94);border-color:#C2903A;color:#F7E5C2}
+.sp.hw{background:rgba(46,46,43,.94);border-color:#7A786F;color:#DAD8D0}
+.sp.ev{background:rgba(16,16,14,.86);border:1px dashed #4A4942;color:var(--tx2);align-items:center;justify-content:center;text-align:center}
+.sp.cnr{background:#EDEAE1;color:#1A1A17;align-items:center;justify-content:center;text-align:center;border:none}
+.sp.cnr .lbl{font-size:10px}
+.sp.cnr .sub{font-size:7px;opacity:.7;margin-top:2px}
+.sp.owned::after{content:"";position:absolute;inset:0;border:2px solid var(--good);border-radius:4px;pointer-events:none}
+.sp.here{box-shadow:0 0 0 3px var(--warn);z-index:5;transform:scale(1.06)}
+.pawns{position:absolute;bottom:2px;right:2px;display:flex;gap:2px}
+.pawn{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(0,0,0,.5);
+  animation:drop .18s cubic-bezier(.3,1.6,.5,1)}
+@keyframes drop{from{transform:translateY(-7px) scale(.5);opacity:0}to{transform:none;opacity:1}}
+@keyframes tumble{0%{transform:rotate(-14deg) scale(.94)}50%{transform:rotate(12deg) scale(1.06)}100%{transform:rotate(-8deg) scale(.97)}}
+@keyframes settle{0%{transform:scale(1.22)}60%{transform:scale(.95)}100%{transform:scale(1)}}
+.die.tumble{animation:tumble .07s linear infinite}
+.die.settle{animation:settle .34s cubic-bezier(.2,1.5,.4,1)}
+@keyframes popG{0%{box-shadow:0 0 0 0 rgba(93,202,165,.9)}100%{box-shadow:0 0 0 13px rgba(93,202,165,0)}}
+@keyframes popB{0%{box-shadow:0 0 0 0 rgba(224,112,90,.9)}100%{box-shadow:0 0 0 13px rgba(224,112,90,0)}}
+.sp.pop-good{animation:popG .7s ease-out}
+.sp.pop-bad{animation:popB .7s ease-out}
+
+/* ---------- BACKDROP (Option B: District Bands) ---------- */
+.stage{position:relative;border-radius:12px;overflow:hidden;width:min(100%, calc(100vh - 56px));aspect-ratio:1}
+.sky,.city,.scrim{position:absolute;inset:0;pointer-events:none}
+.sky{z-index:0} .city{z-index:1} .scrim{z-index:2}
+.city svg{display:block;width:100%;height:100%}
+.stage .board{position:relative;z-index:3;padding:0;width:100%}
+.mid{
+  grid-area:2/2/10/10;background:#17171400;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center;
+}
+.mid h1{font-size:clamp(26px,4vw,46px);font-weight:850;letter-spacing:-.03em;
+  text-shadow:0 2px 26px rgba(0,0,0,.9)}
+.mid .tag{color:var(--tx2);font-size:12px;max-width:38ch;text-shadow:0 1px 12px rgba(0,0,0,.95)}
+.dice{display:flex;gap:10px;align-items:center}
+.die{width:44px;height:44px;border-radius:8px;background:#EDEAE1;color:#1A1A17;
+  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
+.btn{
+  background:var(--tx);color:#12120F;border:none;border-radius:var(--r);
+  padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line)}
+.btn.sm{padding:7px 12px;font-size:12px}
+.btn.go{background:var(--good);color:#04241C}
+.btn.no{background:transparent;color:var(--tx2);border:1px solid var(--line)}
+
+/* ---------- SIDE ---------- */
+.side{display:flex;flex-direction:column;gap:10px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.card h3{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:9px;font-weight:750}
+.pl{border-radius:9px;padding:9px 10px;margin-bottom:6px;background:var(--panel2);border:1px solid var(--line);position:relative}
+.pl.act{border-color:var(--warn);box-shadow:0 0 0 1px var(--warn)}
+.pl .top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.pl .dot{width:11px;height:11px;border-radius:50%;flex:none}
+.pl .nm{font-weight:750;font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pl .bot{font-size:9px;color:var(--tx3);font-weight:700;letter-spacing:.05em}
+.rows{display:grid;grid-template-columns:1fr auto;gap:1px 8px;font-size:12px}
+.rows .k{color:var(--tx2)}
+.rows .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:650}
+.v.g{color:var(--good)} .v.b{color:var(--bad)} .v.w{color:var(--warn)}
+.covbar{height:5px;border-radius:3px;background:#2A2A26;margin-top:7px;overflow:hidden}
+.covbar i{display:block;height:100%;border-radius:3px}
+.att{display:flex;gap:3px;margin-top:6px}
+.att i{width:16px;height:16px;border-radius:4px;border:1px solid var(--line);background:#2A2A26;
+  display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--tx3)}
+.att i.used{background:var(--warn);border-color:var(--warn);color:#12120F;font-weight:800}
+.log{max-height:230px;overflow-y:auto;font-size:12px;display:flex;flex-direction:column-reverse;gap:5px}
+.log div{color:var(--tx2);padding-bottom:5px;border-bottom:1px solid #24241F;line-height:1.35}
+.log b{color:var(--tx)}
+.log .hl{color:var(--warn)} .log .gd{color:var(--good)} .log .bd{color:var(--bad)}
+
+/* ---------- MODAL ---------- */
+.mask{position:fixed;inset:0;background:rgba(8,8,6,.82);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.mask.on{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  max-width:470px;width:100%;padding:20px;max-height:92vh;overflow-y:auto}
+.modal .kick{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:750}
+.modal h2{font-size:21px;margin:5px 0 3px;letter-spacing:-.02em}
+.modal .dist{font-size:11px;color:var(--tx2);margin-bottom:13px}
+.deal{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.deal .rows{font-size:13px;gap:3px 8px}
+.hr{height:1px;background:var(--line);margin:9px 0}
+.note{font-size:11px;color:var(--tx2);line-height:1.5;margin-bottom:12px}
+.note.warn{color:var(--warn)}
+.acts{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;
+  cursor:pointer;text-align:left;color:var(--tx);font-family:inherit;font-size:13px;width:100%}
+.opt:hover:not(:disabled){border-color:var(--tx2)}
+.opt:disabled{opacity:.35;cursor:not-allowed}
+.opt .t{font-weight:700} .opt .d{font-size:11px;color:var(--tx2);margin-top:2px}
+.opt .amt{font-variant-numeric:tabular-nums;font-weight:750;white-space:nowrap}
+.win{text-align:center} .win h2{font-size:30px;margin:10px 0}
+.badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:4px;background:#2A2A26;color:var(--tx2)}
+.badge.ess{background:#123B2E;color:var(--good)}
+.badge.dis{background:#3E2018;color:var(--bad)}
+.setup{max-width:420px;margin:60px auto;text-align:center}
+.setup h1{font-size:46px;font-weight:850;letter-spacing:-.03em;margin-bottom:6px}
+.setup p{color:var(--tx2);margin-bottom:22px;font-size:13px;line-height:1.6}
+.pick{display:flex;gap:8px;justify-content:center;margin-bottom:22px}
+.pick button{flex:1;padding:14px 0;border-radius:10px;background:var(--panel2);
+  border:1px solid var(--line);color:var(--tx);font-family:inherit;font-size:15px;font-weight:750;cursor:pointer}
+.pick button.on{background:var(--tx);color:#12120F;border-color:var(--tx)}
+.pick.goals button{padding:11px 0;font-size:14px;line-height:1.25}
+.pick.goals button small{display:block;font-size:10px;font-weight:600;opacity:.62;margin-top:2px}
+.setuplbl{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);
+  font-weight:750;margin-bottom:8px;text-align:left}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ============ SETUP ============ -->
+<div id="setup" class="setup">
+  <h1>BOOMTOWN</h1>
+  <p>Buy small businesses and commercial real estate. Escape into more risk, not less.<br><br>
+  <b style="color:var(--tx)">Net worth is the score.</b> First to the goal wins, but only while holding
+  1.25x coverage. Racing there on debt you cannot service does not count.</p>
+  <div class="setuplbl">Players</div>
+  <div class="pick" id="pick"></div>
+  <div class="setuplbl">Goal</div>
+  <div class="pick goals" id="goalpick"></div>
+  <div class="setuplbl">Mode</div>
+  <div class="pick goals" id="modepick"></div>
+  <button class="btn" onclick="startGame()">Start Game</button>
+  <p style="margin-top:18px;font-size:11px;color:var(--tx3)" id="modehint">Everyone plays. Pass the laptop when the highlighted player changes.</p>
+</div>
+
+<!-- ============ GAME ============ -->
+<div class="app hide" id="app">
+  <div class="boardwrap">
+    <div class="stage"><div class="sky" id="sky"></div><div class="city" id="city"></div>
+      <div class="scrim" id="scrim"></div><div class="board" id="board"></div></div>
+  </div>
+  <div class="side">
+    <div class="card"><h3>Players</h3><div id="players"></div></div>
+    <div class="card"><h3>Activity</h3><div class="log" id="log"></div></div>
+  </div>
+</div>
+
+<div class="mask" id="mask"><div class="modal" id="modal"></div></div>
+
+<script>
+/* =====================================================================
+   BOOMTOWN v1
+   Board teaches the rent gradient. Decks supply the deal flow.
+   All math is done by the game. Players only decide.
+   ===================================================================== */
+
+const F = n => (n<0?"-":"") + "$" + Math.abs(Math.round(n)).toLocaleString();
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* ---------- DISTRICTS ----------
+   Cap rate falls as you approach downtown. That single fact drives everything:
+   cheap dirt yields more and covers debt easily; prestige yields less and runs thin. */
+const DISTRICTS = {
+  ot:{key:"ot",name:"Old Town",   blurb:"Declining into pioneer. Cheap dirt, fat yields, real risk."},
+  hw:{key:"hw",name:"The Highway",blurb:"Flat and cheap. Big lots, low rent per foot."},
+  st:{key:"st",name:"The Strip",  blurb:"Rising. Where the value gets created."},
+  dt:{key:"dt",name:"Main & Center",blurb:"Downtown. Safest income, thinnest coverage."}
+};
+
+/* ---------- PROPERTY DECKS (landlord: no attention needed, honest NOI) ---------- */
+const PROPS = {
+  ot:[
+    {n:"Corner Tire Shop",  price:42000, noi:470, ess:true},
+    {n:"Vacant Storefront", price:36000, noi:390, ess:false},
+    {n:"Old Warehouse",     price:68000, noi:740, ess:true},
+    {n:"Two-Bay Garage",    price:52000, noi:580, ess:true},
+    {n:"Cinder Block Strip",price:75000, noi:800, ess:false},
+    {n:"Rail-Side Yard",    price:44000, noi:490, ess:true}
+  ],
+  hw:[
+    {n:"Furniture Showroom",price:88000, noi:790, ess:false},
+    {n:"Self Storage",      price:155000,noi:1330,ess:true},
+    {n:"Truck Parking Lot", price:62000, noi:560, ess:true},
+    {n:"Highway Outparcel", price:96000, noi:850, ess:false},
+    {n:"Contractor Yard",   price:71000, noi:650, ess:true},
+    {n:"Mini Storage Annex",price:118000,noi:1020,ess:true}
+  ],
+  st:[
+    {n:"Brewery Building",  price:145000,noi:1110,ess:false},
+    {n:"Corner Lot",        price:64000, noi:520, ess:false},
+    {n:"Live-Work Duplex",  price:112000,noi:880, ess:true},
+    {n:"Renovated Bay",     price:98000, noi:760, ess:false},
+    {n:"Second-Floor Offices",price:132000,noi:1020,ess:true},
+    {n:"Old Bank Branch",   price:158000,noi:1210,ess:false}
+  ],
+  dt:[
+    {n:"Corner Bank Building",price:238000,noi:1420,ess:true},
+    {n:"Main St Retail Row",  price:196000,noi:1190,ess:true},
+    {n:"Hard Corner Pad",     price:265000,noi:1550,ess:true},
+    {n:"Center Street Mixed-Use",price:212000,noi:1290,ess:true},
+    {n:"Signalized Drive-Thru",price:248000,noi:1480,ess:true},
+    {n:"Courthouse Annex",    price:178000,noi:1090,ess:true}
+  ]
+};
+
+/* ---------- BUSINESS DECKS (operator: needs attention or a manager, SDE is CLAIMED) ---------- */
+const BIZ = {
+  ot:[
+    {n:"Auto Shop",         price:58000, sde:2050, mgr:520, ess:true},
+    {n:"Coin Laundry",      price:96000, sde:3150, mgr:480, ess:true, re:true},
+    {n:"Small Engine Repair",price:44000,sde:1620, mgr:460, ess:true},
+    {n:"Sign Shop",         price:52000, sde:1830, mgr:500, ess:false},
+    {n:"Upholstery Shop",   price:39000, sde:1450, mgr:440, ess:false},
+    {n:"Tow Operator",      price:74000, sde:2540, mgr:580, ess:true}
+  ],
+  hw:[
+    {n:"Pest Control Route",price:78000, sde:2480, mgr:600, ess:true},
+    {n:"Car Wash",          price:128000,sde:3820, mgr:560, ess:true, re:true},
+    {n:"Septic Service",    price:92000, sde:2900, mgr:640, ess:true},
+    {n:"Equipment Rental",  price:112000,sde:3400, mgr:700, ess:true},
+    {n:"Landscaping Crew",  price:66000, sde:2180, mgr:590, ess:false},
+    {n:"Portable Toilet Route",price:84000,sde:2690,mgr:560,ess:true}
+  ],
+  st:[
+    {n:"Salon Suites",      price:98000, sde:2820, mgr:700, ess:false},
+    {n:"Pizza Shop",        price:79000, sde:2340, mgr:640, ess:false},
+    {n:"Bike Shop",         price:61000, sde:1880, mgr:580, ess:false},
+    {n:"Boutique Gym",      price:105000,sde:2980, mgr:760, ess:false},
+    {n:"Print & Design Studio",price:72000,sde:2170,mgr:620,ess:false},
+    {n:"Pet Grooming",      price:68000, sde:2100, mgr:560, ess:true}
+  ],
+  dt:[
+    {n:"Dental Suite",      price:168000,sde:4150, mgr:1100,ess:true},
+    {n:"Coffee Shop",       price:132000,sde:3380, mgr:850, ess:false},
+    {n:"Bookkeeping Firm",  price:154000,sde:3900, mgr:1020,ess:true},
+    {n:"Insurance Agency",  price:186000,sde:4550, mgr:1150,ess:true},
+    {n:"Title Office",      price:172000,sde:4260, mgr:1080,ess:true},
+    {n:"Corner Cafe",       price:118000,sde:3060, mgr:790, ess:false}
+  ]
+};
+
+/* Off-market wildcard deals. Cheaper than listed, but the numbers are rougher. */
+const OFFMARKET = [
+  {n:"Owner Called Back",   d:"ot", kind:"biz",  disc:.82},
+  {n:"Tired Seller, No Broker",d:"hw",kind:"biz",disc:.78},
+  {n:"Estate Sale",         d:"st", kind:"prop", disc:.80},
+  {n:"Retiring, Wants Out",  d:"dt", kind:"biz",  disc:.85},
+  {n:"Divorce Forced Sale",  d:"st", kind:"biz",  disc:.76},
+  {n:"Bank-Owned",           d:"ot", kind:"prop", disc:.72},
+  {n:"Relocating Out of State",d:"hw",kind:"prop",disc:.81},
+  {n:"Partner Buyout Gone Bad",d:"dt",kind:"prop",disc:.86}
+];
+
+const DOODADS = [
+  {t:"New truck you didn't need",  c:4200},
+  {t:"Kitchen remodel overrun",    c:6800},
+  {t:"Vacation on the credit card",c:3100},
+  {t:"Kid's braces",               c:2400},
+  {t:"HVAC died at the house",     c:5600},
+  {t:"Boat. You bought a boat.",   c:9500},
+  {t:"Vet bill",                   c:1800},
+  {t:"Wedding you're in",          c:2900}
+];
+
+const LIFE = [
+  {t:"New baby",           a:1, r:4, c:3000, d:"Congratulations. One attention slot is gone for 4 turns."},
+  {t:"Parent needs care",  a:1, r:3, c:2000, d:"You're driving to appointments. One slot gone for 3 turns."},
+  {t:"Back surgery",       a:1, r:3, c:4500, d:"Six weeks off your feet. One slot gone for 3 turns."},
+  {t:"Moving house",       a:1, r:2, c:5000, d:"Two turns of your attention, gone."},
+  {t:"Second kid",         a:1, r:4, c:3500, d:"Another slot gone for 4 turns."},
+  {t:"Jury duty + flu",    a:1, r:2, c:600,  d:"Bad month. One slot gone for 2 turns."}
+];
+
+/* ---------- MARKET REGIMES ----------
+   Exactly one is active at all times and it is always visible on the board.
+   It changes only when somebody LANDS on the MARKET SHIFT corner, so a regime
+   persists for an unpredictable stretch, the way a real cycle does.
+   Each regime favours a different asset class, which is why holding both
+   businesses and buildings beats going all-in on either. */
+const REGIMES = [
+  { k:"steady", n:"Steady Market", favors:"Nobody in particular",
+    d:"Nothing unusual. Businesses and buildings both behave.",
+    bizEss:1.00, bizDis:1.00, propEss:1.00, propDis:1.00,
+    bizDs:1.00, propDs:1.00, cov:1.25, priceMod:1.00, living:1500 },
+  { k:"boom", n:"Boom Years", favors:"Businesses, especially discretionary",
+    d:"Revenue runs hot. Operating leverage works FOR you now: earnings rise faster than sales. Buildings barely notice.",
+    bizEss:1.22, bizDis:1.36, propEss:1.06, propDis:1.08,
+    bizDs:1.00, propDs:1.00, cov:1.25, priceMod:1.12, living:1500 },
+  { k:"recession", n:"Recession", favors:"Essential businesses and leased buildings",
+    d:"Revenue drops and operating leverage cuts the other way, so business earnings fall far harder than sales do. A signed lease keeps paying.",
+    bizEss:0.62, bizDis:0.45, propEss:0.94, propDis:0.86,
+    bizDs:1.00, propDs:1.00, cov:1.25, priceMod:0.88, living:1500 },
+  { k:"cheap", n:"Cheap Money", favors:"Real estate",
+    d:"Rates fall and cap rates compress. Property debt gets 20% cheaper and buildings reprice upward. This is real estate's decade.",
+    bizEss:1.00, bizDis:1.00, propEss:1.12, propDis:1.12,
+    bizDs:1.00, propDs:0.80, cov:1.25, priceMod:1.14, living:1500 },
+  { k:"tight", n:"Tight Credit", favors:"Whoever paid cash",
+    d:"Lenders want 1.5x coverage, not 1.25x. Leverage is punished and the buyer with no debt finally wins.",
+    bizEss:0.95, bizDis:0.90, propEss:0.98, propDis:0.95,
+    bizDs:1.00, propDs:1.00, cov:1.50, priceMod:0.86, living:1500 },
+  { k:"inflation", n:"Inflation", favors:"Real assets and fixed-rate debt",
+    d:"Everything reprices upward. Your rents and your prices rise, your loan payment does not. Your grocery bill does.",
+    bizEss:1.14, bizDis:1.09, propEss:1.18, propDis:1.15,
+    bizDs:1.00, propDs:1.00, cov:1.25, priceMod:1.20, living:2400 }
+];
+
+/* ---------- BOARD LAYOUT: 10x10 perimeter = 36 spaces ---------- */
+function buildLayout(){
+  // Each side carries its own PAYDAY, so cash arrives ~5 times a lap instead of
+  // once. Cashflow 101 does the same thing: several Pay Check spaces, collected
+  // on land OR pass. One payday a lap starves the whole game.
+  const side = d => ([
+    {k:"prop",d}, {k:"biz",d}, {k:"opp"},   {k:"payday"},
+    {k:"prop",d}, {k:"dood"},  {k:"biz",d}, {k:"mkt"}
+  ]);
+  const alt = d => ([
+    {k:"prop",d}, {k:"biz",d}, {k:"life"},  {k:"payday"},
+    {k:"prop",d}, {k:"opp"},   {k:"biz",d}, {k:"mkt"}
+  ]);
+  return [
+    {k:"payday"}, ...side("ot"),
+    {k:"taxday"}, ...alt("hw"),
+    {k:"shift"},  ...side("st"),
+    {k:"closing"},...alt("dt")
+  ];
+}
+const LAYOUT = buildLayout();
+
+/* grid position for each index (clockwise from bottom-left) */
+function gridPos(i){
+  if(i===0)  return [10,1];
+  if(i<9)    return [10-i, 1];        // left side going up  (1..8)
+  if(i===9)  return [1,1];
+  if(i<18)   return [1, i-8];         // top going right     (10..17)
+  if(i===18) return [1,10];
+  if(i<27)   return [i-17, 10];       // right going down    (19..26)
+  if(i===27) return [10,10];
+  return [10, 10-(i-27)];             // bottom going left   (28..35)
+}
+
+const CORNERS = {
+  payday:{n:"PAYDAY", s:"START<br>Collect cash flow."},
+  taxday:{n:"TAX DAY", s:"Tax on business income.<br>Real estate is shielded."},
+  shift:{n:"MARKET<br>SHIFT", s:"The cycle turns."},
+  closing:{n:"CLOSING<br>DAY", s:"Bonus: refinance<br>or take a breath."}
+};
+
+const COLORS   = ["#3B82F6","#E0705A","#5DCAA5","#E8B54A"];
+const BOTNAMES = ["You","Dana","Marcus","Rae"];
+const SEATNAMES= ["Player 1","Player 2","Player 3","Player 4"];
+let mode = "pass";   // "pass" = everyone human, share the laptop. "bots" = you vs AI.
+
+/* The net-worth goal IS the length dial. Pick the target, pick the game. */
+const GOALS = [
+  {k:"quick",    n:"Quick",    worth: 1500000, mins:"20-30 min"},
+  {k:"standard", n:"Standard", worth: 6000000, mins:"30-45 min"},
+  {k:"long",     n:"Long",     worth:20000000, mins:"45-70 min"}
+];
+
+/* Deal scale rises with your net worth. You start buying laundromats and end up
+   buying platforms. Same board, same decks, the numbers grow with you. */
+const TIERS = [
+  {max:  400000, scale:  1,  n:"Main Street"},
+  {max: 2000000, scale:  5,  n:"Lower Middle Market"},
+  {max: 8000000, scale: 22,  n:"Middle Market"},
+  {max: Infinity,scale: 90,  n:"Platform"}
+];
+function tierOf(p){ const w=worth(p); return TIERS.find(t=>w<t.max); }
+
+/* Net worth = cash + what the assets are worth today - what you still owe.
+   Values ride the regime, so a boom lifts your score and a bust cuts it. */
+function worth(p){
+  return Math.round(p.cash + p.assets.reduce((s,a)=>
+    s + a.price*G.regime.priceMod - a.loan, 0));
+}
+
+let G = null;
+let nPlayers = 3;
+let goal = GOALS[1];
+
+/* ---------------- SKYLINE ----------------
+   Drawn, not photographed: a few kB, crisp at any size, and it never dates.
+   Each district gets its own silhouette so the board SHOWS the rent gradient
+   it already prices. Towers downtown, mid-rise and a crane on the rising Strip,
+   warehouses and a water tower on the Highway, low brick and a stack in Old Town. */
+const RND=(s=>()=>((s=s*16807%2147483647)-1)/2147483646)(42);
+function win_(x,w,y,h,dens,warm){
+  let o=""; const cols=Math.max(1,Math.floor(w/7)), rows=Math.max(1,Math.floor(h/9));
+  for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){
+    if(RND()>dens) continue;
+    o+=`<rect x="${(x+4+c*7).toFixed(1)}" y="${(y+5+r*9).toFixed(1)}" width="2.6" height="3.4" fill="${warm}" opacity="${(0.28+RND()*0.55).toFixed(2)}"/>`;
+  } return o;
+}
+function skDowntown(w,h,f,warm){ let o="",x=0;
+  while(x<w){ const bw=16+RND()*26, bh=h*(0.42+RND()*0.55);
+    o+=`<rect x="${x.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${f}"/>`;
+    if(RND()>0.72) o+=`<rect x="${(x+bw/2-1).toFixed(1)}" y="${(h-bh-11).toFixed(1)}" width="2" height="11" fill="${f}"/>`;
+    o+=win_(x,bw,h-bh,bh,0.42,warm); x+=bw+2+RND()*4; } return o; }
+function skStrip(w,h,f,warm){ let o="",x=0;
+  while(x<w){ const bw=20+RND()*30, bh=h*(0.22+RND()*0.33);
+    o+=`<rect x="${x.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${f}"/>`;
+    o+=win_(x,bw,h-bh,bh,0.34,warm); x+=bw+3+RND()*6; }
+  const cx=w*0.62;
+  o+=`<rect x="${cx}" y="${h*0.12}" width="2.4" height="${h*0.72}" fill="${f}"/><rect x="${cx-26}" y="${h*0.12}" width="54" height="2.4" fill="${f}"/><rect x="${cx-24}" y="${h*0.14}" width="1.6" height="14" fill="${f}"/>`;
+  return o; }
+function skHighway(w,h,f,warm){ let o="",x=0;
+  while(x<w){ const bw=44+RND()*58, bh=h*(0.13+RND()*0.16);
+    o+=`<rect x="${x.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${f}"/>`;
+    o+=win_(x,bw,h-bh,bh,0.14,warm); x+=bw+9+RND()*16; }
+  const tx=w*0.3, ty=h*0.30;
+  o+=`<ellipse cx="${tx}" cy="${ty}" rx="13" ry="8.5" fill="${f}"/><rect x="${tx-11}" y="${ty}" width="22" height="6" fill="${f}"/><rect x="${tx-8}" y="${ty+6}" width="2" height="${h-ty-6}" fill="${f}"/><rect x="${tx+6}" y="${ty+6}" width="2" height="${h-ty-6}" fill="${f}"/>`;
+  return o; }
+function skOldTown(w,h,f,warm){ let o="",x=0;
+  while(x<w){ if(RND()>0.86){ x+=18+RND()*22; continue; }
+    const bw=22+RND()*24, bh=h*(0.20+RND()*0.24);
+    o+=`<rect x="${x.toFixed(1)}" y="${(h-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${f}"/>`;
+    if(RND()>0.55) o+=`<path d="M${x} ${h-bh} L${(x+bw/2).toFixed(1)} ${(h-bh-9).toFixed(1)} L${(x+bw).toFixed(1)} ${h-bh} Z" fill="${f}"/>`;
+    o+=win_(x,bw,h-bh,bh,0.2,warm); x+=bw+3+RND()*5; }
+  const sx=w*0.74;
+  o+=`<rect x="${sx}" y="${h*0.20}" width="7" height="${h*0.80}" fill="${f}"/><rect x="${sx-2}" y="${h*0.20}" width="11" height="3.4" fill="${f}"/>`;
+  return o; }
+function sk(kind,w,h,f,warm){
+  const g={dt:skDowntown,st:skStrip,hw:skHighway,ot:skOldTown}[kind];
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">${g(w,h,f,warm)}</svg>`;
+}
+let _painted=false;
+function paintCity(){
+  if(_painted) return; _painted=true;
+  document.getElementById("sky").style.background =
+    "radial-gradient(115% 78% at 50% 106%, #2A4767 0%, rgba(22,35,51,.31) 46%, #0B0B09 78%)";
+  document.getElementById("city").innerHTML = `
+    <div style="position:absolute;left:11%;right:11%;bottom:11.5%;height:23%;opacity:.5">${sk("dt",520,140,"#0A121C","#FFC98A")}</div>
+    <div style="position:absolute;left:11%;right:11%;bottom:9.5%;height:7.5%;opacity:.62">${sk("dt",560,44,"#111A26","#FFD09A")}</div>
+    <div style="position:absolute;left:11%;right:11%;top:9.5%;height:7%;opacity:.5;transform:scaleY(-1)">${sk("hw",560,40,"#1B1B18","#E9D5A6")}</div>
+    <div style="position:absolute;top:11%;bottom:11%;left:9.6%;width:7%;opacity:.5;transform:rotate(90deg);transform-origin:center">${sk("ot",560,40,"#241B0C","#FFC978")}</div>
+    <div style="position:absolute;top:11%;bottom:11%;right:9.6%;width:7%;opacity:.5;transform:rotate(-90deg);transform-origin:center">${sk("st",560,40,"#17210C","#D6E89A")}</div>`;
+  document.getElementById("scrim").style.background =
+    "linear-gradient(to top, rgba(11,11,9,.66), rgba(11,11,9,.10) 46%, rgba(11,11,9,.5))";
+}
+
+/* ---------------- SETUP ---------------- */
+(function(){
+  const p = document.getElementById("pick");
+  [2,3,4].forEach(n=>{
+    const b=document.createElement("button");
+    b.textContent = n;
+    b.className = n===3?"on":"";
+    b.onclick=()=>{nPlayers=n;[...p.children].forEach(c=>c.className="");b.className="on";};
+    p.appendChild(b);
+  });
+  const mp = document.getElementById("modepick");
+  [["pass","Pass &amp; Play","Everyone human, share one screen"],
+   ["bots","vs Bots","You against the computer"]].forEach(([k,t,d],i)=>{
+    const b=document.createElement("button");
+    b.innerHTML=`${t}<small>${d}</small>`;
+    b.className = i===0?"on":"";
+    b.onclick=()=>{mode=k;[...mp.children].forEach(c=>c.className="");b.className="on";};
+    mp.appendChild(b);
+  });
+  const gp = document.getElementById("goalpick");
+  GOALS.forEach((G_,i)=>{
+    const b=document.createElement("button");
+    b.innerHTML = `${G_.n}<small>${F(G_.worth)} · ${G_.mins}</small>`;
+    b.className = i===1?"on":"";
+    b.onclick=()=>{goal=G_;[...gp.children].forEach(c=>c.className="");b.className="on";};
+    gp.appendChild(b);
+  });
+})();
+
+function startGame(){
+  G = {
+    turn:0, pos:0, players:[], log:[],
+    decks:{}, offm:shuffle(OFFMARKET), dood:shuffle(DOODADS),
+    life:shuffle(LIFE), regime:REGIMES[0], over:false
+  };
+  for(const d of ["ot","hw","st","dt"]){
+    G.decks["prop_"+d] = shuffle(PROPS[d]);
+    G.decks["biz_"+d]  = shuffle(BIZ[d]);
+  }
+  for(let i=0;i<nPlayers;i++){
+    const isBot = (mode==="bots") && i>0;
+    G.players.push({
+      i, name:(mode==="bots"?BOTNAMES[i]:SEATNAMES[i]), color:COLORS[i], bot:isBot,
+      cash:75000, pos:0, assets:[], attention:2, busy:[], skip:0, laps:0
+    });
+  }
+  document.getElementById("setup").classList.add("hide");
+  document.getElementById("app").classList.remove("hide");
+  say(`<b>Boomtown.</b> Goal: ${F(goal.worth)} net worth at ${minCov().toFixed(2)}x coverage. `+
+      `Everyone starts with ${F(75000)} and two attention slots. Living costs ${F(1500)} a month.`);
+  if(mode==="pass") say(`Pass &amp; Play: hand the laptop to the next player when their turn comes up.`);
+  paintCity();
+  renderBoard(); renderPlayers();
+  nextTurn();
+}
+
+/* ---------------- MATH (the game does all of it) ---------------- */
+function income(p){
+  const R = G.regime;
+  const biz = p.assets.filter(a=>a.type==="biz").sort((a,b)=>b.mgr-a.mgr);
+  const slots = Math.max(0, p.attention - p.busy.length);
+  let noi=0, covNoi=0, ds=0, mgrCost=0;
+  biz.forEach((a,idx)=>{
+    // OPERATING LEVERAGE. SDE is a thin residual on a mostly-fixed cost base, so a
+    // revenue swing multiplies through instead of passing straight down. That is the
+    // real reason a business is the risky asset and a leased building is the safe one.
+    let e = a.noi * (a.ess ? R.bizEss : R.bizDis);
+    const d = a.ds * R.bizDs;
+    // COVERAGE: the manager is charged either way. Your labour is not free, and a
+    // lender underwrites the business without you in it. (Deal box, DB-018.)
+    covNoi += e - a.mgr;
+    // CASH: you keep the manager's pay when you sit in the seat yourself. When you
+    // don't, you pay a market manager. A good manager runs it fine, so the cost of
+    // stepping back is the wage, not decay.
+    if(idx >= slots){ e -= a.mgr; mgrCost += a.mgr; }
+    noi += e; ds += d;
+  });
+  p.assets.filter(a=>a.type!=="biz").forEach(a=>{
+    const e = a.noi * (a.ess ? R.propEss : R.propDis);
+    noi += e; covNoi += e; ds += a.ds * R.propDs;
+  });
+  const cov = ds>0 ? covNoi/ds : (covNoi>0?99:0);
+  const fcf = noi - ds - R.living;
+  return {noi, covNoi, ds, cov, fcf, mgrCost, living:R.living,
+          unmanned:Math.max(0,biz.length-slots)};
+}
+function covColor(c){ return c>=1.5?"var(--good)":c>=1.25?"var(--warn)":"var(--bad)"; }
+function minCov(){ return G.regime.cov; }
+
+/* ---------------- RENDER ---------------- */
+function renderBoard(){
+  const b = document.getElementById("board");
+  b.innerHTML = "";
+  LAYOUT.forEach((sp,i)=>{
+    const [r,c] = gridPos(i);
+    const el = document.createElement("div");
+    el.id = "sp"+i;
+    el.style.gridArea = `${r}/${c}`;
+    const here = G.players.some(p=>p.pos===i);
+    if(CORNERS[sp.k]){
+      el.className = "sp cnr" + (here?" here":"");
+      el.innerHTML = `<div><div class="lbl">${CORNERS[sp.k].n}</div><div class="sub">${CORNERS[sp.k].s}</div></div>`;
+    } else if(sp.k==="prop"||sp.k==="biz"){
+      const owner = G.players.find(p=>p.assets.some(a=>a.space===i));
+      el.className = `sp ${sp.d}` + (owner?" owned":"") + (here?" here":"");
+      const a = owner && owner.assets.find(x=>x.space===i);
+      el.innerHTML = `<div class="sub">${DISTRICTS[sp.d].name}</div>
+        <div class="lbl">${sp.k==="biz"?"Business":"Property"}</div>
+        <div class="sub">${a? a.n : "Draw a card"}</div>`;
+    } else {
+      const t = {opp:"Opportunity",dood:"Doodad",life:"Life",mkt:"The Market"}[sp.k];
+      el.className = "sp ev" + (here?" here":"");
+      el.innerHTML = `<div class="lbl">${t}</div>`;
+    }
+    const pawns = G.players.filter(p=>p.pos===i);
+    if(pawns.length){
+      el.innerHTML += `<div class="pawns">${pawns.map(p=>`<i class="pawn" style="background:${p.color}"></i>`).join("")}</div>`;
+    }
+    b.appendChild(el);
+  });
+  const mid = document.createElement("div");
+  mid.className="mid";
+  const cur = G.players[G.turn % G.players.length];
+  const R = G.regime;
+  mid.innerHTML = `<h1>BOOMTOWN</h1>
+    <div class="tag">First to <b style="color:var(--tx)">${F(goal.worth)}</b> net worth, holding <b style="color:var(--tx)">${minCov().toFixed(2)}x</b> coverage.</div>
+    <div class="tag" style="font-size:13px;color:var(--tx)"><b>${R.n}</b></div>
+    <div class="tag" style="font-size:11px">Favours: ${R.favors}</div>
+    <div id="rollzone"></div>`;
+  b.appendChild(mid);
+  const rz = document.getElementById("rollzone");
+  if(G.over) return;
+  if(cur.bot){
+    rz.innerHTML = `<div class="tag" style="color:${cur.color};font-weight:700">${cur.name} is thinking…</div>`;
+  } else {
+    rz.innerHTML =
+      `${G.players.filter(x=>!x.bot).length>1
+        ? `<div class="tag" style="font-size:15px;font-weight:800;color:${cur.color};margin-bottom:8px">${cur.name}'s turn</div>` : ""}
+       <button class="btn" id="rollbtn" onclick="humanRoll()">Roll</button>`;
+  }
+}
+
+/* Repaint only the pawns. Rebuilding the whole board mid-move would wipe the dice. */
+function renderPawns(){
+  document.querySelectorAll(".pawns").forEach(e=>e.remove());
+  document.querySelectorAll(".sp.here").forEach(e=>e.classList.remove("here"));
+  G.players.forEach(p=>{
+    const cell=document.getElementById("sp"+p.pos);
+    if(!cell) return;
+    cell.classList.add("here");
+    let box=cell.querySelector(".pawns");
+    if(!box){ box=document.createElement("div"); box.className="pawns"; cell.appendChild(box); }
+    const i=document.createElement("i");
+    i.className="pawn"; i.style.background=p.color;
+    box.appendChild(i);
+  });
+}
+
+function renderPlayers(){
+  const w = document.getElementById("players");
+  w.innerHTML = "";
+  G.players.forEach((p,idx)=>{
+    const m = income(p);
+    const act = idx === (G.turn % G.players.length) && !G.over;
+    const d = document.createElement("div");
+    d.className = "pl" + (act?" act":"");
+    const pct = Math.max(0, Math.min(100, (m.cov/2.5)*100));
+    d.innerHTML = `
+      <div class="top">
+        <i class="dot" style="background:${p.color}"></i>
+        <span class="nm">${p.name}</span>
+        ${p.bot?'<span class="bot">BOT</span>':''}
+      </div>
+      <div class="rows" style="font-size:13px;margin-bottom:5px">
+        <span class="k" style="font-weight:700;color:var(--tx)">Net worth</span>
+        <span class="v" style="font-weight:800;color:${worth(p)>=goal.worth?'var(--good)':'var(--tx)'}">${F(worth(p))}</span>
+      </div>
+      <div class="rows">
+        <span class="k">Cash</span><span class="v">${F(p.cash)}</span>
+        <span class="k">Income</span><span class="v">${F(m.noi)}</span>
+        <span class="k">Debt service</span><span class="v b">${m.ds?"-"+F(m.ds).slice(1):"$0"}</span>
+        <span class="k">Living</span><span class="v b">-${F(m.living).slice(1)}</span>
+        <span class="k">Free cash flow</span><span class="v ${m.fcf>0?'g':m.fcf<0?'b':''}">${F(m.fcf)}</span>
+        <span class="k">Coverage</span><span class="v" style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"—"}</span>
+      </div>
+      <div class="covbar"><i style="width:${pct}%;background:${covColor(m.cov)}"></i></div>
+      <div class="att">
+        ${Array.from({length:p.attention}).map((_,k)=>`<i class="${k<p.busy.length?'used':''}">${k<p.busy.length?'!':'●'}</i>`).join("")}
+        <span style="font-size:10px;color:var(--tx3);margin-left:5px;align-self:center">
+          ${p.assets.length} asset${p.assets.length===1?'':'s'}${m.unmanned?` · ${m.unmanned} managed`:''} · ${tierOf(p).n}
+        </span>
+      </div>`;
+    w.appendChild(d);
+  });
+}
+
+function say(html, cls=""){
+  G.log.unshift(`<div class="${cls}">${html}</div>`);
+  document.getElementById("log").innerHTML = G.log.slice(0,60).join("");
+}
+
+/* ---------------- TURN LOOP ---------------- */
+function nextTurn(){
+  if(G.over) return;
+  renderBoard(); renderPlayers();
+  const p = G.players[G.turn % G.players.length];
+  if(p.skip>0){
+    p.skip--;
+    say(`<b>${p.name}</b> sits out a turn.`);
+    G.turn++; setTimeout(nextTurn, 700); return;
+  }
+  if(p.bot) setTimeout(()=>doRoll(p), 850);
+}
+function humanRoll(){
+  const b=document.getElementById("rollbtn"); if(b) b.disabled=true;
+  doRoll(G.players[G.turn % G.players.length]);
+}
+
+/* Dice tumble before they settle. Small thing, but a number that just appears
+   feels like a spreadsheet and a number that lands feels like a game. */
+function rollDice(d1,d2,cb){
+  const rz=document.getElementById("rollzone");
+  if(!rz){ cb(); return; }
+  rz.innerHTML=`<div class="dice"><div class="die" id="dA">?</div><div class="die" id="dB">?</div></div>`;
+  const a=document.getElementById("dA"), b=document.getElementById("dB");
+  let t=0;
+  const iv=setInterval(()=>{
+    a.textContent=1+Math.floor(Math.random()*6);
+    b.textContent=1+Math.floor(Math.random()*6);
+    a.classList.add("tumble"); b.classList.add("tumble");
+    if(++t>=9){
+      clearInterval(iv);
+      a.textContent=d1; b.textContent=d2;
+      a.classList.remove("tumble"); b.classList.remove("tumble");
+      a.classList.add("settle"); b.classList.add("settle");
+      setTimeout(cb, 460);
+    }
+  },70);
+}
+
+/* Walk the pawn one space at a time. Because we touch every square on the way,
+   passing a PAYDAY pays you automatically, which is exactly Cashflow's rule. */
+function stepMove(p,n,cb){
+  let left=n;
+  const tick=()=>{
+    p.pos=(p.pos+1)%LAYOUT.length;
+    if(LAYOUT[p.pos].k==="payday" && left>1) payday(p, true);
+    renderPawns(); renderPlayers();
+    if(--left>0) setTimeout(tick, 105);
+    else setTimeout(cb, 300);
+  };
+  tick();
+}
+
+function doRoll(p){
+  const d1=1+Math.floor(Math.random()*6), d2=1+Math.floor(Math.random()*6);
+  const n=d1+d2;
+  say(`<b>${p.name}</b> rolls ${d1}+${d2} = <span class="hl">${n}</span>.`);
+  rollDice(d1,d2,()=>stepMove(p,n,()=>land(p)));
+}
+
+function endTurn(){
+  closeModal();
+  // tick timers
+  const p = G.players[G.turn % G.players.length];
+  p.busy = p.busy.filter(t=>--t.r > 0);
+  G.turn++;
+  checkWin();
+  if(!G.over) setTimeout(nextTurn, 380);
+}
+function payday(p, passing){
+  const m=income(p);
+  p.cash += m.fcf;
+  const s = m.fcf>=0 ? `collects <span class="gd">${F(m.fcf)}</span>` : `pays out <span class="bd">${F(-m.fcf)}</span>`;
+  say(`<b>${p.name}</b> ${passing?"passes":"lands on"} PAYDAY and ${s}.`);
+  flashCell(p.pos, m.fcf>=0 ? "pop-good" : "pop-bad");
+  if(p.cash < 0) forceSell(p);
+}
+
+function flashCell(i, cls){
+  const c=document.getElementById("sp"+i); if(!c) return;
+  c.classList.add(cls); setTimeout(()=>c.classList.remove(cls), 700);
+}
+
+/* ---------------- LANDING ---------------- */
+function land(p){
+  const sp = LAYOUT[p.pos];
+  switch(sp.k){
+    case "payday":  payday(p, false); renderPlayers(); return endTurn();
+    case "taxday":  return taxDay(p);
+    case "shift":   return marketShift(p);
+    case "closing": return closingDay(p);
+    case "dood":    return doodad(p);
+    case "life":    return lifeEvent(p);
+    case "mkt":     return marketOffer(p);
+    case "opp":     return drawOffMarket(p);
+    case "prop":
+    case "biz":     return drawDeal(p, sp);
+  }
+}
+
+/* Entry multiples by district, inside the deal box's stated bands.
+   2.0-2.6x for routes, trades, personal care.  2.75-3.3x for professional services.
+   3.0x is the hard safety ceiling, so nothing here is priced above it. */
+const BIZ_MULT = { ot:2.15, hw:2.45, st:2.35, dt:2.95 };
+
+/* A market-rate manager runs ~32% of SDE. That number is not arbitrary:
+   at 3.0x with the manager charged, it lands DSCR at ~1.5x, which is the
+   deal box's coverage floor. Solve it backwards and the manager is 32.5% of SDE. */
+const MGR_SHARE = 0.32;
+
+function makeDeal(kind, dist, spaceIdx, discount=1, scale=1){
+  const key = kind+"_"+dist;
+  if(!G.decks[key].length) G.decks[key] = shuffle(kind==="prop"?PROPS[dist]:BIZ[dist]);
+  const base = G.decks[key].shift();
+  const price = kind==="biz"
+    ? Math.round(base.sde * 12 * BIZ_MULT[dist] * discount * G.regime.priceMod * scale)
+    : Math.round(base.price * discount * G.regime.priceMod * scale);
+  const down  = Math.round(price * (kind==="biz" ? .15 : .18));
+  const loan  = price - down;
+  // SBA 7(a) debt service runs ~15% of PURCHASE PRICE per year (deal box screening
+  // rate, 90% LTV / 10yr / ~11%). On an 85% loan that's a 0.0147 monthly constant.
+  // Property is 25-year money at ~6.2%, which must stay below the cap rate.
+  const ds = kind==="biz"
+    ? Math.round(loan * 0.0147)
+    : Math.round(loan * 0.0052);
+  const d = {
+    n:base.n, type:kind, dist, space:spaceIdx, price, down, loan, ds,
+    ess:base.ess, mgr:kind==="biz"?Math.round(base.sde*MGR_SHARE*scale):0, re:!!base.re
+  };
+  if(kind==="biz"){
+    d.claimed = base.sde;
+    // Verified SDE almost always shrinks. Occasionally it collapses.
+    const roll = Math.random();
+    const factor = roll<0.10 ? (0.42+Math.random()*0.12)     // the Powder Room card
+                 : roll<0.35 ? (0.80+Math.random()*0.07)
+                             : (0.88+Math.random()*0.11);
+    d.noi = Math.round(base.sde*factor*scale);
+    d.claimed = Math.round(d.claimed*scale);
+    d.factor = factor;
+  } else {
+    // Cap rates lift so leverage stays positive at every district.
+    d.noi = Math.round(base.noi * 1.14 * scale);
+    d.claimed = d.noi;
+    d.factor = 1;
+  }
+  return d;
+}
+
+function drawDeal(p, sp, discount=1, kicker=null){
+  const owner = G.players.find(pl=>pl.assets.some(a=>a.space===p.pos));
+  if(owner){
+    if(owner===p){ say(`<b>${p.name}</b> lands on their own asset.`); return endTurn(); }
+    return offerFlow(p, owner, owner.assets.find(a=>a.space===p.pos));
+  }
+  const deal = makeDeal(sp.k, sp.d, p.pos, discount, tierOf(p).scale);
+  deal.kicker = kicker;
+  p.bot ? botDecide(p, deal) : showDeal(p, deal, false);
+}
+
+function drawOffMarket(p){
+  const card = G.offm.length ? G.offm.shift() : pick(OFFMARKET);
+  G.offm.push(card);
+  const deal = makeDeal(card.kind, card.d, -1, card.disc, tierOf(p).scale);
+  deal.kicker = card.n;
+  say(`<b>${p.name}</b> finds an off-market deal: <span class="hl">${card.n}</span>.`);
+  p.bot ? botDecide(p, deal) : showDeal(p, deal, false);
+}
+
+/* ---------------- THE OFFER ----------------
+   No rent. Monopoly's rent is a wealth transfer triggered by a die roll: it punishes
+   bad luck and teaches nothing true. You do not pay a stranger for walking past their
+   building. What IS true is that you can go ask them to sell. So landing on someone
+   else's asset buys you the right to make an offer, and nothing more. They can say no. */
+function marketValue(a){ return Math.round(a.price * G.regime.priceMod); }
+
+function ownerAccepts(owner, a, price){
+  const v = marketValue(a), m = income(owner);
+  let need = 1.30;                              // comfortable seller wants a premium
+  if(m.fcf < 0)             need = 1.14;        // bleeding cash
+  if(owner.cash < 20000)    need = 1.12;        // tight
+  if(m.cov < minCov())      need = 1.04;        // coverage trouble: motivated seller
+  return price >= v * need;
+}
+
+function doTransfer(buyer, owner, a, price){
+  const equity = price - a.loan;                // buyer pays the equity, assumes the loan
+  buyer.cash -= equity; owner.cash += equity;
+  owner.assets = owner.assets.filter(x=>x!==a);
+  buyer.assets.push(a);
+}
+
+function offerFlow(buyer, owner, a){
+  const v = marketValue(a);
+  if(buyer.bot){
+    const price = Math.round(v * (1.12 + Math.random()*0.3));
+    const equity = price - a.loan;
+    const net = a.noi - a.ds;
+    if(buyer.cash > equity + 20000 && net*12/Math.max(equity,1) > 0.2 && ownerAccepts(owner,a,price)){
+      doTransfer(buyer, owner, a, price);
+      say(`<b>${buyer.name}</b> buys <span class="hl">${a.n}</span> off ${owner.name} for ${F(price)}.`, "gd");
+    } else {
+      say(`<b>${buyer.name}</b> lands on ${owner.name}'s ${a.n}. No deal.`);
+    }
+    renderBoard(); renderPlayers();
+    return setTimeout(endTurn, 750);
+  }
+  window._offer = {buyer, owner, a, v};
+  const net = a.noi - a.ds;
+  const lv = [
+    {t:"Market price",  m:1.05, d:"Fair, and easy to refuse."},
+    {t:"Strong offer",  m:1.32, d:"A real premium. Most sellers take this."},
+    {t:"Hard to refuse",m:1.62, d:"You are overpaying, and you know it."}
+  ];
+  open(`
+    <div class="kick">${owner.name} owns this</div>
+    <h2>${a.n}</h2>
+    <div class="dist">${DISTRICTS[a.dist].name} · you may make an offer. They can say no.</div>
+    <div class="deal"><div class="rows">
+      <span class="k">Market value today</span><span class="v">${F(v)}</span>
+      <span class="k">Loan you would assume</span><span class="v">${F(a.loan)}</span>
+      <span class="k">Cash flow it throws</span><span class="v ${net>=0?'g':'b'}">${F(net)}/mo</span>
+      ${a.type==="biz"?`<span class="k">Manager if unattended</span><span class="v">-${F(a.mgr).slice(1)}/mo</span>`:""}
+    </div></div>
+    <div class="note">You pay the equity in cash and take over the loan. There is no rent in this game,
+    because being on a square is not a reason to hand someone money. Wanting what they own is.</div>
+    <div class="acts">
+      ${lv.map((L,i)=>{const price=Math.round(v*L.m), eq=price-a.loan;
+        return `<button class="opt" onclick="makeOffer(${i})" ${buyer.cash<eq?"disabled":""}>
+          <span><span class="t">${L.t}</span><span class="d">${L.d}</span></span>
+          <span class="amt">-${F(eq).slice(1)}</span></button>`;}).join("")}
+      <button class="opt" onclick="endTurn()"><span><span class="t">Walk away</span>
+        <span class="d">Costs nothing.</span></span><span class="amt">—</span></button>
+    </div>`);
+}
+function makeOffer(i){
+  const {buyer, owner, a, v} = window._offer;
+  const price = Math.round(v * [1.05,1.32,1.62][i]);
+  if(ownerAccepts(owner, a, price)){
+    doTransfer(buyer, owner, a, price);
+    say(`<b>${buyer.name}</b> buys <span class="hl">${a.n}</span> off ${owner.name} for ${F(price)}.`, "gd");
+  } else {
+    say(`${owner.name} turns down ${F(price)} for ${a.n}.`);
+  }
+  renderBoard(); renderPlayers();
+  endTurn();
+}
+
+/* ---------------- DEAL MODAL ---------------- */
+function showDeal(p, d, verified){
+  const shown = verified ? d.noi : d.claimed;
+  const isBiz = d.type==="biz";
+  const cash = p.cash;
+  const m = income(p);
+  // Coverage always charges a market manager, even on a business you'd run yourself.
+  const projCovNoi = m.covNoi + shown - (isBiz ? d.mgr : 0);
+  const projCov = (m.ds + d.ds) ? projCovNoi/(m.ds+d.ds) : 99;
+  const cov = d.ds ? (shown - (isBiz?d.mgr:0))/d.ds : 99;
+  const blocked = projCov < minCov();
+
+  open(`
+    <div class="kick">${d.kicker ? d.kicker : (isBiz?"Business for sale":"Property for sale")}</div>
+    <h2>${d.n}</h2>
+    <div class="dist">${DISTRICTS[d.dist].name} · ${DISTRICTS[d.dist].blurb}
+      ${d.ess?'<span class="badge ess" style="margin-left:6px">Essential</span>':'<span class="badge dis" style="margin-left:6px">Discretionary</span>'}
+      ${d.re?'<span class="badge" style="margin-left:4px">Includes real estate</span>':''}
+    </div>
+
+    <div class="deal">
+      <div class="rows">
+        <span class="k">Asking price</span><span class="v">${F(d.price)}</span>
+        <span class="k">Down payment</span><span class="v">${F(d.down)}</span>
+        <span class="k">Loan</span><span class="v">${F(d.loan)}</span>
+        <div class="hr" style="grid-column:1/3"></div>
+        <span class="k">${isBiz ? (verified?"Verified SDE":"Claimed SDE") : "Net operating income"}</span>
+        <span class="v ${verified&&d.factor<.7?'b':''}">${F(shown)}/mo</span>
+        <span class="k">Debt service</span><span class="v b">-${F(d.ds).slice(1)}/mo</span>
+        ${isBiz?`<span class="k">Manager if unattended</span><span class="v">-${F(d.mgr).slice(1)}/mo</span>`:""}
+        <div class="hr" style="grid-column:1/3"></div>
+        <span class="k">Coverage on this deal</span>
+        <span class="v" style="color:${covColor(cov)}">${cov.toFixed(2)}x</span>
+        <span class="k">Your coverage after</span>
+        <span class="v" style="color:${covColor(projCov)}">${projCov.toFixed(2)}x</span>
+      </div>
+    </div>
+
+    ${isBiz && !verified ? `<div class="note warn">That SDE is the seller's number. It has not been verified. Quality of earnings costs ${F(2500)} and shows you the real one.</div>`
+      : isBiz && verified ? `<div class="note ${d.factor<.7?'warn':''}">Verified. The real number is <b>${Math.round(d.factor*100)}%</b> of what was claimed.${d.factor<.7?" This listing was badly overstated.":""}</div>`
+      : `<div class="note">Property NOI is verifiable from the rent roll. No diligence needed.</div>`}
+
+    ${blocked?`<div class="note warn">Your coverage would fall to ${projCov.toFixed(2)}x. The bank needs ${minCov().toFixed(2)}x. You can still pay all cash.</div>`:""}
+
+    <div class="acts">
+      ${isBiz && !verified ? `
+      <button class="opt" onclick="runQoE()" ${cash<2500?"disabled":""}>
+        <span><span class="t">Run quality of earnings</span><span class="d">See the verified number before you decide</span></span>
+        <span class="amt">-${F(2500).slice(1)}</span>
+      </button>`:""}
+      <button class="opt" onclick="buy('loan')" ${cash<d.down||blocked?"disabled":""}>
+        <span><span class="t">Buy with a loan</span><span class="d">${F(d.down)} down, ${F(d.ds)}/mo debt service</span></span>
+        <span class="amt">-${F(d.down).slice(1)}</span>
+      </button>
+      <button class="opt" onclick="buy('cash')" ${cash<d.price?"disabled":""}>
+        <span><span class="t">Pay all cash</span><span class="d">No debt service. Coverage untouched.</span></span>
+        <span class="amt">-${F(d.price).slice(1)}</span>
+      </button>
+      <button class="opt" onclick="pass()">
+        <span><span class="t">Pass</span><span class="d">No called strikes. Passing costs nothing.</span></span>
+        <span class="amt">—</span>
+      </button>
+    </div>
+  `);
+  window._deal = {p, d, verified};
+}
+
+function runQoE(){
+  const {p,d} = window._deal;
+  p.cash -= 2500;
+  say(`<b>${p.name}</b> pays ${F(2500)} for quality of earnings on ${d.n}.`);
+  if(d.factor < .7) say(`Verified SDE comes back at <span class="bd">${Math.round(d.factor*100)}%</span> of claimed. That listing was cooked.`, "");
+  renderPlayers();
+  showDeal(p, d, true);
+}
+function pass(){
+  const {p,d} = window._deal;
+  say(`<b>${p.name}</b> passes on ${d.n}.`);
+  endTurn();
+}
+function buy(how){
+  const {p,d} = window._deal;
+  if(how==="cash"){ p.cash -= d.price; d.ds = 0; d.loan = 0; }
+  else { p.cash -= d.down; }
+  if(d.space>=0) d.space = p.pos; else d.space = -1-p.assets.length;
+  p.assets.push(d);
+  const m = income(p);
+  say(`<b>${p.name}</b> buys <span class="hl">${d.n}</span> ${how==="cash"?"for cash":"with a loan"}. Coverage now <span style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"no debt"}</span>.`, "gd");
+  renderBoard(); renderPlayers();
+  endTurn();
+}
+
+/* ---------------- BOT ---------------- */
+function botDecide(p, d){
+  const isBiz = d.type==="biz";
+  // A disciplined buyer verifies before every business purchase. QoE on every LOI.
+  let known = d.claimed;
+  if(isBiz && p.cash > 6000){
+    p.cash -= 2500; known = d.noi;
+    say(`<b>${p.name}</b> runs QoE on ${d.n}.`);
+  }
+  const m = income(p);
+  const projCov = (m.ds+d.ds) ? (m.covNoi + known - (isBiz?d.mgr:0))/(m.ds+d.ds) : 99;
+  const canLoan = p.cash >= d.down + 8000 && projCov >= minCov();
+  const canCash = p.cash >= d.price + 15000;
+  // Judge on cash-on-cash against the money actually going in, not gross yield.
+  // Businesses beyond the attention cap get the manager and the absentee drag.
+  const attended = p.assets.filter(a=>a.type==="biz").length < Math.max(0,p.attention-p.busy.length);
+  const netMo = isBiz ? (attended ? known - d.ds : known - d.mgr - d.ds) : known - d.ds;
+  const coc = (netMo*12) / d.down;
+
+  if(canLoan && coc > 0.28){
+    p.cash -= d.down; d.space = d.space>=0 ? p.pos : -1-p.assets.length;
+    p.assets.push(d);
+    say(`<b>${p.name}</b> buys <span class="hl">${d.n}</span> with a loan.`);
+  } else if(canCash && (netMo*12)/d.price > 0.16){
+    p.cash -= d.price; d.ds=0; d.loan=0; d.space = d.space>=0 ? p.pos : -1-p.assets.length;
+    p.assets.push(d);
+    say(`<b>${p.name}</b> pays cash for <span class="hl">${d.n}</span>.`);
+  } else {
+    say(`<b>${p.name}</b> passes on ${d.n}.`);
+  }
+  renderBoard(); renderPlayers();
+  setTimeout(endTurn, 520);
+}
+
+/* ---------------- EVENT SPACES ---------------- */
+function taxDay(p){
+  // Tax the NET profit a business throws off, not its gross SDE. Debt service is
+  // not income. Real estate income is shielded by depreciation and pays nothing.
+  const bizNoi = p.assets.filter(a=>a.type==="biz")
+                  .reduce((s,a)=>s+Math.max(0, a.noi - a.ds), 0);
+  const tax = Math.round(bizNoi * 12 * 0.24);
+  const reNoi = p.assets.filter(a=>a.type!=="biz").reduce((s,a)=>s+Math.max(0,a.noi-a.ds), 0);
+  p.cash -= tax;
+  open(`
+    <div class="kick">Corner</div><h2>Tax Day</h2>
+    <div class="dist">Business income is taxed. Real estate income is shielded by depreciation.</div>
+    <div class="deal"><div class="rows">
+      <span class="k">Business profit (annual)</span><span class="v">${F(bizNoi*12)}</span>
+      <span class="k">Tax at 24%</span><span class="v b">-${F(tax).slice(1)}</span>
+      <div class="hr" style="grid-column:1/3"></div>
+      <span class="k">Real estate profit (annual)</span><span class="v">${F(reNoi*12)}</span>
+      <span class="k">Tax on it</span><span class="v g">$0</span>
+    </div></div>
+    <div class="note">This is why the wealthy own buildings. Same dollar, different tax treatment.</div>
+    <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>
+  `);
+  say(`<b>${p.name}</b> hits TAX DAY and pays ${F(tax)}${reNoi?`. Real estate income of ${F(reNoi*12)} goes untaxed.`:"."}`);
+  if(p.cash<0) forceSell(p);
+  renderPlayers();
+  if(p.bot) setTimeout(endTurn, 1100);
+}
+
+function marketShift(p){
+  const was = G.regime;
+  G.regime = pick(REGIMES.filter(r=>r.k!==was.k));
+  const R = G.regime;
+  say(`<span class="hl">MARKET SHIFT</span> — ${was.n} gives way to <b>${R.n}</b>. Favours: ${R.favors}.`);
+  open(`
+    <div class="kick">Corner · the cycle turns for everyone</div>
+    <h2>${R.n}</h2>
+    <div class="dist">Favours: ${R.favors}</div>
+    <div class="note" style="font-size:13px">${R.d}</div>
+    <div class="deal"><div class="rows">
+      <span class="k">Coverage the bank now wants</span><span class="v">${R.cov.toFixed(2)}x</span>
+      <span class="k">Living costs</span><span class="v">${F(R.living)}/mo</span>
+      <span class="k">Asking prices</span><span class="v">${R.priceMod>1?"+":""}${Math.round((R.priceMod-1)*100)}%</span>
+      <div class="hr" style="grid-column:1/3"></div>
+      ${G.players.map(pl=>{const m=income(pl);
+        return `<span class="k" style="color:${pl.color}">${pl.name}</span>
+        <span class="v" style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"no debt"} · ${F(m.fcf)}/mo</span>`;}).join("")}
+    </div></div>
+    <div class="note">This regime holds until somebody lands here again.</div>
+    <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>
+  `);
+  renderPlayers();
+  if(p.bot) setTimeout(endTurn, 1600);
+}
+function closingDay(p){
+  const gain = 4000 + Math.round(Math.random()*6000);
+  p.cash += gain;
+  say(`<b>${p.name}</b> hits CLOSING DAY and banks <span class="gd">${F(gain)}</span> from a refinance.`);
+  renderPlayers();
+  if(!p.bot){
+    open(`<div class="kick">Corner</div><h2>Closing Day</h2>
+      <div class="note" style="font-size:13px">You pulled <b>${F(gain)}</b> out of an earlier deal in a refinance. Tax free, because a loan is not income.</div>
+      <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>`);
+  } else setTimeout(endTurn, 700);
+}
+
+function doodad(p){
+  const c = G.dood.length ? G.dood.shift() : pick(DOODADS);
+  G.dood.push(c);
+  p.cash -= c.c;
+  say(`<b>${p.name}</b> — Doodad: ${c.t}. <span class="bd">-${F(c.c).slice(1)}</span>`);
+  if(p.cash<0) forceSell(p);
+  renderPlayers();
+  if(!p.bot){
+    open(`<div class="kick">Doodad</div><h2>${c.t}</h2>
+      <div class="note" style="font-size:13px">Mandatory, not optional. That is what makes it a doodad.</div>
+      <div class="deal"><div class="rows"><span class="k">Cost</span><span class="v b">-${F(c.c).slice(1)}</span></div></div>
+      <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>`);
+  } else setTimeout(endTurn, 650);
+}
+
+function lifeEvent(p){
+  const c = G.life.length ? G.life.shift() : pick(LIFE);
+  G.life.push(c);
+  p.cash -= c.c;
+  p.busy.push({r:c.r, t:c.t});
+  say(`<b>${p.name}</b> — Life: ${c.t}. Loses an attention slot for ${c.r} turns and pays ${F(c.c)}.`, "");
+  if(p.cash<0) forceSell(p);
+  renderPlayers();
+  if(!p.bot){
+    const m = income(p);
+    open(`<div class="kick">Life</div><h2>${c.t}</h2>
+      <div class="note" style="font-size:13px">${c.d}</div>
+      <div class="deal"><div class="rows">
+        <span class="k">Cost</span><span class="v b">-${F(c.c).slice(1)}</span>
+        <span class="k">Attention slots left</span><span class="v">${Math.max(0,p.attention-p.busy.length)} of ${p.attention}</span>
+        ${m.unmanned?`<span class="k">Businesses now on a manager</span><span class="v w">${m.unmanned}</span>`:""}
+      </div></div>
+      <div class="note">Money is not the only thing a life event takes. This is the part no other money game models.</div>
+      <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>`);
+  } else setTimeout(endTurn, 800);
+}
+
+function marketOffer(p){
+  if(!p.assets.length){
+    say(`<b>${p.name}</b> lands on The Market with nothing to sell.`);
+    return endTurn();
+  }
+  const a = pick(p.assets);
+  const mult = 1.15 + Math.random()*0.45;
+  const offer = Math.round((a.price) * mult - a.loan);
+  if(p.bot){
+    if(offer > a.price*0.55 && Math.random()<0.35){
+      p.cash += offer; p.assets = p.assets.filter(x=>x!==a);
+      say(`<b>${p.name}</b> sells ${a.n} for <span class="gd">${F(offer)}</span>.`);
+    } else say(`<b>${p.name}</b> turns down an offer on ${a.n}.`);
+    renderBoard(); renderPlayers();
+    return setTimeout(endTurn, 700);
+  }
+  window._sale = {p,a,offer};
+  open(`
+    <div class="kick">The Market</div><h2>Somebody wants to buy</h2>
+    <div class="dist">A buyer approaches you about ${a.n}.</div>
+    <div class="deal"><div class="rows">
+      <span class="k">You paid</span><span class="v">${F(a.price)}</span>
+      <span class="k">Offer</span><span class="v">${F(Math.round(a.price*mult))}</span>
+      <span class="k">Loan payoff</span><span class="v b">-${F(a.loan).slice(1)}</span>
+      <div class="hr" style="grid-column:1/3"></div>
+      <span class="k">Cash to you</span><span class="v g">${F(offer)}</span>
+      <span class="k">Cash flow you give up</span><span class="v b">-${F(a.noi-a.ds).slice(1)}/mo</span>
+    </div></div>
+    <div class="note">Selling is a real option, not a failure. Sometimes the cash beats the coupon.</div>
+    <div class="acts">
+      <button class="opt" onclick="sellIt()"><span><span class="t">Sell it</span><span class="d">Take the cash, lose the income</span></span><span class="amt">+${F(offer).slice(1)}</span></button>
+      <button class="opt" onclick="endTurn()"><span><span class="t">Keep it</span><span class="d">Hold the cash flow</span></span><span class="amt">—</span></button>
+    </div>
+  `);
+}
+function sellIt(){
+  const {p,a,offer} = window._sale;
+  p.cash += offer; p.assets = p.assets.filter(x=>x!==a);
+  say(`<b>${p.name}</b> sells ${a.n} for <span class="gd">${F(offer)}</span>.`);
+  renderBoard(); renderPlayers();
+  endTurn();
+}
+
+/* ---------------- DISTRESS ---------------- */
+function forceSell(p){
+  while(p.cash < 0 && p.assets.length){
+    const a = p.assets.reduce((w,x)=> (x.noi-x.ds) < (w.noi-w.ds) ? x : w);
+    const proceeds = Math.round(a.down * 0.5);
+    p.cash += proceeds;
+    p.assets = p.assets.filter(x=>x!==a);
+    say(`<b>${p.name}</b> is short on cash and dumps <span class="bd">${a.n}</span> for half the down payment (${F(proceeds)}).`, "");
+  }
+  if(p.cash < 0){
+    say(`<b>${p.name}</b> is wiped out. The personal guarantee took everything.`, "bd");
+    p.cash = 0; p.skip = 3;
+  }
+  renderBoard(); renderPlayers();
+}
+
+/* ---------------- WIN ---------------- */
+function checkWin(){
+  for(const p of G.players){
+    const m = income(p);
+    if(worth(p) >= goal.worth && m.cov >= minCov() && p.assets.length){
+      G.over = true;
+      open(`<div class="win">
+        <div class="kick">Winner</div>
+        <h2 style="color:${p.color}">${p.name}</h2>
+        <div class="deal" style="margin-top:14px"><div class="rows">
+          <span class="k">Net worth</span><span class="v g">${F(worth(p))}</span>
+          <span class="k">Free cash flow</span><span class="v">${F(m.fcf)}/mo</span>
+          <span class="k">Coverage</span><span class="v" style="color:${covColor(m.cov)}">${m.cov.toFixed(2)}x</span>
+          <span class="k">Assets</span><span class="v">${p.assets.length}</span>
+          <span class="k">Cash</span><span class="v">${F(p.cash)}</span>
+        </div></div>
+        <div class="note">${p.assets.map(a=>a.n).join(" · ")}</div>
+        <div class="note">Net worth is the score. Coverage is what let them keep it.</div>
+        <div class="acts"><button class="btn" onclick="location.reload()">Play again</button></div>
+      </div>`);
+      say(`<b>${p.name}</b> wins with a net worth of ${F(worth(p))} at ${m.cov.toFixed(2)}x coverage.`, "gd");
+      renderBoard();
+      return;
+    }
+  }
+}
+
+/* ---------------- MODAL ---------------- */
+function open(html){
+  document.getElementById("modal").innerHTML = html;
+  document.getElementById("mask").classList.add("on");
+}
+function closeModal(){ document.getElementById("mask").classList.remove("on"); }
+</script>
+</body>
+</html>
