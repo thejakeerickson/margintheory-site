@@ -344,48 +344,50 @@ const OFFMARKET = [
   {n:"Partner Buyout Gone Bad",d:"dt",kind:"prop",disc:.86}
 ];
 
-/* Doodads are a SHARE of what you earn, never a flat number. A $5,600 furnace is
-   an inconvenience to a Doctor and the end of the game for a Janitor, and a game
-   where the dice decide that is not teaching anything. `m` is a multiple of your
-   monthly income, so the sting lands the same at every income level. */
+/* Doodads are real dollars, and they scale SUBLINEARLY. A furnace is a furnace.
+   Someone earning three hundred times more does not buy a three-hundred-times
+   furnace, they buy a nicer one. The exponent below turns a 300x income into
+   roughly a 7x bill, which is about how life actually works, and it means doodads
+   quietly stop mattering once you are rich. That is the lesson, not a bug.
+   `c` is the cost for someone on the reference income. Most of them are small. */
+const DOOD_REF = 1600;
 const DOODADS = [
-  {t:"Cracked your phone screen. Again.",           m:0.22},
-  {t:"Two new tires, and the alignment",             m:0.55},
-  {t:"Dentist, and the insurance didn't cover it",   m:0.60},
-  {t:"School trip you weren't going to say no to",   m:0.30},
-  {t:"Water heater let go overnight",                m:0.95},
-  {t:"Speeding ticket plus the class",               m:0.28},
-  {t:"Vet bill",                                     m:0.45},
-  {t:"You're in the wedding. Suit, flight, gift.",   m:0.75},
-  {t:"Laptop died mid-sentence",                     m:0.50},
-  {t:"A weekend you couldn't talk yourself out of",  m:0.85},
-  {t:"Furnace, in February",                         m:1.20},
-  {t:"Deductible after a parking-lot fender bender", m:0.70},
-  {t:"Impulse buy you already regret",               m:0.40},
-  {t:"Brakes, rotors, and a diagnostic fee",         m:0.65}
+  {t:"Cracked your phone screen. Again.",            c: 350},
+  {t:"Speeding ticket plus the class",                c: 420},
+  {t:"School trip you weren't going to say no to",    c: 450},
+  {t:"Impulse buy you already regret",                c: 600},
+  {t:"Vet bill",                                      c: 650},
+  {t:"Laptop died mid-sentence",                      c: 750},
+  {t:"Two new tires, and the alignment",              c: 850},
+  {t:"Dentist, and the insurance didn't cover it",    c: 900},
+  {t:"Brakes, rotors, and a diagnostic fee",          c: 950},
+  {t:"Deductible after a parking-lot fender bender",  c:1000},
+  {t:"You're in the wedding. Suit, flight, gift.",    c:1100},
+  {t:"A weekend you couldn't talk yourself out of",   c:1250},
+  {t:"Water heater let go overnight",                 c:1400},
+  {t:"Furnace, in February",                          c:1900}
 ];
 
 const LIFE = [
-  {t:"New baby",          a:1, r:4, m:1.30, kid:true,
-   d:"Congratulations. One attention slot gone for 4 turns, and a permanent new expense."},
-  {t:"Parent needs care", a:1, r:3, m:0.90,
+  {t:"Jury duty and the flu, same month", a:1, r:2, c: 500,
+   d:"Bad month. One attention slot gone for 2 turns."},
+  {t:"Parent needs care", a:1, r:3, c:1800,
    d:"You're driving to appointments. One slot gone for 3 turns."},
-  {t:"Back surgery",      a:1, r:3, m:1.60,
-   d:"Six weeks off your feet. One slot gone for 3 turns."},
-  {t:"Moving house",      a:1, r:2, m:1.10,
+  {t:"Moving house",      a:1, r:2, c:2200,
    d:"Two turns of your attention, gone."},
-  {t:"Second kid",        a:1, r:4, m:1.40, kid:true,
+  {t:"New baby",          a:1, r:4, c:2600, kid:true,
+   d:"Congratulations. One slot gone for 4 turns, and a permanent new expense."},
+  {t:"Second kid",        a:1, r:4, c:2800, kid:true,
    d:"Another slot gone for 4 turns, and another permanent expense."},
-  {t:"Jury duty and the flu, same month", a:1, r:2, m:0.25,
-   d:"Bad month. One slot gone for 2 turns."}
+  {t:"Back surgery",      a:1, r:3, c:3200,
+   d:"Six weeks off your feet. One slot gone for 3 turns."}
 ];
 
-/* What a hit costs: a share of everything coming in, so it lands the same whether
-   you clear $520 a month or $13,200. */
-function hitCost(p, mult){
+function hitCost(p, dollars){
   const m = income(p);
-  const base = Math.max(1200, (p.escaped?0:m.salary) + Math.max(0,m.passive) + (m.hustle||0));
-  return Math.round(base * mult);
+  const inc = Math.max(DOOD_REF, (p.escaped?0:m.salary) + Math.max(0,m.passive) + (m.hustle||0));
+  const scale = Math.pow(inc / DOOD_REF, 0.35);   // 300x income -> about 7x the bill
+  return Math.round(dollars * scale);
 }
 
 /* ---------- MARKET REGIMES ----------
@@ -927,7 +929,7 @@ function endTurn(){
     const cur = G.players[G.turn % G.players.length];
     if(cur && !cur.bot && !G.over && !G._fin){ G._fin = true; return finishPanel(cur); }
     G._fin = false;
-    if(cur) cur._boughtThisTurn = false;
+
   }
   // tick timers
   const p = G.players[G.turn % G.players.length];
@@ -1391,8 +1393,9 @@ function botDecide(p, d){
     say(`<b>${p.name}</b> passes on ${d.n}.`);
   }
   // A bot that is flush buys the best edge it can afford.
-  const want = Object.keys(ABILITIES).filter(k=>!has(p,k) && p.cash > ABILITIES[k].cost*3);
+  const want = p.bought ? [] : Object.keys(ABILITIES).filter(k=>!has(p,k) && p.cash > ABILITIES[k].cost*3);
   if(want.length){
+    p.bought = true;
     const k = want.sort((a,b)=>ABILITIES[b].cost-ABILITIES[a].cost)[0];
     p.cash -= ABILITIES[k].cost; p.abilities.push(k);
     say(`<b>${p.name}</b> buys ${ABILITIES[k].n}.`);
@@ -1455,7 +1458,7 @@ function marketShift(p){
   if(p.bot) setTimeout(endTurn, 1600);
 }
 function closingDay(p){
-  const gain = 4000 + Math.round(Math.random()*6000);
+  const gain = hitCost(p, 2200 + Math.round(Math.random()*2600));
   p.cash += gain;
   say(`<b>${p.name}</b> hits CLOSING DAY and banks <span class="gd">${F(gain)}</span> from a refinance.`);
   renderPlayers();
@@ -1469,7 +1472,7 @@ function closingDay(p){
 function doodad(p){
   const c = G.dood.length ? G.dood.shift() : pick(DOODADS);
   G.dood.push(c);
-  const cost = hitCost(p, c.m); c._last = cost;
+  const cost = hitCost(p, c.c); c._last = cost;
   p.cash -= cost;
   say(`<b>${p.name}</b> — Doodad: ${c.t}. <span class="bd">-${F(cost).slice(1)}</span>`);
   coverShortfall(p);
@@ -1485,7 +1488,7 @@ function doodad(p){
 function lifeEvent(p){
   const c = G.life.length ? G.life.shift() : pick(LIFE);
   G.life.push(c);
-  const cost = hitCost(p, c.m); c._last = cost;
+  const cost = hitCost(p, c.c); c._last = cost;
   p.cash -= cost;
   if(c.kid && p.kids < 3) p.kids++;
   p.busy.push({r:c.r, t:c.t});
@@ -1643,7 +1646,7 @@ function finishPanel(p){
           <span class="amt">-${F(1000*bankRate(p)).slice(1)}/mo</span></button>
         <button class="opt" onclick="shop()">
           <span><span class="t">Buy an ability</span>
-          <span class="d">${p.abilities.length} owned · permanent</span></span>
+          <span class="d">${p.bought ? "Already used your one purchase" : p.abilities.length+" owned · one purchase per game"}</span></span>
           <span class="amt">›</span></button>
         <button class="btn" style="margin-top:6px" onclick="reallyEnd()">End turn</button>
       </div>
@@ -1666,12 +1669,12 @@ function shop(){
     <div>
       <div class="kick">Abilities · bought once, kept forever</div>
       <h2>Invest in yourself</h2>
-      <div class="dist">Cash spent here buys no cash flow. It buys a better version of every
-      turn you take after it.</div>
+      <div class="dist">You get exactly one purchase per game, and it is permanent.
+      Cash spent here buys no cash flow. It buys a better version of every turn after it.</div>
       <div class="acts">
-        ${p._boughtThisTurn ? `<div class="note warn">One ability a turn.</div>` : ""}
+        ${p.bought ? `<div class="note warn">You have already bought your one ability. Characters start with one and buy one. That is the whole budget, so it had better be the right one.</div>` : ""}
         ${keys.length ? keys.map(k=>{const a=ABILITIES[k];
-          return `<button class="opt" onclick="buyAbility('${k}')" ${(p.cash<a.cost||p._boughtThisTurn)?"disabled":""}>
+          return `<button class="opt" onclick="buyAbility('${k}')" ${(p.cash<a.cost||p.bought)?"disabled":""}>
             <span><span class="t">${a.n}</span><span class="d">${a.d}</span></span>
             <span class="amt">-${F(a.cost).slice(1)}</span></button>`;}).join("")
           : `<div class="note">You own every ability there is.</div>`}
@@ -1684,8 +1687,8 @@ function shop(){
 function buyAbility(k){
   const p = G.players[G.turn%G.players.length];
   const a = ABILITIES[k];
-  if(p.cash < a.cost || p._boughtThisTurn) return;
-  p._boughtThisTurn = true;
+  if(p.cash < a.cost || p.bought) return;
+  p.bought = true;
   p.cash -= a.cost; p.abilities.push(k);
   if(k==="bench") p.assets.forEach(x=>{ if(x.type==="biz") x.mgr=Math.round(x.mgr*(0.22/0.32)); });
   say(`<b>${p.name}</b> buys <span class="hl">${a.n}</span> for ${F(a.cost)}.`, "gd");
