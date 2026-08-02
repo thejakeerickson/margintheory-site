@@ -311,6 +311,23 @@ const BIZ = {
    They are honest numbers too. Nobody pays $2,500 for quality of earnings on a
    vending route, so there is no lie to uncover and no diligence to run.
    They also do not claim a board space, so the square stays open for a real deal. */
+/* ---------------- PAPER ----------------
+   Not every deal is a business. Cashflow's small deck is full of stock: no cash
+   flow, no tenants, nothing to operate. You buy it because it is cheap today and
+   the range says it could be worth more. Most of the time the market moves it a
+   little and nothing happens. Occasionally one runs to the top of its range and
+   pays for a whole down payment. That is the point of paper, and it is the one
+   thing on this board that does nothing while you hold it. */
+const STOCKS = [
+  {sym:"OK4U",   n:"OK4U Drug Co.",        lo: 5, hi:30, base:20, div:0},
+  {sym:"ON2U",   n:"ON2U Entertainment",   lo:10, hi:30, base:10, div:0},
+  {sym:"MYT4U",  n:"MYT4U Mining",         lo: 5, hi:40, base:15, div:0},
+  {sym:"GRO4US", n:"GRO4US Growth Fund",   lo:10, hi:40, base:30, div:0},
+  {sym:"2BIG",   n:"2BIG Power Co.",       lo: 8, hi:35, base:13, div:10},
+  {sym:"BUYRT",  n:"BuyRite Grocers",      lo: 6, hi:24, base:12, div:0},
+  {sym:"SLOW",   n:"Slowpoke Freight",     lo: 4, hi:18, base: 9, div:6}
+];
+
 const SMALL_PROP = [
   {n:"Six Storage Units",         price:14000, noi:205, ess:true},
   {n:"Billboard Easement",        price: 9500, noi:134, ess:false},
@@ -516,6 +533,16 @@ function has(p,k){ return p.abilities && p.abilities.indexOf(k)>=0; }
 function mgrShare(p){ return has(p,"bench") ? 0.22 : MGR_SHARE; }
 function bankRate(p){ return has(p,"banker") ? 0.06 : 0.10; }
 
+/* You cannot borrow into every deal. A lender checks you can service the payment,
+   and so does this. You may borrow up to the point where your PAYDAY reaches zero
+   and not one dollar past it. On a $520 payday at 10% a month that is $5,000, full
+   stop, and the only way to raise it is to raise your income. */
+function borrowCap(p){
+  const m = income(p);
+  const headroom = Math.max(0, m.fcf);
+  return Math.floor(headroom / bankRate(p) / 1000) * 1000;
+}
+
 function jobExpenses(p){
   const j=p.prof;
   return j.tax+j.home+j.car+j.cc+j.ret+j.oth + (p.kids||0)*j.ch + (p.bankLoan||0)*bankRate(p);
@@ -546,7 +573,10 @@ function tierOf(p){ const w=worth(p); return TIERS.find(t=>w<t.max); }
 /* Net worth = cash + what the assets are worth today - what you still owe.
    Values ride the regime, so a boom lifts your score and a bust cuts it. */
 function worth(p){
-  return Math.round(p.cash + p.assets.reduce((s,a)=>
+  const paper = p.shares ? Object.keys(p.shares).reduce((s,k)=>{
+    const h=p.shares[k]; return s + h.n * ((h.lo+h.hi)/2);   // marked at mid-range
+  },0) : 0;
+  return Math.round(p.cash + paper + p.assets.reduce((s,a)=>
     s + a.price*G.regime.priceMod - a.loan, 0));
 }
 
@@ -993,8 +1023,20 @@ const MGR_SHARE = 0.32;
    whether you are worth $5,000 or $5,000,000. That is the point of them: they get
    you off the ground early and become irrelevant on purpose. Letting them scale
    made them a permanent loophole that beat every real deal on the board. */
+/* Just under half of every small deal is paper. */
+function makeStock(){
+  const b = pick(STOCKS);
+  const spread = b.hi - b.lo;
+  const price = Math.max(b.lo, Math.min(b.hi,
+    Math.round(b.lo + spread*(0.12 + Math.random()*0.45))));
+  return { n:b.n, sym:b.sym, type:"stock", small:true, paper:true, dist:"small",
+           space:-1, price, lo:b.lo, hi:b.hi, div:b.div,
+           noi:0, claimed:0, ds:0, down:price, loan:0, mgr:0, ess:true, factor:1 };
+}
+
 function makeSmall(kind, scale=1){
   scale = 1;
+  if(Math.random() < 0.45) return makeStock();
   const key = "small_"+kind;
   if(!G.decks[key] || !G.decks[key].length)
     G.decks[key] = shuffle(kind==="prop"?SMALL_PROP:SMALL_BIZ);
@@ -1140,8 +1182,13 @@ function statementHTML(p){
         </div>`}
 
     <h4>Assets</h4>
+    ${(p.shares ? Object.keys(p.shares).filter(k=>p.shares[k].n>0) : []).map(k=>{
+        const h=p.shares[k];
+        return `<div class="ln mut"><span>${k} · ${h.n} shares</span><span>$${h.basis.toFixed(2)}/sh</span></div>`;
+      }).join("")}
     ${p.assets.length ? p.assets.map(a=>row(a.n, a.price, true)).join("")
-                      : `<div class="ln mut"><span>&mdash;</span><span>$0</span></div>`}
+      : ((p.shares && Object.keys(p.shares).some(k=>p.shares[k].n>0)) ? ""
+         : `<div class="ln mut"><span>&mdash;</span><span>$0</span></div>`)}
 
     <h4>Liabilities</h4>
     ${liab.map(([k,v])=>row(k,v,true)).join("")}
@@ -1303,8 +1350,101 @@ function dealFlowPick(p, pair, isSmall){
 }
 function takeDF(i){ const {p,pair,isSmall}=window._df; showDeal(p, pair[i], isSmall); }
 
+/* ---------------- PAPER ---------------- */
+function showStock(p, st){
+  window._stock = {p, st};
+  const owned = (p.shares && p.shares[st.sym]) ? p.shares[st.sym] : {n:0, basis:0};
+  const blocks = [100, 500, 1000].filter(b=>b*st.price <= p.cash);
+  open(`<div class="panes"><div>${statementHTML(p)}</div><div>
+    <div class="kick">Small deal · paper</div>
+    <h2>${st.n}</h2>
+    <div class="dist">${st.sym} · shares. No tenants, no manager, nothing to run.</div>
+    <div class="deal"><div class="rows">
+      <span class="k">Today's price</span><span class="v">$${st.price}</span>
+      <span class="k">Trading range</span><span class="v">$${st.lo} to $${st.hi}</span>
+      <span class="k">Cash flow</span><span class="v">${st.div?F(st.div)+"/mo per 100":"$0"}</span>
+      <span class="k">Shares you own</span><span class="v">${owned.n}</span>
+    </div></div>
+    <div class="note">Paper pays you nothing for holding it. It is worth something only
+    when the market comes for it, and most of the time the market barely moves.</div>
+    <div class="acts">
+      ${blocks.length ? blocks.map(b=>`<button class="opt" onclick="buyShares(${b})">
+        <span><span class="t">Buy ${b} shares</span><span class="d">at $${st.price} each</span></span>
+        <span class="amt">-${F(b*st.price).slice(1)}</span></button>`).join("")
+        : `<div class="note warn">You cannot afford a block at this price.</div>`}
+      <button class="opt" onclick="pass()"><span><span class="t">Pass</span>
+        <span class="d">Costs nothing.</span></span><span class="amt">—</span></button>
+    </div></div></div>`, true);
+}
+function buyShares(count){
+  const {p, st} = window._stock;
+  const cost = count * st.price;
+  if(p.cash < cost) return;
+  p.cash -= cost;
+  if(!p.shares) p.shares = {};
+  const h = p.shares[st.sym] || {n:0, basis:0, lo:st.lo, hi:st.hi, name:st.n, div:st.div};
+  h.basis = (h.basis*h.n + cost) / (h.n + count);
+  h.n += count; h.lo=st.lo; h.hi=st.hi; h.name=st.n; h.div=st.div;
+  p.shares[st.sym] = h;
+  say(`<b>${p.name}</b> buys ${count} shares of <span class="hl">${st.sym}</span> at $${st.price}.`);
+  renderPlayers(); endTurn();
+}
+
+/* The Market is where paper finally does something. Usually a nudge. Rarely a run. */
+function stockMove(p){
+  const sym = pick(Object.keys(STOCKS.reduce((o,x)=>(o[x.sym]=1,o),{})));
+  const meta = STOCKS.find(x=>x.sym===sym);
+  const roll = Math.random();
+  const t = roll < 0.08 ? 0.97          // the run: near the top of the range
+          : roll < 0.20 ? 0.06          // the crash
+          : 0.25 + Math.random()*0.5;   // the usual nothing
+  const price = Math.max(meta.lo, Math.min(meta.hi, Math.round(meta.lo + (meta.hi-meta.lo)*t)));
+  const holders = G.players.filter(pl=>pl.shares && pl.shares[sym] && pl.shares[sym].n>0);
+  say(`<span class="hl">${sym}</span> is trading at $${price}.${
+    t>0.9?" That is the top of its range.":t<0.1?" It has collapsed.":""}`);
+  if(!holders.length){
+    if(!p.bot) return open(`<div class="kick">The Market</div><h2>${meta.n} at $${price}</h2>
+      <div class="note" style="font-size:13px">${t>0.9?"Top of its range. Somebody made money today. Not you.":
+        t<0.1?"It collapsed. Good thing you weren't holding it.":"It barely moved, which is what paper usually does."}</div>
+      <div class="acts"><button class="btn" onclick="endTurn()">Continue</button></div>`);
+    return endTurn();
+  }
+  // bots take a clear profit
+  holders.filter(h=>h.bot).forEach(pl=>{
+    const h = pl.shares[sym];
+    if(price > h.basis*1.5){ pl.cash += h.n*price;
+      say(`<b>${pl.name}</b> sells ${h.n} ${sym} at $${price}.`, "gd"); h.n=0; }
+  });
+  const me = p.shares && p.shares[sym] && p.shares[sym].n>0 ? p.shares[sym] : null;
+  if(!me || p.bot){ renderPlayers(); return endTurn(); }
+  window._sell = {p, sym, price, h:me};
+  const gain = Math.round(me.n*price - me.n*me.basis);
+  open(`<div class="panes"><div>${statementHTML(p)}</div><div>
+    <div class="kick">The Market</div><h2>${meta.n} at $${price}</h2>
+    <div class="dist">You hold ${me.n} shares. Everyone holding may sell at this price.</div>
+    <div class="deal"><div class="rows">
+      <span class="k">You paid</span><span class="v">$${me.basis.toFixed(2)}/share</span>
+      <span class="k">Today</span><span class="v">$${price}/share</span>
+      <span class="k">Sell everything for</span><span class="v">${F(me.n*price)}</span>
+      <span class="k">Gain</span><span class="v ${gain>=0?'g':'b'}">${F(gain)}</span>
+    </div></div>
+    <div class="acts">
+      <button class="opt" onclick="sellShares()"><span><span class="t">Sell all ${me.n}</span>
+        <span class="d">Take the cash</span></span><span class="amt">+${F(me.n*price).slice(1)}</span></button>
+      <button class="opt" onclick="endTurn()"><span><span class="t">Hold</span>
+        <span class="d">The range still has room.</span></span><span class="amt">—</span></button>
+    </div></div></div>`, true);
+}
+function sellShares(){
+  const {p, sym, price, h} = window._sell;
+  p.cash += h.n*price;
+  say(`<b>${p.name}</b> sells ${h.n} ${sym} at $${price} for ${F(h.n*price)}.`, "gd");
+  h.n = 0; renderPlayers(); endTurn();
+}
+
 /* ---------------- DEAL MODAL ---------------- */
 function showDeal(p, d, verified){
+  if(d.paper) return showStock(p, d);
   const isBiz = d.type==="biz";
   const free  = has(p,"qoe");
   const known = (verified || free || !isBiz) ? d.noi : d.claimed;
@@ -1345,12 +1485,17 @@ function showDeal(p, d, verified){
         <button class="opt" onclick="buy('loan')" ${cash<d.down?"disabled":""}>
           <span><span class="t">Buy</span><span class="d">${F(d.down)} down, ${F(d.ds)}/mo debt</span></span>
           <span class="amt">-${F(d.down).slice(1)}</span></button>
-        ${cash < d.down && cash + 50000 >= d.down ? (()=>{
+        ${(()=>{ if(cash >= d.down) return "";
           const need = Math.ceil((d.down - cash)/1000)*1000;
+          const cap  = borrowCap(p);
+          if(need > cap) return `<button class="opt" disabled>
+            <span><span class="t">Borrow ${F(need)}, then buy</span>
+            <span class="d">The bank will only go to ${F(cap)} on your income. Raise your PAYDAY first.</span></span>
+            <span class="amt">no</span></button>`;
           return `<button class="opt" onclick="borrowAndBuy(${need})">
             <span><span class="t">Borrow ${F(need)}, then buy</span>
-            <span class="d">${Math.round(bankRate(p)*100)}% a month until you repay it</span></span>
-            <span class="amt">-${F(need*bankRate(p)).slice(1)}/mo</span></button>`;})() : ""}
+            <span class="d">${Math.round(bankRate(p)*100)}% a month until you repay it · limit ${F(cap)}</span></span>
+            <span class="amt">-${F(need*bankRate(p)).slice(1)}/mo</span></button>`;})()}
         <button class="opt" onclick="buy('cash')" ${cash<d.price?"disabled":""}>
           <span><span class="t">Pay all cash</span><span class="d">No debt at all</span></span>
           <span class="amt">-${F(d.price).slice(1)}</span></button>
@@ -1545,6 +1690,7 @@ function lifeEvent(p){
 }
 
 function marketOffer(p){
+  if(Math.random() < 0.55) return stockMove(p);
   if(!p.assets.length){
     say(`<b>${p.name}</b> lands on The Market. A buyer is looking, but there is nothing to sell yet.`);
     if(!p.bot){
@@ -1687,7 +1833,9 @@ function finishPanel(p){
           <span class="amt">+${F(1000*bankRate(p)).slice(1)}/mo</span></button>
         <button class="opt" onclick="borrowOnly()">
           <span><span class="t">Borrow $1,000</span>
-          <span class="d">${Math.round(bankRate(p)*100)}% a month until you repay it</span></span>
+          <span class="d">${borrowCap(p)>=1000
+            ? Math.round(bankRate(p)*100)+"% a month · they will go to "+F(borrowCap(p))
+            : "The bank says no. Your PAYDAY will not service more."}</span></span>
           <span class="amt">-${F(1000*bankRate(p)).slice(1)}/mo</span></button>
         <button class="opt" onclick="shop()">
           <span><span class="t">Buy an ability</span>
@@ -1702,6 +1850,7 @@ function repay(){ const p=G.players[G.turn%G.players.length];
   const amt=Math.min(1000,p.bankLoan); p.bankLoan-=amt; p.cash-=amt;
   say(`<b>${p.name}</b> repays ${F(amt)} to the bank.`); renderPlayers(); finishPanel(p); }
 function borrowOnly(){ const p=G.players[G.turn%G.players.length];
+  if(borrowCap(p) < 1000){ say(`The bank turns <b>${p.name}</b> down. Not enough PAYDAY to service it.`); return finishPanel(p); }
   p.bankLoan+=1000; p.cash+=1000;
   say(`<b>${p.name}</b> borrows ${F(1000)}.`); renderPlayers(); finishPanel(p); }
 function reallyEnd(){ closeModal(); endTurn(); }
