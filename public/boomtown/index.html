@@ -383,6 +383,30 @@ const CORNERS = {
   closing:{n:"CLOSING<br>DAY", s:"Bonus: refinance<br>or take a breath."}
 };
 
+/* ---------------- PROFESSIONS ----------------
+   Straight from Cashflow's design, and the lesson is in the shape of the table:
+   the Doctor earns 8x the Janitor and clears barely 6x more per month, because
+   expenses scale with income. High salary is not the same thing as free cash.
+   Starting cash = one month's cash flow + savings. That is ALL you get, which is
+   why the first deal is genuinely out of reach and the bank looks tempting. */
+const PROFESSIONS = [
+  {n:"Janitor",          sal:1600, tax:280,  home:330,  car:60,  cc:60,  ret:50, oth:300,  sav:560,  ch:70},
+  {n:"Truck Driver",     sal:2500, tax:460,  home:400,  car:80,  cc:60,  ret:50, oth:570,  sav:700,  ch:140},
+  {n:"Police Officer",   sal:3000, tax:580,  home:700,  car:100, cc:60,  ret:50, oth:680,  sav:520,  ch:180},
+  {n:"Nurse",            sal:3100, tax:600,  home:630,  car:110, cc:80,  ret:50, oth:700,  sav:720,  ch:200},
+  {n:"Teacher",          sal:3300, tax:630,  home:700,  car:120, cc:90,  ret:50, oth:760,  sav:400,  ch:180},
+  {n:"Mechanic",         sal:2600, tax:490,  home:450,  car:90,  cc:70,  ret:50, oth:600,  sav:660,  ch:150},
+  {n:"Business Manager", sal:4600, tax:910,  home:700,  car:300, cc:270, ret:50, oth:1200, sav:400,  ch:240},
+  {n:"Engineer",         sal:4900, tax:1050, home:1330, car:380, cc:270, ret:50, oth:1090, sav:400,  ch:280},
+  {n:"Airline Pilot",    sal:9500, tax:2350, home:1330, car:550, cc:280, ret:50, oth:2210, sav:400,  ch:480},
+  {n:"Lawyer",           sal:7500, tax:1830, home:1900, car:380, cc:270, ret:50, oth:2100, sav:400,  ch:380},
+  {n:"Doctor",           sal:13200,tax:3420, home:1900, car:750, cc:380, ret:50, oth:2880, sav:400,  ch:640}
+];
+function jobExpenses(p){
+  const j=p.prof;
+  return j.tax+j.home+j.car+j.cc+j.ret+j.oth + (p.kids||0)*j.ch + (p.bankLoan||0)*0.10;
+}
+
 const COLORS   = ["#3B82F6","#E0705A","#5DCAA5","#E8B54A"];
 const BOTNAMES = ["You","Dana","Marcus","Rae"];
 const SEATNAMES= ["Player 1","Player 2","Player 3","Player 4"];
@@ -515,12 +539,18 @@ function startGame(){
     G.decks["prop_"+d] = shuffle(PROPS[d]);
     G.decks["biz_"+d]  = shuffle(BIZ[d]);
   }
+  const profDeck = shuffle(PROFESSIONS);
   for(let i=0;i<nPlayers;i++){
     const isBot = (mode==="bots") && i>0;
-    G.players.push({
+    const prof  = profDeck.length ? profDeck.shift() : pick(PROFESSIONS);
+    const pl = {
       i, name:(mode==="bots"?BOTNAMES[i]:SEATNAMES[i]), color:COLORS[i], bot:isBot,
-      cash:75000, pos:0, assets:[], attention:2, busy:[], skip:0, laps:0
-    });
+      prof, kids:0, bankLoan:0, escaped:false,
+      cash:0, pos:0, assets:[], attention:2, busy:[], skip:0, laps:0
+    };
+    // Cashflow's rule exactly: you start with one month of cash flow plus your savings.
+    pl.cash = (prof.sal - jobExpenses(pl)) + prof.sav;
+    G.players.push(pl);
   }
   document.getElementById("setup").classList.add("hide");
   document.getElementById("app").classList.remove("hide");
@@ -558,8 +588,13 @@ function income(p){
     noi += e; covNoi += e; ds += a.ds * R.propDs;
   });
   const cov = ds>0 ? covNoi/ds : (covNoi>0?99:0);
-  const fcf = noi - ds - R.living;
-  return {noi, covNoi, ds, cov, fcf, mgrCost, living:R.living,
+  const passive = noi - ds;                      // what the assets pay you, net of debt
+  // In the Rat Race you have a job and a job's expenses. Escaping trades a salary
+  // for freedom: the paycheck stops and so do the commute, the suits and the tax.
+  const salary  = p.escaped ? 0 : p.prof.sal;
+  const expense = p.escaped ? R.living : jobExpenses(p);
+  const fcf = passive + salary - expense;
+  return {noi, covNoi, ds, cov, fcf, passive, salary, expense, mgrCost, living:R.living,
           unmanned:Math.max(0,biz.length-slots)};
 }
 function covColor(c){ return c>=1.5?"var(--good)":c>=1.25?"var(--warn)":"var(--bad)"; }
@@ -655,9 +690,12 @@ function renderPlayers(){
       </div>
       <div class="rows">
         <span class="k">Cash</span><span class="v">${F(p.cash)}</span>
-        <span class="k">Income</span><span class="v">${F(m.noi)}</span>
-        <span class="k">Debt service</span><span class="v b">${m.ds?"-"+F(m.ds).slice(1):"$0"}</span>
-        <span class="k">Living</span><span class="v b">-${F(m.living).slice(1)}</span>
+        ${p.escaped
+          ? `<span class="k" style="color:var(--good)">Out of the Rat Race</span><span class="v g">✓</span>`
+          : `<span class="k">${p.prof.n} salary</span><span class="v">${F(m.salary)}</span>`}
+        <span class="k">Passive income</span><span class="v ${m.passive>0?'g':''}">${F(m.passive)}</span>
+        <span class="k">${p.escaped?"Living":"Expenses"}</span><span class="v b">-${F(m.expense).slice(1)}</span>
+        ${p.bankLoan?`<span class="k">Bank loan ${F(p.bankLoan)}</span><span class="v b">-${F(p.bankLoan*0.10).slice(1)}</span>`:""}
         <span class="k">Free cash flow</span><span class="v ${m.fcf>0?'g':m.fcf<0?'b':''}">${F(m.fcf)}</span>
         <span class="k">Coverage</span><span class="v" style="color:${covColor(m.cov)}">${m.ds?m.cov.toFixed(2)+"x":"—"}</span>
       </div>
@@ -749,6 +787,7 @@ function endTurn(){
 function payday(p, passing){
   const m=income(p);
   p.cash += m.fcf;
+  checkEscape(p);
   const s = m.fcf>=0 ? `collects <span class="gd">${F(m.fcf)}</span>` : `pays out <span class="bd">${F(-m.fcf)}</span>`;
   say(`<b>${p.name}</b> ${passing?"passes":"lands on"} PAYDAY and ${s}.`);
   flashCell(p.pos, m.fcf>=0 ? "pop-good" : "pop-bad");
@@ -978,6 +1017,12 @@ function showDeal(p, d, verified){
         <span><span class="t">Buy with a loan</span><span class="d">${F(d.down)} down, ${F(d.ds)}/mo debt service</span></span>
         <span class="amt">-${F(d.down).slice(1)}</span>
       </button>
+      ${cash < d.down && cash + 50000 >= d.down ? (()=>{
+        const need = Math.ceil((d.down - cash)/1000)*1000;
+        return `<button class="opt" onclick="borrowAndBuy(${need})">
+          <span><span class="t">Borrow ${F(need)} from the bank, then buy</span>
+          <span class="d">10% a month, forever. Costs you ${F(need*0.10)}/mo until you repay it.</span></span>
+          <span class="amt">-${F(need*0.10).slice(1)}/mo</span></button>`;})() : ""}
       <button class="opt" onclick="buy('cash')" ${cash<d.price?"disabled":""}>
         <span><span class="t">Pay all cash</span><span class="d">No debt service. Coverage untouched.</span></span>
         <span class="amt">-${F(d.price).slice(1)}</span>
@@ -989,6 +1034,16 @@ function showDeal(p, d, verified){
     </div>
   `);
   window._deal = {p, d, verified};
+}
+
+/* The bank will always lend you the gap, at a price that should scare you.
+   Cashflow's rule verbatim: $1,000 units, 10% per month, $100/mo per $1,000. */
+function borrowAndBuy(amount){
+  const {p} = window._deal;
+  p.bankLoan = (p.bankLoan||0) + amount;
+  p.cash += amount;
+  say(`<b>${p.name}</b> borrows ${F(amount)} from the bank. That is ${F(amount*0.10)} a month, every month.`, "");
+  buy('loan');
 }
 
 function runQoE(){
@@ -1209,6 +1264,36 @@ function forceSell(p){
     p.cash = 0; p.skip = 3;
   }
   renderBoard(); renderPlayers();
+}
+
+/* ---------------- ESCAPING THE RAT RACE ----------------
+   Cashflow's exact condition: passive income greater than total expenses. The moment
+   it happens the job is gone, and with it the salary you were leaning on. The tiers
+   open up. It is the payoff of the whole first act, and it is also when the danger
+   starts, because now nothing but the assets is paying your bills. */
+function checkEscape(p){
+  if(p.escaped) return;
+  const m = income(p);
+  if(m.passive > jobExpenses(p) && p.assets.length){
+    p.escaped = true;
+    p.attention = 3;                            // no day job frees up a slot
+    say(`<b>${p.name}</b> is <span class="gd">OUT OF THE RAT RACE</span>. The ${p.prof.n} paycheck stops. Bigger deals unlock.`, "gd");
+    if(!p.bot){
+      open(`<div class="win">
+        <div class="kick">Out</div>
+        <h2 style="color:${p.color}">You're out of the Rat Race</h2>
+        <div class="deal" style="margin-top:12px"><div class="rows">
+          <span class="k">Passive income</span><span class="v g">${F(m.passive)}/mo</span>
+          <span class="k">Job you just quit</span><span class="v">${p.prof.n}</span>
+          <span class="k">Salary you gave up</span><span class="v b">-${F(p.prof.sal).slice(1)}/mo</span>
+          <span class="k">Expenses that left with it</span><span class="v g">${F(jobExpenses(p))}/mo</span>
+          <span class="k">Attention slots</span><span class="v g">3</span>
+        </div></div>
+        <div class="note">Nothing but your assets pays your bills now. That is the good news and the bad news.</div>
+        <div class="acts"><button class="btn" onclick="closeModal()">Let's go</button></div>
+      </div>`);
+    }
+  }
 }
 
 /* ---------------- WIN ---------------- */
