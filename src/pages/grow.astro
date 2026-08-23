@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const calendlyUrl = 'https://calendly.com/jake-qmqx/strategy-call';
-const loomEmbedUrl = 'https://www.loom.com/embed/be2e1557b04e48d6be26411608b80c45?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true';
+const vslVideoUrl = '/grow-vsl.mp4';
+const vslPosterUrl = '/grow-vsl-poster.jpg';
 const contactEmail = 'jake@margintheory.co';
 const SITE_URL = 'https://margintheory.co';
 
@@ -46,27 +47,21 @@ const serviceSchema = {
         How I uncovered <span class="text-brand-blue font-bold">$60K</span> in profit for a $1.4M business in 90 days (without making a single cut).
       </p>
 
-      {loomEmbedUrl.includes('PLACEHOLDER') ? (
-        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl bg-white/[0.03] flex items-center justify-center">
-          <div class="text-center px-6">
-            <div class="text-brand-blue text-5xl mb-4">▶</div>
-            <p class="text-white/70 text-lg font-medium">5-minute video goes here</p>
-            <p class="text-white/40 text-sm mt-2">Replace PLACEHOLDER_VIDEO_ID in grow.astro with the real Loom ID after recording.</p>
-          </div>
-        </div>
-      ) : (
-        <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl">
-          <iframe
-            src={loomEmbedUrl}
-            frameborder="0"
-            webkitallowfullscreen
-            mozallowfullscreen
-            allowfullscreen
-            class="w-full h-full"
-            title="How Margin Theory works"
-          ></iframe>
-        </div>
-      )}
+      <div class="aspect-video w-full overflow-hidden border border-white/15 shadow-2xl bg-black">
+        <video
+          src={vslVideoUrl}
+          poster={vslPosterUrl}
+          width="1280"
+          height="720"
+          controls
+          preload="metadata"
+          playsinline
+          webkit-playsinline
+          controlsList="nodownload"
+          class="block w-full h-full object-contain"
+          title="How Margin Theory works"
+        ></video>
+      </div>
     </div>
   </section>
 
