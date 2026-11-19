@@ -9,10 +9,10 @@ const SITE_URL = 'https://margintheory.co';
  * date: null puts the page in waitlist mode (register to get the date first).
  */
 const COHORT = {
-  date: null as string | null, // e.g. 'Thursday, July 24'
-  time: '',    // e.g. '12:00 PM Central'
-  seats: null as number | null,  // e.g. 25
-  closeDate: '', // e.g. 'Tuesday, July 22'
+  date: 'Thursday, January 21' as string | null, // e.g. 'Thursday, July 24'
+  time: '7:30 AM Central',    // e.g. '12:00 PM Central'
+  seats: 10 as number | null,  // e.g. 25
+  closeDate: 'Tuesday, January 19', // e.g. 'Tuesday, July 22'
 };
 
 const isLive = Boolean(COHORT.date);
